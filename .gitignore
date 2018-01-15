@@ -1,0 +1,11 @@
+/logs
+/target
+target/
+/target/
+.classpath
+.project
+.settings
+.idea/
+FactoryAirMonitor.iml
+FactoryAirMonitor/target/
+*/*.iml
