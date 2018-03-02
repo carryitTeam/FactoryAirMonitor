@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.carryit.base.fam.dao.UserDao">
+
+    <resultMap type="com.carryit.base.fam.bean.User" id="User">
+        <!-- column:库表的字段名 property:实体类里的属性名 -->
+        <id column="id" property="id"/>
+        <result column="userId" property="userId"/>
+        <result column="userPwd" property="userPwd"/>
+        <result column="userName" property="userName"/>
+        <result column="userEmail" property="userEmail"/>
+        <result column="userRole" property="userRole"/>
+        <result column="appEui" property="appEui"/>
+        <result column="changeTime" property="changeTime"/>
+        <result column="createTime" property="createTime"/>
+    </resultMap>
+
+    <insert id="addUser" parameterType="com.carryit.base.fam.bean.User"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into user(userId,userPwd,userName,userEmail,userRole,appEui,changeTime,createTime)
+        values(#{userId},#{userPwd},#{userName},#{userEmail},#{userRole},#{appEui},#{changeTime},#{createTime})
+    </insert>
+
+    <delete id="deleteUser" parameterType="com.carryit.base.fam.bean.User">
+        delete from user where userId=#{userId}
+    </delete>
+
+    <update id="updateUser" parameterType="com.carryit.base.fam.bean.User">
+        update user set userName=#{userName},userEmail=#{userEmail},appEui=#{appEui},changeTime=#{changeTime}
+        where userId=#{userId}
+    </update>
+
+    <select id="queryUsersById" parameterType="com.carryit.base.fam.bean.User"
+            resultMap="User">
+        select id, userId,userPwd, userName, userEmail, userRole,appEui, changeTime,createTime from user where userId=#{userId}
+    </select>
+
+    <select id="queryAllUsersByRole" parameterType="com.carryit.base.fam.bean.User"
+            resultMap="User">
+        select id, userId,userPwd, userName, userEmail, userRole,appEui, changeTime,createTime from user where userRole=#{userRole}
+    </select>
+
+    <select id="checkUserByPwd" parameterType="com.carryit.base.fam.bean.User"
+            resultMap="User">
+        select id, userId,userPwd, userName, userEmail, userRole,appEui, changeTime,createTime from user where userId=#{userId} and userPwd= #{userPwd}
+    </select>
+
+</mapper>

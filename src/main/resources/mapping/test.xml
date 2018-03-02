@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.carryit.base.fam.dao.TestDao">
+    <!--<resultMap type="com.ctrip.flight.livewatch.performance.domain.UserSnapshotVo" id="UserSnapshot">-->
+    <!--&lt;!&ndash; column:库表的字段名 property:实体类里的属性名 &ndash;&gt;-->
+    <!--<id column="id" property="id"/>-->
+    <!--<result column="userId" property="userId"/>-->
+    <!--<result column="reportId" property="reportId"/>-->
+    <!--<result column="dimSnapshot" property="dimSnapshot"/>-->
+    <!--<result column="legendSnapshot" property="legendSnapshot"/>-->
+    <!--<result column="DataChange_CreateTime" property="DataChange_CreateTime"/>-->
+    <!--<result column="DataChange_LastTime" property="DataChange_LastTime"/>-->
+    <!--</resultMap>-->
+
+
+    <select id="countData" resultType="int">
+        select count(1) from test
+    </select>
+
+</mapper>

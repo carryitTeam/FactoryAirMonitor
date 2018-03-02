@@ -4,6 +4,9 @@
 package com.carryit.base.fam.connection;
 
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -18,6 +21,9 @@ import java.net.SocketAddress;
  * @author 10028484
  * @version 0.0.1
  */
+
+@Component
+@Scope("prototype")
 public class TCPConnection implements Connection {
 
     /**
@@ -67,6 +73,11 @@ public class TCPConnection implements Connection {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean isConnected() throws IOException {
+        return this.socket.isConnected();
     }
 
 
@@ -122,6 +133,5 @@ public class TCPConnection implements Connection {
             return true;
         }
     }
-
 
 }

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.carryit.base.fam.dao.DatasDao">
+    <resultMap type="com.carryit.base.fam.bean.Datas" id="Datas">
+        <!-- column:库表的字段名 property:实体类里的属性名 -->
+        <id column="id" property="id"/>
+        <result column="appEui" property="appEui"/>
+        <result column="devEui" property="devEui"/>
+        <result column="jsonData" property="jsonData"/>
+        <result column="realData" property="realData"/>
+        <result column="createTime" property="createTime"/>
+    </resultMap>
+
+    <insert id="addDatas" parameterType="com.carryit.base.fam.bean.Datas"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into datas(appEui,devEui,jsonData,realData)
+        values(#{appEui},#{devEui},#{jsonData},#{realData})
+    </insert>
+
+    <select id="queryUsersByUserId" parameterType="com.carryit.base.fam.bean.Datas"
+            resultMap="Datas">
+        select datas.id,datas.appEui,datas.devEui,datas.jsonData,datas.realData,datas.createTime from datas, user where datas.appEui=user.appEui and user.userId=${userId}
+    </select>
+
+    <select id="queryAllUsersByAppEui" parameterType="com.carryit.base.fam.bean.Datas"
+            resultMap="Datas">
+        select datas.id,datas.appEui,datas.devEui,datas.jsonData,datas.realData,datas.createTime from datas where appEui=${appEui}
+    </select>
+
+    <select id="queryAllUsersByAppDevEui" parameterType="com.carryit.base.fam.bean.Datas"
+            resultMap="Datas">
+        select datas.id,datas.appEui,datas.devEui,datas.jsonData,datas.realData,datas.createTime from datas where appEui=${appEui} and devEui=${devEui}
+    </select>
+</mapper>
