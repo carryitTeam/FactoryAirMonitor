@@ -19,8 +19,8 @@
 
     <insert id="addUser" parameterType="com.carryit.base.fam.bean.User"
             useGeneratedKeys="true" keyProperty="id">
-        insert into user(userId,userPwd,userName,userEmail,userRole,appEui,changeTime,createTime)
-        values(#{userId},#{userPwd},#{userName},#{userEmail},#{userRole},#{appEui},#{changeTime},#{createTime})
+        insert into user(userId,userPwd,userName,userEmail,userRole,appEui)
+        values(#{userId},#{userPwd},#{userName},#{userEmail},#{userRole},#{appEui})
     </insert>
 
     <delete id="deleteUser" parameterType="com.carryit.base.fam.bean.User">

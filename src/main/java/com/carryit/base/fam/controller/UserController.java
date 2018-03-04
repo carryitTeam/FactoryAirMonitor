@@ -11,7 +11,11 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.SimpleFormatter;
 
 /**
  * Created by hlzou on 2018/2/27.
@@ -26,6 +30,36 @@ public class UserController {
 
     @Autowired
     private ServletContext servletContext;
+
+
+    @PostMapping("/submitAddUser")
+    public
+    @ResponseBody
+    Object submitAddUser(User user) {
+
+        Map<String, Boolean> userData = (Map<String, Boolean>) servletContext.getAttribute("userData");
+
+        userData.put(user.getUserId() + "_" + user.getAppEui(), false);
+
+        int res = userService.addUser(user);
+        return res;
+    }
+
+    @PostMapping("/submitUpdateUser")
+    public
+    @ResponseBody
+    Object submitUpdateUser(User user) {
+        Map<String, Boolean> userData = (Map<String, Boolean>) servletContext.getAttribute("userData");
+
+        userData.put(user.getUserId() + "_" + user.getAppEui(), false);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String changeTime = sdf.format(new Date());
+        user.setChangeTime(changeTime);
+
+        int res = userService.updateUser(user);
+        return res;
+    }
 
     @PostMapping("/checkUser")
     public

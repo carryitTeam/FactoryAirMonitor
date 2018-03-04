@@ -51,14 +51,14 @@
             <th>operator</th>
         </tr>
         <c:forEach items="${users}" var="user">
-            <c:set var="dog" scope="page" value="${user.userId}${'_'}${user.appEui}"/>
+            <c:set var="dog" scope="page" value="${user.id}${'_'}${user.appEui}"/>
             <c:if test="${userData[dog]==true}">
-                <tr style="background: #79ff0a;">
+                <tr style="background: #79ff0a;" id="${user.id}">
                 <td><span class="glyphicon glyphicon-off" style="color: rgb(0, 129, 0);">On</span>
                 </td>
             </c:if>
             <c:if test="${userData[dog]==false}">
-                <tr style="background: #fff3b5;">
+                <tr style="background: #fff3b5;" id="${user.userId}">
                 <td><span class="glyphicon glyphicon-off" style="color: rgb(255, 0, 0);">Off</span>
                 </td>
             </c:if>
@@ -141,13 +141,69 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-primary" onclick="submitUser(this)" id="saveOrEdit">Save</button>
             </div>
         </div>
     </div>
 </div>
 
 <script type="text/javascript">
+
+    function submitUser(node) {
+        var currModel = $(node).text()
+        var userId = $("#form-userId").val()
+        var userName = $("#form-userName").val()
+        var userEmail = $("#form-userEmail").val()
+        var userPwd = $("#form-userPwd").val()
+        var appEui = $("#form-appEui").val()
+        var userRole = $("input[name='form-userRole']:checked").val();
+        if (currModel == "Save") {
+            $.ajax({
+                type: 'POST',
+                url: "submitAddUser",
+                async: false,
+                data: {
+                    userId: userId,
+                    userName: userName,
+                    userEmail: userEmail,
+                    userRole: userRole,
+                    userPwd: userPwd,
+                    appEui: appEui
+                },
+                success: function (data) {
+                    $('#myModal').modal('hide')
+                    if (data == 0) {
+                        alert("添加失败")
+                    } else {
+                        alert("添加成功")
+                    }
+                }
+            });
+
+        } else if (currModel == "Update") {
+            $.ajax({
+                type: 'POST',
+                url: "submitUpdateUser",
+                async: false,
+                data: {
+                    userId: userId,
+                    userName: userName,
+                    userEmail: userEmail,
+                    userPwd: userPwd,
+                    appEui: appEui
+                },
+                success: function (data) {
+                    $('#myModal').modal('hide')
+                    if (data == 0) {
+                        alert("修改失败")
+                    } else {
+                        alert("修改成功")
+                    }
+                }
+            });
+        }
+    }
+
 
     function showUserData() {
         var uid = $("#userId").val()
@@ -184,10 +240,18 @@
         $("#form-userEmail").val("")
         $("#form-userPwd").val("")
         $("#form-appEui").val("")
+        $("#saveOrEdit").text("Save")
+
     }
 
     function editUser(node) {
         var tr = $(node).parent().parent().children()
+        var flag = $(tr.get(1)).text();
+
+        if (flag == "on") {
+            alert("任务正在运行,修改前请先关闭")
+            return;
+        }
         $("#myModal").modal({
             backdrop: 'static',
             keyboard: false
@@ -199,6 +263,8 @@
         $("#form-userEmail").val($(tr.get(4)).text())
         $("input[name='form-userRole'][value='" + $(tr.get(5)).text() + "']").prop("checked", "checked");
         $("#form-appEui").val($(tr.get(6)).text())
+
+        $("#saveOrEdit").text("Update")
     }
 
     function startReceiveData(node) {
