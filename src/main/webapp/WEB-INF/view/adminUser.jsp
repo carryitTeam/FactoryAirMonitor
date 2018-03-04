@@ -51,14 +51,14 @@
             <th>operator</th>
         </tr>
         <c:forEach items="${users}" var="user">
-            <c:set var="dog" scope="page" value="${user.id}${'_'}${user.appEui}"/>
+            <c:set var="dog" scope="page" value="${user.userId}${'_'}${user.appEui}"/>
             <c:if test="${userData[dog]==true}">
-                <tr style="background: #79ff0a;" id="${user.id}">
+                <tr style="background: #79ff0a;">
                 <td><span class="glyphicon glyphicon-off" style="color: rgb(0, 129, 0);">On</span>
                 </td>
             </c:if>
             <c:if test="${userData[dog]==false}">
-                <tr style="background: #fff3b5;" id="${user.userId}">
+                <tr style="background: #fff3b5;">
                 <td><span class="glyphicon glyphicon-off" style="color: rgb(255, 0, 0);">Off</span>
                 </td>
             </c:if>
