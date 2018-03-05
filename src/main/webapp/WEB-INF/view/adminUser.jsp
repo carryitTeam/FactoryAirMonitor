@@ -78,8 +78,9 @@
                     <a href="#" class="glyphicon glyphicon-stop" title="停止获取数据" onclick="stopReceiveData(this);"></a>
 
                     <form id="_form" method="post" action="/commonUser">
-                        <input type="hidden" id="userId" value="${user.userId}"/>
-                        <input type="hidden" id="userPassword" value="${user.userPwd}"/>
+                        <input type="hidden" id="userId" name="userId" value="${user.userId}"/>
+                        <input type="hidden" id="userPassword" name="userPassword" value="${user.userPwd}"/>
+                        <input type="hidden" id="select" name="select" value="show"/>
                             <%--<a onclick="document.getElementById('_form').submit();">点击提交</a>--%>
                         <a href="#" class="glyphicon glyphicon-eye-open" title="查看数据" onclick="showUserData();"></a>
                     </form>

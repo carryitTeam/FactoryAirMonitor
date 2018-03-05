@@ -19,18 +19,18 @@
         values(#{appEui},#{devEui},#{jsonData},#{realData})
     </insert>
 
-    <select id="queryUsersByUserId" parameterType="com.carryit.base.fam.bean.Datas"
+    <select id="queryUsersByUserId" parameterType="com.carryit.base.fam.bean.User"
             resultMap="Datas">
-        select datas.id,datas.appEui,datas.devEui,datas.jsonData,datas.realData,datas.createTime from datas, user where datas.appEui=user.appEui and user.userId=${userId}
+        select datas.id,datas.appEui,datas.devEui,datas.jsonData,datas.realData,datas.createTime from datas, user where datas.appEui=user.appEui and userId=#{userId} order by createTime desc limit 20
     </select>
 
     <select id="queryAllUsersByAppEui" parameterType="com.carryit.base.fam.bean.Datas"
             resultMap="Datas">
-        select datas.id,datas.appEui,datas.devEui,datas.jsonData,datas.realData,datas.createTime from datas where appEui=${appEui}
+        select datas.id,datas.appEui,datas.devEui,datas.jsonData,datas.realData,datas.createTime from datas where appEui=#{appEui} order by createTime desc limit 20
     </select>
 
     <select id="queryAllUsersByAppDevEui" parameterType="com.carryit.base.fam.bean.Datas"
             resultMap="Datas">
-        select datas.id,datas.appEui,datas.devEui,datas.jsonData,datas.realData,datas.createTime from datas where appEui=${appEui} and devEui=${devEui}
+        select datas.id,datas.appEui,datas.devEui,datas.jsonData,datas.realData,datas.createTime from datas where appEui=#{appEui} and devEui=#{devEui} order by createTime desc limit 20
     </select>
 </mapper>

@@ -1,6 +1,8 @@
 package com.carryit.base.fam.controller;
 
+import com.carryit.base.fam.bean.Datas;
 import com.carryit.base.fam.bean.User;
+import com.carryit.base.fam.service.DatasService;
 import com.carryit.base.fam.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,6 +32,9 @@ public class UserController {
 
     @Autowired
     private ServletContext servletContext;
+
+    @Autowired
+    private DatasService datasService;
 
 
     @PostMapping("/submitAddUser")
@@ -103,21 +108,25 @@ public class UserController {
     @PostMapping("/commonUser")
     public ModelAndView commonUser(HttpServletRequest request) {
         ModelAndView model = new ModelAndView();
+
         User user = new User();
         String userId = request.getParameter("userId");
         String pwd = request.getParameter("userPassword");
         user.setUserId(userId);
         user.setUserPwd(pwd);
-//        User user = new User();
-//        user.setUserId(request.getParameter("userId"));
-//        user.setUserPwd(request.getParameter("userPwd"));
-//        User cuser = userService.checkUserByPwd(user);
-//        model.setViewName("forward:asdfasdf.jsp");
-//        if (cuser == null || cuser.getUserId() == null) {
-//            model.setViewName("redirect:index.jsp");
-//        } else {
-        model.setViewName("commonUser");
-//        }
+        User cuser = userService.checkUserByPwd(user);
+        String select = request.getParameter("select");
+
+        List<Datas> datasList = datasService.queryUsersByUserId(user);
+        model.addObject("user", cuser);
+        if ("show".equalsIgnoreCase(select)) {
+            model.addObject("datasList", datasList);
+            model.setViewName("showData");
+        }else if ("alert".equalsIgnoreCase(select)){
+            model.setViewName("alertData");
+        }else if ("device".equalsIgnoreCase(select)){
+            model.setViewName("deviceData");
+        }
         return model;
     }
 

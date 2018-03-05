@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <!--[if lt IE 7]>
@@ -64,7 +64,8 @@
                 async: false,
                 data: {
                     userId: uid,
-                    userPwd: pwd
+                    userPwd: pwd,
+                    select: 'show'
                 },
                 success: function (data) {
                     if (data == 0) {

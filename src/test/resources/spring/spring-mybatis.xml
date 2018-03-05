@@ -7,7 +7,7 @@
 
     <mvc:annotation-driven/>
     <context:annotation-config/>
-    <context:component-scan base-package="com.carryit.base.fam.*"/>
+    <context:component-scan base-package="com.carryit.base.fam.service,com.carryit.base.fam.dao"/>
 
     <bean id="DataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close" autowire="no">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
