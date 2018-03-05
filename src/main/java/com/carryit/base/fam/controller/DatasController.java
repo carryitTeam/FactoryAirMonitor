@@ -1,9 +1,11 @@
 package com.carryit.base.fam.controller;
 
+import com.carryit.base.fam.bean.Datas;
 import com.carryit.base.fam.claa.LoraDataRetrieve;
 import com.carryit.base.fam.connection.CSQuit;
 import com.carryit.base.fam.connection.Connection;
 import com.carryit.base.fam.init.SpringBeanFactory;
+import com.carryit.base.fam.service.DatasService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +15,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.carryit.base.fam.utils.CmdMessageUtils.composeMessage;
@@ -30,6 +33,28 @@ public class DatasController {
 
     @Autowired
     private ServletContext servletContext;
+
+    @Autowired
+    private DatasService datasService;
+
+    @PostMapping("/refreshData")
+    public
+    @ResponseBody
+    Object refreshData(HttpServletRequest request) {
+        String appEui = request.getParameter("appEui");
+        String createTime = request.getParameter("createTime");
+        Datas datas = new Datas();
+        datas.setAppEui(appEui);
+        datas.setCreateTime(createTime);
+        List<Datas> resDatas = datasService.queryAllUsersByAppEui(datas);
+        if (resDatas.size() == 0) {
+            return 0;
+        }
+        if (resDatas.size() > 10) {
+            return resDatas.subList(0, 3);
+        }
+        return resDatas;
+    }
 
     @PostMapping("/startReceiveData")
     public

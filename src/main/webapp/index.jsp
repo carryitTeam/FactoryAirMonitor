@@ -25,6 +25,7 @@
         <form method="post" id="mainForm">
             <p><input type="text" name="userId" value="" placeholder="UserId" id="userId"></p>
             <p><input type="password" name="userPassword" value="" placeholder="Password" id="userPassword"></p>
+            <p><input type="hidden" name="select" value="show"></p>
             <p class="remember_me">
                 <label>
                     <input type="checkbox" name="remember_me" id="remember_me">
