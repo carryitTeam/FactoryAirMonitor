@@ -3,7 +3,8 @@ SQLyog Ultimate v11.24 (32 bit)
 MySQL - 5.6.21-ctrip : Database - USE `factoryAirMonitor`;
 
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -23,6 +24,7 @@ DROP TABLE IF EXISTS `alerthistory`;
 
 CREATE TABLE `alerthistory` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `historyId` varchar(50) DEFAULT NULL,
   `userId` varchar(20) DEFAULT NULL,
   `ruleId` varchar(20) DEFAULT NULL,
   `appEui` varchar(100) DEFAULT NULL,
@@ -39,6 +41,7 @@ DROP TABLE IF EXISTS `alertrules`;
 
 CREATE TABLE `alertrules` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `ruleId` varchar(50) DEFAULT NULL,
   `appEui` varchar(100) DEFAULT NULL,
   `devEui` varchar(100) DEFAULT NULL,
   `ruleContent` varchar(500) DEFAULT NULL,

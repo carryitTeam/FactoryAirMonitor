@@ -1,11 +1,13 @@
 package com.carryit.base.fam.claa;
 
+import com.carryit.base.fam.bean.AlertHistory;
 import com.carryit.base.fam.bean.Datas;
 import com.carryit.base.fam.bean.LoraData;
 import com.carryit.base.fam.connection.CSJoinReq;
 import com.carryit.base.fam.connection.Configure;
 import com.carryit.base.fam.connection.Connection;
 import com.carryit.base.fam.connection.TCPConnection;
+import com.carryit.base.fam.service.AlertHistoryService;
 import com.carryit.base.fam.service.DatasService;
 import com.carryit.base.fam.utils.Base64Utils;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,9 +18,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.net.SocketException;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.carryit.base.fam.utils.CmdMessageUtils.composeMessage;
 import static com.carryit.base.fam.utils.CmdMessageUtils.encapsulateContent;
@@ -36,6 +36,9 @@ public class LoraDataRetrieve implements Runnable {
 
     @Autowired
     private DatasService datasService;
+
+    @Autowired
+    private AlertHistoryService alertHistoryService;
 
     @Autowired
     private TCPConnection connection;
@@ -152,9 +155,27 @@ public class LoraDataRetrieve implements Runnable {
                     if (dataMap.containsKey("payload")) {
                         String careData = Base64Utils.CharToHex(Base64Utils.base64Decode((String) dataMap.get("payload")));
                         datas.setRealData(careData);
-                        datas.setAppEui((String) dataMap.get("AppEUI"));
-                        datas.setDevEui((String) dataMap.get("DevEUI"));
+                        String appEui = (String) dataMap.get("AppEUI");
+                        String devEui = (String) dataMap.get("DevEUI");
+                        datas.setAppEui(appEui);
+                        datas.setDevEui(devEui);
                         loraDataCache.add(datas);
+                        Map<String, Object> detail = (Map<String, Object>) dataMap.get("detail");
+                        Map<String, Object> app = (Map<String, Object>) detail.get("app");
+                        List<Map<String, Object>> gwrx = (List<Map<String, Object>>) app.get("gwrx");
+                        Object lsnr = gwrx.get(0).get("lsnr");
+
+                        if ((lsnr instanceof Integer && (int) lsnr > 9) || (lsnr instanceof Double) && (double) lsnr > 9) {
+                            AlertHistory alertHistory = new AlertHistory();
+                            alertHistory.setAppEui(appEui);
+                            alertHistory.setDevEui(devEui);
+                            alertHistory.setJsonData(allContent);
+                            String id = Long.toString(new Date().getTime());
+                            alertHistory.setRuleId("ruleid_" + id);
+                            alertHistory.setHistoryId("historyId_" + id);
+                            alertHistory.setIsProcess("0");
+                            alertHistoryService.addAlertHistory(alertHistory);
+                        }
                     }
                 }
                 Long end = System.currentTimeMillis();
@@ -171,11 +192,11 @@ public class LoraDataRetrieve implements Runnable {
                 }
             } catch (SocketException e) {
                 try {
-                    if (isRunFlag()){
+                    if (isRunFlag()) {
                         initConnection();
                         System.out.println("--------------reset SocketException-----------------");
                         System.out.println(connection.isClosed() + "_" + connection.isConnected());
-                    }else {
+                    } else {
                         System.out.println("--------------quit cmd-----------------");
                     }
                 } catch (IOException e1) {

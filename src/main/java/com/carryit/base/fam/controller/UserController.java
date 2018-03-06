@@ -1,7 +1,11 @@
 package com.carryit.base.fam.controller;
 
+import com.carryit.base.fam.bean.AlertHistory;
+import com.carryit.base.fam.bean.AlertRules;
 import com.carryit.base.fam.bean.Datas;
 import com.carryit.base.fam.bean.User;
+import com.carryit.base.fam.service.AlertHistoryService;
+import com.carryit.base.fam.service.AlertRulesService;
 import com.carryit.base.fam.service.DatasService;
 import com.carryit.base.fam.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +18,7 @@ import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.SimpleFormatter;
 
 /**
@@ -35,6 +37,12 @@ public class UserController {
 
     @Autowired
     private DatasService datasService;
+
+    @Autowired
+    private AlertRulesService alertRulesService;
+
+    @Autowired
+    private AlertHistoryService alertHistoryService;
 
 
     @PostMapping("/submitAddUser")
@@ -107,6 +115,7 @@ public class UserController {
 
     @PostMapping("/commonUser")
     public ModelAndView commonUser(HttpServletRequest request) {
+        Map<String, Boolean> userData = (Map<String, Boolean>) servletContext.getAttribute("userData");
         ModelAndView model = new ModelAndView();
 
         User user = new User();
@@ -118,17 +127,41 @@ public class UserController {
         String select = request.getParameter("select");
 
         List<Datas> datasList = datasService.queryUsersByUserId(user);
+        if (datasList.size()>10){
+            datasList = datasList.subList(0,10);
+        }
         model.addObject("user", cuser);
         if ("show".equalsIgnoreCase(select)) {
+            Set<String> devEuis = getDevEui(datasList);
+            model.addObject("isStarted", userData.get(cuser.getUserId() + "_" + cuser.getAppEui()));
             model.addObject("datasList", datasList);
+            model.addObject("devEuis", devEuis);
             model.setViewName("showData");
-        }else if ("alert".equalsIgnoreCase(select)){
+        } else if ("alert".equalsIgnoreCase(select)) {
+            AlertRules alertRules = new AlertRules();
+            alertRules.setAppEui(cuser.getAppEui());
+            List<AlertRules> ars = alertRulesService.queryAlertRulesByAppEui(alertRules);
+            model.addObject("alertRules", ars);
+
+            AlertHistory alertHistory = new AlertHistory();
+            alertHistory.setAppEui(cuser.getAppEui());
+            List<AlertHistory> ahs = alertHistoryService.queryAlertHistoryByAppEui(alertHistory);
+            model.addObject("alertHistories", ahs);
+
             model.setViewName("alertData");
-        }else if ("device".equalsIgnoreCase(select)){
+        } else if ("device".equalsIgnoreCase(select)) {
             model.setViewName("deviceData");
         }
         return model;
     }
 
+    public Set<String> getDevEui(List<Datas> datas){
+        Set<String> devEuis = new HashSet<>();
+        for (Datas d : datas){
+            devEuis.add(d.getDevEui());
+        }
+
+        return devEuis;
+    }
 
 }

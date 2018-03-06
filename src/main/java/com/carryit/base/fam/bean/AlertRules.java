@@ -7,6 +7,16 @@ public class AlertRules {
 
     private int id;
 
+    private String ruleId;
+
+    public String getRuleId() {
+        return ruleId;
+    }
+
+    public void setRuleId(String ruleId) {
+        this.ruleId = ruleId;
+    }
+
     private String appEui;
 
     private String devEui;
@@ -69,6 +79,7 @@ public class AlertRules {
     public String toString() {
         return "AlertRules{" +
                 "id=" + id +
+                ", ruleId='" + ruleId + '\'' +
                 ", appEui='" + appEui + '\'' +
                 ", devEui='" + devEui + '\'' +
                 ", ruleContent='" + ruleContent + '\'' +

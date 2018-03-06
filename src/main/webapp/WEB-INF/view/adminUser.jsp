@@ -15,7 +15,7 @@
     <div class="container-fluid">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">管理员操作</a>
+                <a class="navbar-brand" href="/">管理员操作</a>
             </div>
             <div>
                 <ul class="nav navbar-nav">

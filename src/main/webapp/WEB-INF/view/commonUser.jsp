@@ -15,7 +15,7 @@
     <div class="container-fluid">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">用户功能</a>
+                <a class="navbar-brand" href="/">用户功能</a>
             </div>
             <div>
                 <ul class="nav navbar-nav">

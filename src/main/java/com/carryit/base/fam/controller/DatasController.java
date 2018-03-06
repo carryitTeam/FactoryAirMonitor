@@ -28,9 +28,6 @@ import static com.carryit.base.fam.utils.CmdMessageUtils.encapsulateContent;
 @Controller
 public class DatasController {
 
-//    @Autowired
-//    private LoraDataRetrieve loraDataRetrieve;
-
     @Autowired
     private ServletContext servletContext;
 
@@ -140,11 +137,11 @@ public class DatasController {
             e.printStackTrace();
             return 0;
         } finally {
-            try {
-                connection.disconnect();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                connection.disconnect();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
         }
         return 1;
     }

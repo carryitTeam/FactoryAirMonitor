@@ -15,14 +15,14 @@
     <div class="container-fluid">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">用户功能</a>
+                <a class="navbar-brand" href="/">用户功能</a>
             </div>
             <div>
                 <ul class="nav navbar-nav">
                     <li>
                         <a href="#" onclick="pageSelect(this);" name="show">数据查看</a>
                     </li>
-                    <li  class="active">
+                    <li class="active">
                         <a href="#" onclick="pageSelect(this);" name="alert">报警操作</a>
                     <li>
                         <a href="#" onclick="pageSelect(this);" name="device">设备故障</a>
@@ -35,6 +35,80 @@
 </nav>
 <div class="container">
 
+    <div id="alertRules" class="row" style="min-height: 300px">
+        <button id="addRule" class="btn btn-info" data-toggle="modal" >添加规则</button><label>告警规则：</label>
+        <div class="table-responsive">
+            <table id="alertRulesTable" cellpadding="4" cellspacing="0"
+                   class="table table-bordered table-striped text-nowrap">
+                <thead>
+                    <tr>
+                        <th data-field="ruleId">ruleId</th>
+                        <th data-field="createTime">createTime</th>
+                        <th data-field="changeTime">changeTime</th>
+                        <th data-field="appEui">appEui</th>
+                        <th data-field="devEui">devEui</th>
+                        <th data-field="ruleContent">ruleContent</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <c:forEach items="${alertRules}" var="ar">
+                    <tr>
+                        <td>${ar.ruleId}</td>
+                        <td>${ar.createTime}</td>
+                        <td>${ar.changeTime}</td>
+                        <td>${ar.appEui}</td>
+                        <td>${ar.devEui}</td>
+                        <td>${ar.ruleContent}</td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+    <br/>
+    <div id="alertHistory" class="row" style="min-height: 500px">
+        <h3>告警记录：</h3>
+        <div class="table-responsive" >
+            <table id="alertHistoryTable" cellpadding="4" cellspacing="0"
+                   class="table table-bordered table-striped text-nowrap">
+                <thead>
+                <tr>
+                    <th data-field="historyId">historyId</th>
+                    <th data-field="createTime">createTime</th>
+                    <th data-field="changeTime">changeTime</th>
+                    <th data-field="userId">userId</th>
+                    <th data-field="ruleId">ruleId</th>
+                    <th data-field="appEui">appEui</th>
+                    <th data-field="devEui">devEui</th>
+                    <th data-field="ruleContent">isProcess</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach items="${alertHistories}" var="ah">
+                    <tr>
+                        <td>${ah.historyId}</td>
+                        <td>${ah.createTime}</td>
+                        <td>${ah.changeTime}</td>
+                        <td>${ah.userId}</td>
+                        <td>${ah.ruleId}</td>
+                        <td>${ah.appEui}</td>
+                        <td>${ah.devEui}</td>
+                        <td>${ah.isProcess}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="8">
+                            <pre hidden="hidden">
+                                    ${ah.jsonData}
+                            </pre>
+                        </td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 </div>
 <form id='tagClick' action='/commonUser' method='post'>

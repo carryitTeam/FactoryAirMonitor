@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.carryit.base.fam.dao.AlertHistoryDao">
+    <resultMap type="com.carryit.base.fam.bean.AlertHistory" id="AlertHistory">
+        <!-- column:库表的字段名 property:实体类里的属性名 -->
+        <id column="id" property="id"/>
+        <result column="historyId" property="historyId"/>
+        <result column="userId" property="userId"/>
+        <result column="ruleId" property="ruleId"/>
+        <result column="appEui" property="appEui"/>
+        <result column="devEui" property="devEui"/>
+        <result column="isProcess" property="isProcess"/>
+        <result column="jsonData" property="jsonData"/>
+        <result column="changeTime" property="changeTime"/>
+        <result column="createTime" property="createTime"/>
+    </resultMap>
+
+    <select id="queryAlertHistoryByHistoryId" parameterType="com.carryit.base.fam.bean.AlertHistory"
+            resultMap="AlertHistory">
+        select id,historyId,userId,ruleId,appEui,devEui,isProcess,jsonData,changeTime,createTime from alerthistory where  historyId=#{historyId}
+    </select>
+
+    <select id="queryAlertHistoryByAppEui" parameterType="com.carryit.base.fam.bean.AlertHistory"
+            resultMap="AlertHistory">
+        select id,historyId,userId,ruleId,appEui,devEui,isProcess,jsonData,changeTime,createTime from alerthistory where  appEui=#{appEui}
+    </select>
+
+    <insert id="addAlertHistory" parameterType="com.carryit.base.fam.bean.AlertHistory"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into alerthistory(historyId,userId,ruleId,appEui,devEui,isProcess,jsonData)
+        values(#{historyId},#{userId},#{ruleId},#{appEui},#{devEui},#{isProcess},#{jsonData})
+    </insert>
+
+    <update id="updateAlertHistory" parameterType="com.carryit.base.fam.bean.AlertHistory">
+        update alerthistory set appEui=#{appEui},devEui=#{devEui},isProcess=#{isProcess},changeTime=#{changeTime}
+        where historyId=#{historyId}
+    </update>
+
+    <delete id="deleteAlertHistory" parameterType="com.carryit.base.fam.bean.AlertHistory">
+        delete from alerthistory where historyId=#{historyId}
+    </delete>
+</mapper>

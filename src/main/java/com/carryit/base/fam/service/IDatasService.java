@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by hlzou on 2018/2/27.
  */
-public interface IDatasDao {
+public interface IDatasService {
 
     int addDatas(Datas datas);
 

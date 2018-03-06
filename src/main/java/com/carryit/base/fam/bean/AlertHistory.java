@@ -7,6 +7,26 @@ public class AlertHistory {
 
     private int id;
 
+    private String historyId;
+
+    private String jsonData;
+
+    public String getJsonData() {
+        return jsonData;
+    }
+
+    public void setJsonData(String jsonData) {
+        this.jsonData = jsonData;
+    }
+
+    public String getHistoryId() {
+        return historyId;
+    }
+
+    public void setHistoryId(String historyId) {
+        this.historyId = historyId;
+    }
+
     private String userId;
 
     private String ruleId;

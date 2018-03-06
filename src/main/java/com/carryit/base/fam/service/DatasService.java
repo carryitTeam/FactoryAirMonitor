@@ -12,7 +12,7 @@ import java.util.List;
  * Created by hlzou on 2018/3/1.
  */
 @Service
-public class DatasService implements IDatasDao {
+public class DatasService implements IDatasService {
 
     @Resource
     private DatasDao datasDao;
