@@ -1,13 +1,7 @@
 package com.carryit.base.fam.controller;
 
-import com.carryit.base.fam.bean.AlertHistory;
-import com.carryit.base.fam.bean.AlertRules;
-import com.carryit.base.fam.bean.Datas;
-import com.carryit.base.fam.bean.User;
-import com.carryit.base.fam.service.AlertHistoryService;
-import com.carryit.base.fam.service.AlertRulesService;
-import com.carryit.base.fam.service.DatasService;
-import com.carryit.base.fam.service.UserService;
+import com.carryit.base.fam.bean.*;
+import com.carryit.base.fam.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,6 +37,9 @@ public class UserController {
 
     @Autowired
     private AlertHistoryService alertHistoryService;
+
+    @Autowired
+    private FaultRecordsService faultRecordsService;
 
 
     @PostMapping("/submitAddUser")
@@ -127,12 +124,12 @@ public class UserController {
         String select = request.getParameter("select");
 
         List<Datas> datasList = datasService.queryUsersByUserId(user);
-        if (datasList.size()>10){
-            datasList = datasList.subList(0,10);
+        if (datasList.size() > 10) {
+            datasList = datasList.subList(0, 10);
         }
         model.addObject("user", cuser);
+        Set<String> devEuis = getDevEui(datasList);
         if ("show".equalsIgnoreCase(select)) {
-            Set<String> devEuis = getDevEui(datasList);
             model.addObject("isStarted", userData.get(cuser.getUserId() + "_" + cuser.getAppEui()));
             model.addObject("datasList", datasList);
             model.addObject("devEuis", devEuis);
@@ -150,14 +147,19 @@ public class UserController {
 
             model.setViewName("alertData");
         } else if ("device".equalsIgnoreCase(select)) {
+            model.addObject("devEuis", devEuis);
+            FaultRecords faultRecords = new FaultRecords();
+            faultRecords.setAppEui(cuser.getAppEui());
+            List<FaultRecords> frs = faultRecordsService.queryFaultRecordsByAppEui(faultRecords);
+            model.addObject("frs", frs);
             model.setViewName("deviceData");
         }
         return model;
     }
 
-    public Set<String> getDevEui(List<Datas> datas){
+    public Set<String> getDevEui(List<Datas> datas) {
         Set<String> devEuis = new HashSet<>();
-        for (Datas d : datas){
+        for (Datas d : datas) {
             devEuis.add(d.getDevEui());
         }
 

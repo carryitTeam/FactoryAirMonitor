@@ -42,23 +42,15 @@
                    class="table table-bordered table-striped text-nowrap">
                 <thead>
                 <tr>
-                    <th data-field="ruleId">ruleId</th>
-                    <th data-field="createTime">createTime</th>
-                    <th data-field="changeTime">changeTime</th>
                     <th data-field="appEui">appEui</th>
                     <th data-field="devEui">devEui</th>
-                    <th data-field="ruleContent">ruleContent</th>
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach items="${alertRules}" var="ar">
+                <c:forEach items="${devEuis}" var="de">
                     <tr>
-                        <td>${ar.ruleId}</td>
-                        <td>${ar.createTime}</td>
-                        <td>${ar.changeTime}</td>
-                        <td>${ar.appEui}</td>
-                        <td>${ar.devEui}</td>
-                        <td>${ar.ruleContent}</td>
+                        <td>${user.appEui}</td>
+                        <td>${de}</td>
                     </tr>
                 </c:forEach>
                 </tbody>
@@ -75,34 +67,19 @@
                    class="table table-bordered table-striped text-nowrap">
                 <thead>
                 <tr>
-                    <th data-field="historyId">historyId</th>
                     <th data-field="createTime">createTime</th>
-                    <th data-field="changeTime">changeTime</th>
-                    <th data-field="userId">userId</th>
-                    <th data-field="ruleId">ruleId</th>
                     <th data-field="appEui">appEui</th>
                     <th data-field="devEui">devEui</th>
-                    <th data-field="ruleContent">isProcess</th>
+                    <th data-field="faultContect">faultContect</th>
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach items="${alertHistories}" var="ah">
+                <c:forEach items="${frs}" var="fr">
                     <tr>
-                        <td>${ah.historyId}</td>
-                        <td>${ah.createTime}</td>
-                        <td>${ah.changeTime}</td>
-                        <td>${ah.userId}</td>
-                        <td>${ah.ruleId}</td>
-                        <td>${ah.appEui}</td>
-                        <td>${ah.devEui}</td>
-                        <td>${ah.isProcess}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="8">
-                            <pre hidden="hidden">
-                                    ${ah.jsonData}
-                            </pre>
-                        </td>
+                        <td>${fr.createTime}</td>
+                        <td>${fr.appEui}</td>
+                        <td>${fr.devEui}</td>
+                        <td>${fr.faultContent}</td>
                     </tr>
                 </c:forEach>
                 </tbody>

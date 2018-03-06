@@ -30,6 +30,7 @@ CREATE TABLE `alerthistory` (
   `appEui` varchar(100) DEFAULT NULL,
   `devEui` varbinary(100) DEFAULT NULL,
   `isProcess` varchar(10) DEFAULT NULL,
+  `jsonData` varchar(5000) DEFAULT NULL,
   `changeTime` datetime DEFAULT CURRENT_TIMESTAMP,
   `createtime` datetime DEFAULT CURRENT_TIMESTAMP,
   KEY `id` (`id`)
