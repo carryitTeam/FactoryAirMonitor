@@ -95,7 +95,15 @@
                         <td>${ah.ruleId}</td>
                         <td>${ah.appEui}</td>
                         <td>${ah.devEui}</td>
-                        <td>${ah.isProcess}</td>
+                        <%--<td>${ah.isProcess}</td>--%>
+                        <td>
+                            <c:if test="${ah.isProcess=='0'}">
+                                <button class="btn btn-small btn-info">处理</button>
+                            </c:if>
+                            <c:if test="${ah.isProcess!='0'}">
+                                <button class="btn btn-small btn-warning">已处理</button>
+                            </c:if>
+                        </td>
                     </tr>
                     <tr>
                         <td colspan="8">
