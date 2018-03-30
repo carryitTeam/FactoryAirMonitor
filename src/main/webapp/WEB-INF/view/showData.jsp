@@ -38,6 +38,13 @@
 </nav>
 <div class="container">
     <div class="row">
+        <h2>工厂设备位置图：</h2>
+        <div class="col-lg-12">
+            <img src="/pic/f1.jpg" height="400" width="1000" />
+        </div>
+    </div>
+
+    <div class="row">
         <h2>DataReceived:</h2>
     </div>
     <div class="row">
