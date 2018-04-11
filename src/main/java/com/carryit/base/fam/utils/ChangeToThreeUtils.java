@@ -28,7 +28,7 @@ public class ChangeToThreeUtils {
         }
 
         String sttsStarts=list.get(2).toString();
-        long third = ChangeUtils.toDecimalism(sttsStarts,10);
+        long third = ChangeUtils.toDecimalism(sttsStarts,2);
 
         return third;
     }

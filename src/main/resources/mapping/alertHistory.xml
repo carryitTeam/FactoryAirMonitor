@@ -12,6 +12,8 @@
         <result column="appEui" property="appEui"/>
         <result column="devEui" property="devEui"/>
         <result column="isProcess" property="isProcess"/>
+        <result column="gasConcentration" property="gasConcentration"/>
+        <result column="faultContect" property="faultContect"/>
         <result column="jsonData" property="jsonData"/>
         <result column="changeTime" property="changeTime"/>
         <result column="createTime" property="createTime"/>
@@ -19,7 +21,7 @@
 
     <select id="queryAlertHistoryByHistoryId" parameterType="com.carryit.base.fam.bean.AlertHistory"
             resultMap="AlertHistory">
-        select id,historyId,userId,ruleId,appEui,devEui,isProcess,jsonData,changeTime,createTime from alerthistory where  historyId=#{historyId}
+        select id,historyId,userId,ruleId,appEui,devEui,isProcess,gasConcentration,faultContect,jsonData,changeTime,createTime from alerthistory where  historyId=#{historyId}
     </select>
 
     <select id="queryAlertHistoryByAppEui" parameterType="com.carryit.base.fam.bean.AlertHistory"
@@ -29,12 +31,12 @@
 
     <insert id="addAlertHistory" parameterType="com.carryit.base.fam.bean.AlertHistory"
             useGeneratedKeys="true" keyProperty="id">
-        insert into alerthistory(historyId,userId,ruleId,appEui,devEui,isProcess,jsonData)
-        values(#{historyId},#{userId},#{ruleId},#{appEui},#{devEui},#{isProcess},#{jsonData})
+        insert into alerthistory(historyId,userId,ruleId,appEui,devEui,isProcess,gasConcentration,faultContect,jsonData)
+        values(#{historyId},#{userId},#{ruleId},#{appEui},#{devEui},#{isProcess},#{gasConcentration},#{faultContect},#{jsonData})
     </insert>
 
     <update id="updateAlertHistory" parameterType="com.carryit.base.fam.bean.AlertHistory">
-        update alerthistory set appEui=#{appEui},devEui=#{devEui},isProcess=#{isProcess},changeTime=#{changeTime}
+        update alerthistory set appEui=#{appEui},devEui=#{devEui},isProcess=#{isProcess},gasConcentration=#{gasConcentration},faultContect=#{faultContect},changeTime=#{changeTime}
         where historyId=#{historyId}
     </update>
 

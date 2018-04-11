@@ -28,7 +28,7 @@ public class ChangeToTwoUtils {
         }
 
         String sttsStarts=list.get(1).toString().substring(8,16);
-        long zeroToSeven = ChangeUtils.toDecimalism(sttsStarts,10);
+        long zeroToSeven = ChangeUtils.toDecimalism(sttsStarts,2);
 
         return zeroToSeven;
     }
@@ -57,7 +57,7 @@ public class ChangeToTwoUtils {
         }
 
         String sttsStarts=list.get(1).toString().substring(0,8);
-        long eightToFifteen = ChangeUtils.toDecimalism(sttsStarts,10);
+        long eightToFifteen = ChangeUtils.toDecimalism(sttsStarts,2);
 
         return eightToFifteen;
     }

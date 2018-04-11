@@ -28,7 +28,7 @@ public class ChangeToOneUtils {
 
         //40001    000010000010 0001
         String sttsStarts=list.get(0).toString().substring(12,16);
-        long zeroToThree = ChangeUtils.toDecimalism(sttsStarts,10);
+        long zeroToThree = ChangeUtils.toDecimalism(sttsStarts,2);
 
         return zeroToThree;
     }
@@ -58,7 +58,7 @@ public class ChangeToOneUtils {
 
         //40001    000010000010 0001
         String sttsStarts=list.get(0).toString().substring(10,12);
-        long fourToFive = ChangeUtils.toDecimalism(sttsStarts,10);
+        long fourToFive = ChangeUtils.toDecimalism(sttsStarts,2);
 
         return fourToFive;
     }
@@ -88,7 +88,7 @@ public class ChangeToOneUtils {
 
         //40001    000010000010 0001
         String sttsStarts=list.get(0).toString().substring(9,10);
-        long six = ChangeUtils.toDecimalism(sttsStarts,10);
+        long six = ChangeUtils.toDecimalism(sttsStarts,2);
 
         return six;
     }
@@ -119,7 +119,7 @@ public class ChangeToOneUtils {
 
         //40001    000010000010 0001
         String sttsStarts=list.get(0).toString().substring(8,9);
-        long seven = ChangeUtils.toDecimalism(sttsStarts,10);
+        long seven = ChangeUtils.toDecimalism(sttsStarts,2);
 
         return seven;
     }
@@ -149,7 +149,7 @@ public class ChangeToOneUtils {
 
         //40001    000010000010 0001
         String sttsStarts=list.get(0).toString().substring(7,8);
-        long eight = ChangeUtils.toDecimalism(sttsStarts,10);
+        long eight = ChangeUtils.toDecimalism(sttsStarts,2);
 
         return eight;
     }
@@ -179,7 +179,7 @@ public class ChangeToOneUtils {
 
         //40001    000010000010 0001
         String sttsStarts=list.get(0).toString().substring(6,7);
-        long nine = ChangeUtils.toDecimalism(sttsStarts,10);
+        long nine = ChangeUtils.toDecimalism(sttsStarts,2);
 
         return nine;
     }
@@ -209,7 +209,7 @@ public class ChangeToOneUtils {
 
         //40001    000010000010 0001
         String sttsStarts=list.get(0).toString().substring(5,6);
-        long ten = ChangeUtils.toDecimalism(sttsStarts,10);
+        long ten = ChangeUtils.toDecimalism(sttsStarts,2);
 
         return ten;
     }
@@ -240,7 +240,7 @@ public class ChangeToOneUtils {
 
         //40001    000010000010 0001
         String sttsStarts=list.get(0).toString().substring(4,5);
-        long eleven = ChangeUtils.toDecimalism(sttsStarts,10);
+        long eleven = ChangeUtils.toDecimalism(sttsStarts,2);
 
         return eleven;
     }
@@ -270,7 +270,7 @@ public class ChangeToOneUtils {
 
         //40001    000010000010 0001
         String sttsStarts=list.get(0).toString().substring(3,4);
-        long twelev = ChangeUtils.toDecimalism(sttsStarts,10);
+        long twelev = ChangeUtils.toDecimalism(sttsStarts,2);
 
         return twelev;
     }
@@ -299,7 +299,7 @@ public class ChangeToOneUtils {
 
         //40001    000010000010 0001
         String sttsStarts=list.get(0).toString().substring(0,3);
-        long thirteenToFifteen = ChangeUtils.toDecimalism(sttsStarts,10);
+        long thirteenToFifteen = ChangeUtils.toDecimalism(sttsStarts,2);
 
         return thirteenToFifteen;
     }

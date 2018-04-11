@@ -40,14 +40,35 @@ public class AlertHistory {
     private String changeTime;
 
     private String createTime;
+    //40006  故障码
+    private String faultContect;
+
+    public String getFaultContect() {
+        return faultContect;
+    }
+
+    public void setFaultContect(String faultContect) {
+        this.faultContect = faultContect;
+    }
+
+    //40003和40004+40007 气体浓度值
+    private String gasConcentration;
+
+    public String getGasConcentration() {
+        return gasConcentration;
+    }
+
+    public void setGasConcentration(String gasConcentration) {
+        this.gasConcentration = gasConcentration;
+    }
+
+
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    public void setId(int id) { this.id = id; }
 
     public String getUserId() {
         return userId;

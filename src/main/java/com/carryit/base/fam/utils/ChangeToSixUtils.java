@@ -28,7 +28,7 @@ public class ChangeToSixUtils {
         }
 
         String sttsStarts=list.get(5).toString();
-        long sixth = ChangeUtils.toDecimalism(sttsStarts,10);
+        long sixth = ChangeUtils.toDecimalism(sttsStarts,2);
 
         return sixth;
     }

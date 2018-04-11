@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.carryit.base.fam.dao.AlertHistoryDao">
+    <resultMap type="com.carryit.base.fam.bean.AlertHistory" id="AlertHistory">
+        <!-- column:库表的字段名 property:实体类里的属性名 -->
+        <id column="id" property="id"/>
+        <result column="devEui" property="devEui"/>
+        <result column="levels" property="levels"/>
+        <result column="devEuiRelate" property="devEuiRelate"/>
+        <result column="RelateNames" property="RelateNames"/>
+        <result column="status" property="status"/>
+        <result column="changeTime" property="changeTime"/>
+        <result column="createTime" property="createTime"/>
+    </resultMap>
+
+    <select id="queryDevEuiByDevEuiRelate" parameterType="com.carryit.base.fam.bean.Alarm"
+            resultMap="Alarm">
+        select id,devEui,levels,devEuiRelate,RelateNames,status,changeTime,createTime from alarm where devEui=#{devEui}
+    </select>
+
+    <select id="queryAlarmByDevEui" parameterType="com.carryit.base.fam.bean.Alarm"
+            resultMap="Alarm">
+        select id,devEui,levels,devEuiRelate,RelateNames,status,changeTime,createTime from alarm where devEui=#{devEui}
+    </select>
+
+    <insert id="addAlarm" parameterType="com.carryit.base.fam.bean.Alarm"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into alarm(devEui,levels,devEuiRelate,RelateNames,status,createTime)
+        values(#{devEui},#{levels},#{devEuiRelate},#{RelateNames},#{status},#{createTime})
+    </insert>
+
+    <update id="updateAlarm" parameterType="com.carryit.base.fam.bean.Alarm">
+        update alarm set devEui=#{devEui},levels=#{levels},devEuiRelate=#{devEuiRelate},RelateNames=#{RelateNames},status=#{status},changeTime=#{changeTime}
+        where alarmId=#{alarmId}
+    </update>
+
+    <delete id="deleteAlarm" parameterType="com.carryit.base.fam.bean.Alarm">
+        delete from alarm where id=#{id}
+    </delete>
+</mapper>

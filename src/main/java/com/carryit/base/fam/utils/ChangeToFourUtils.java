@@ -28,7 +28,7 @@ public class ChangeToFourUtils {
         }
 
         String sttsStarts=list.get(3).toString();
-        long fourth = ChangeUtils.toDecimalism(sttsStarts,10);
+        long fourth = ChangeUtils.toDecimalism(sttsStarts,2);
 
         return fourth;
     }

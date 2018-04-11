@@ -9,7 +9,7 @@ public class ChangeToSevenUtils {
     *   0-2转换十进制
     *
     * */
-    public static Long transferHexZeroToTwo(String hexStr){
+    public static long transferHexZeroToTwo(String hexStr){
         //以空格切割
         String str=hexStr.substring(18,hexStr.length()-6);
         String sys=ChangeUtils.transferHexToBinary(str);
@@ -28,7 +28,7 @@ public class ChangeToSevenUtils {
         }
 
         String sttsStarts=list.get(6).toString().substring(13,16);
-        long zeroToTwo = ChangeUtils.toDecimalism(sttsStarts,10);
+        long zeroToTwo = ChangeUtils.toDecimalism(sttsStarts,2);
 
         return zeroToTwo;
     }
@@ -58,7 +58,7 @@ public class ChangeToSevenUtils {
         }
 
         String sttsStarts=list.get(6).toString().substring(8,13);
-        long threeToSeven = ChangeUtils.toDecimalism(sttsStarts,10);
+        long threeToSeven = ChangeUtils.toDecimalism(sttsStarts,2);
 
         return threeToSeven;
     }
@@ -68,7 +68,7 @@ public class ChangeToSevenUtils {
     *   8-15转换十进制
     *
     * */
-    public static Long transferHexEightToFifteen(String hexStr){
+    public static String transferHexEightToFifteen(String hexStr){
         //以空格切割
         String str=hexStr.substring(18,hexStr.length()-6);
         String sys=ChangeUtils.transferHexToBinary(str);
@@ -87,10 +87,22 @@ public class ChangeToSevenUtils {
         }
 
         String sttsStarts=list.get(6).toString().substring(0,8);
-        long eightToFifteen = ChangeUtils.toDecimalism(sttsStarts,10);
-
-        return eightToFifteen;
+        //转换十进制
+        long eightToFifteen = ChangeUtils.toDecimalism(sttsStarts,2);
+        //转换字符串
+        String eightToFifteens=String.valueOf(eightToFifteen);
+        //判断赋值
+        if(eightToFifteens.equals("1")){
+            eightToFifteens= "ppm";
+        }else if(eightToFifteens.equals("2")){
+            eightToFifteens= "ppb";
+        }else if(eightToFifteens.equals("4")){
+            eightToFifteens="%volume";
+        }else if(eightToFifteens.equals("8")){
+            eightToFifteens="%LEL";
+        }else {
+            eightToFifteens= "mA";
+        }
+        return eightToFifteens;
     }
-
-
 }

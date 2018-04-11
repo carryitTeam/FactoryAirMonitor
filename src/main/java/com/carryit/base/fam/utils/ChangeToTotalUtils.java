@@ -28,7 +28,7 @@ public class ChangeToTotalUtils {
         }
 
         String sttsStarts=list.get(7).toString();
-        long eighth = ChangeUtils.toDecimalism(sttsStarts,10);
+        long eighth = ChangeUtils.toDecimalism(sttsStarts,2);
 
         return eighth;
     }
@@ -58,7 +58,7 @@ public class ChangeToTotalUtils {
         }
 
         String sttsStarts=list.get(8).toString();
-        long ninth = ChangeUtils.toDecimalism(sttsStarts,10);
+        long ninth = ChangeUtils.toDecimalism(sttsStarts,2);
 
         return ninth;
     }
@@ -88,7 +88,7 @@ public class ChangeToTotalUtils {
         }
 
         String sttsStarts=list.get(9).toString();
-        long tenth = ChangeUtils.toDecimalism(sttsStarts,10);
+        long tenth = ChangeUtils.toDecimalism(sttsStarts,2);
 
         return tenth;
     }
@@ -117,7 +117,7 @@ public class ChangeToTotalUtils {
         }
 
         String sttsStarts=list.get(10).toString();
-        long eleventh = ChangeUtils.toDecimalism(sttsStarts,10);
+        long eleventh = ChangeUtils.toDecimalism(sttsStarts,2);
 
         return eleventh;
     }
@@ -148,7 +148,7 @@ public class ChangeToTotalUtils {
         }
 
         String sttsStarts=list.get(11).toString();
-        long twelfth = ChangeUtils.toDecimalism(sttsStarts,10);
+        long twelfth = ChangeUtils.toDecimalism(sttsStarts,2);
 
         return twelfth;
     }
@@ -178,7 +178,7 @@ public class ChangeToTotalUtils {
         }
 
         String sttsStarts=list.get(12).toString();
-        long thirteenth = ChangeUtils.toDecimalism(sttsStarts,10);
+        long thirteenth = ChangeUtils.toDecimalism(sttsStarts,2);
 
         return thirteenth;
     }
@@ -209,7 +209,7 @@ public class ChangeToTotalUtils {
         }
 
         String sttsStarts=list.get(13).toString();
-        long fourteenth = ChangeUtils.toDecimalism(sttsStarts,10);
+        long fourteenth = ChangeUtils.toDecimalism(sttsStarts,2);
 
         return fourteenth;
     }
@@ -238,7 +238,7 @@ public class ChangeToTotalUtils {
         }
 
         String sttsStarts=list.get(14).toString();
-        long fifteenth = ChangeUtils.toDecimalism(sttsStarts,10);
+        long fifteenth = ChangeUtils.toDecimalism(sttsStarts,2);
 
         return fifteenth;
     }
@@ -267,7 +267,7 @@ public class ChangeToTotalUtils {
         }
 
         String sttsStarts=list.get(15).toString();
-        long sixteenth = ChangeUtils.toDecimalism(sttsStarts,10);
+        long sixteenth = ChangeUtils.toDecimalism(sttsStarts,2);
 
         return sixteenth;
     }
@@ -296,7 +296,7 @@ public class ChangeToTotalUtils {
         }
 
         String sttsStarts=list.get(16).toString();
-        long seventeenth = ChangeUtils.toDecimalism(sttsStarts,10);
+        long seventeenth = ChangeUtils.toDecimalism(sttsStarts,2);
 
         return seventeenth;
     }
@@ -325,7 +325,7 @@ public class ChangeToTotalUtils {
         }
 
         String sttsStarts=list.get(17).toString();
-        long eighteenth = ChangeUtils.toDecimalism(sttsStarts,10);
+        long eighteenth = ChangeUtils.toDecimalism(sttsStarts,2);
 
         return eighteenth;
     }
