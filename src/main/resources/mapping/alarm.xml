@@ -2,37 +2,37 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.carryit.base.fam.dao.AlertHistoryDao">
-    <resultMap type="com.carryit.base.fam.bean.AlertHistory" id="AlertHistory">
+<mapper namespace="com.carryit.base.fam.dao.AlarmDao">
+    <resultMap type="com.carryit.base.fam.bean.Alarm" id="Alarm">
         <!-- column:库表的字段名 property:实体类里的属性名 -->
         <id column="id" property="id"/>
         <result column="devEui" property="devEui"/>
-        <result column="levels" property="levels"/>
+        <result column="level" property="level"/>
         <result column="devEuiRelate" property="devEuiRelate"/>
-        <result column="RelateNames" property="RelateNames"/>
+        <result column="relateNames" property="relateNames"/>
         <result column="status" property="status"/>
         <result column="changeTime" property="changeTime"/>
         <result column="createTime" property="createTime"/>
     </resultMap>
 
-    <select id="queryDevEuiByDevEuiRelate" parameterType="com.carryit.base.fam.bean.Alarm"
+    <select id="queryByDevEui" parameterType="com.carryit.base.fam.bean.Alarm"
             resultMap="Alarm">
-        select id,devEui,levels,devEuiRelate,RelateNames,status,changeTime,createTime from alarm where devEui=#{devEui}
+        select id,devEui,level,devEuiRelate,relateNames,status,changeTime,createTime from alarm where devEui=#{devEui}
     </select>
 
-    <select id="queryAlarmByDevEui" parameterType="com.carryit.base.fam.bean.Alarm"
+    <select id="queryAll" parameterType="com.carryit.base.fam.bean.Alarm"
             resultMap="Alarm">
-        select id,devEui,levels,devEuiRelate,RelateNames,status,changeTime,createTime from alarm where devEui=#{devEui}
+        select id,devEui,level,devEuiRelate,relateNames,status,changeTime,createTime from alarm
     </select>
 
     <insert id="addAlarm" parameterType="com.carryit.base.fam.bean.Alarm"
             useGeneratedKeys="true" keyProperty="id">
-        insert into alarm(devEui,levels,devEuiRelate,RelateNames,status,createTime)
-        values(#{devEui},#{levels},#{devEuiRelate},#{RelateNames},#{status},#{createTime})
+        insert into alarm(devEui,level,devEuiRelate,relateNames,status,createTime)
+        values(#{devEui},#{level},#{devEuiRelate},#{relateNames},#{status},#{createTime})
     </insert>
 
     <update id="updateAlarm" parameterType="com.carryit.base.fam.bean.Alarm">
-        update alarm set devEui=#{devEui},levels=#{levels},devEuiRelate=#{devEuiRelate},RelateNames=#{RelateNames},status=#{status},changeTime=#{changeTime}
+        update alarm set devEui=#{devEui},level=#{level},devEuiRelate=#{devEuiRelate},relateNames=#{relateNames},status=#{status},changeTime=#{changeTime}
         where alarmId=#{alarmId}
     </update>
 

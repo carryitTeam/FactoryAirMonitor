@@ -36,21 +36,34 @@
 <div class="container">
 
     <div id="alertRules" class="row" style="min-height: 300px">
-        <label>当前用户设备：</label>
+        <button id="addRelateDev" class="btn btn-info" data-toggle="modal" >添加联动设备</button><label>当前用户联动设备：</label>
         <div class="table-responsive">
             <table id="alertRulesTable" cellpadding="4" cellspacing="0"
                    class="table table-bordered table-striped text-nowrap">
                 <thead>
                 <tr>
-                    <th data-field="appEui">appEui</th>
                     <th data-field="devEui">devEui</th>
+                    <th data-field="appEui">level</th>
+                    <th data-field="appEui">devEuiRelate</th>
+                    <th data-field="appEui">relateNames</th>
+                    <th data-field="appEui">status</th>
+                    <th data-field="appEui">createTime</th>
+                    <th data-field="appEui">operator</th>
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach items="${devEuis}" var="de">
+                <c:forEach items="${devEuiAlarms}" var="de">
                     <tr>
-                        <td>${user.appEui}</td>
-                        <td>${de}</td>
+                        <td>${de.devEui}</td>
+                        <td>${de.level}</td>
+                        <td>${de.devEuiRelate}</td>
+                        <td>${de.relateNames}</td>
+                        <td>${de.status}</td>
+                        <td>${de.createTime}</td>
+                        <td>
+                            <a href="#" class="glyphicon glyphicon-edit" title="修改" onclick="editRelateDev(this);"></a>
+                            <a href="#" class="glyphicon glyphicon-remove" title="删除" onclick="delRelateDev();"></a>
+                        </td>
                     </tr>
                 </c:forEach>
                 </tbody>

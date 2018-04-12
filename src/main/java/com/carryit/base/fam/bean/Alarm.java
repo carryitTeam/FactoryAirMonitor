@@ -3,14 +3,6 @@ package com.carryit.base.fam.bean;
 public class Alarm {
     private int id;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     private String devEui;
 
     //一级报警/二级报警
@@ -22,48 +14,17 @@ public class Alarm {
 
     private String status;
 
-    public String getDevEuiRelate() {
-        return devEuiRelate;
-    }
-
-    public void setDevEuiRelate(String devEuiRelate) {
-        this.devEuiRelate = devEuiRelate;
-    }
-
-    public String getRelateNames() {
-        return relateNames;
-    }
-
-    public void setRelateNames(String RelateNames) {
-        this.relateNames = relateNames;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     private String changeTime;
 
     private String createTime;
 
-    public String getChangeTime() {
-        return changeTime;
+
+    public int getId() {
+        return id;
     }
 
-    public void setChangeTime(String changeTime) {
-        this.changeTime = changeTime;
-    }
-
-    public String getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getDevEui() {
@@ -82,17 +43,43 @@ public class Alarm {
         this.level = level;
     }
 
-    @Override
-    public String toString() {
-        return "Alarm{" +
-                "id=" + id +
-                ", devEui='" + devEui + '\'' +
-                ", level='" + level + '\'' +
-                ", devEuiRelate='" + devEuiRelate + '\'' +
-                ", relateNames='" + relateNames + '\'' +
-                ", status='" + status + '\'' +
-                ", changeTime='" + changeTime + '\'' +
-                ", createTime='" + createTime + '\'' +
-                '}';
+    public String getDevEuiRelate() {
+        return devEuiRelate;
+    }
+
+    public void setDevEuiRelate(String devEuiRelate) {
+        this.devEuiRelate = devEuiRelate;
+    }
+
+    public String getRelateNames() {
+        return relateNames;
+    }
+
+    public void setRelateNames(String relateNames) {
+        this.relateNames = relateNames;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getChangeTime() {
+        return changeTime;
+    }
+
+    public void setChangeTime(String changeTime) {
+        this.changeTime = changeTime;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
     }
 }

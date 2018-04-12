@@ -41,6 +41,8 @@ public class UserController {
     @Autowired
     private FaultRecordsService faultRecordsService;
 
+    @Autowired
+    private AlarmService alarmService;
 
     @PostMapping("/submitAddUser")
     public
@@ -147,7 +149,16 @@ public class UserController {
 
             model.setViewName("alertData");
         } else if ("device".equalsIgnoreCase(select)) {
-            model.addObject("devEuis", devEuis);
+            List<Alarm> alarmList = new ArrayList<>();
+            for (String de: devEuis){
+                Alarm alarm = new Alarm();
+                alarm.setDevEui(de);
+                List<Alarm> tmpAlarms = alarmService.queryByDevEui(alarm);
+                if (!tmpAlarms.isEmpty()){
+                    alarmList.addAll(tmpAlarms);
+                }
+            }
+            model.addObject("devEuiAlarms", alarmList);
             FaultRecords faultRecords = new FaultRecords();
             faultRecords.setAppEui(cuser.getAppEui());
             List<FaultRecords> frs = faultRecordsService.queryFaultRecordsByAppEui(faultRecords);
