@@ -36,7 +36,7 @@
 <div class="container">
 
     <div id="alertRules" class="row" style="min-height: 300px">
-        <button id="addRelateDev" class="btn btn-info" data-toggle="modal" >添加联动设备</button><label>当前用户联动设备：</label>
+        <button id="addRelateDev" class="btn btn-info" data-toggle="modal" onclick="addRelateDev()">添加联动设备</button><label>当前用户联动设备：</label>
         <div class="table-responsive">
             <table id="alertRulesTable" cellpadding="4" cellspacing="0"
                    class="table table-bordered table-striped text-nowrap">
@@ -99,9 +99,56 @@
             </table>
         </div>
     </div>
-
-
 </div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document" style="width: 680px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">联动设备</h4>
+            </div>
+            <div class="modal-body">
+                <div style="padding: 10px 16px 10px;">
+                    <form class="bs-example bs-example-form" role="form" id="submitAlarm" action="/addRelate" method="post">
+                        <div class="input-group">
+                            <span class="input-group-addon">devEui</span>
+                            <input type="text" class="form-control" placeholder="devEui" id="form-devEui" name="devEui">
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <span class="input-group-addon">level</span>
+                            <input type="text" class="form-control" placeholder="1,2,3，..." id="form-level" name="level">
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <span class="input-group-addon">devEuiRelate</span>
+                            <input type="text" class="form-control" placeholder="devEuiRelate" id="form-devEuiRelate" name="devEuiRelate">
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <span class="input-group-addon">relateNames</span>
+                            <input type="text" class="form-control" placeholder="relateNames" id="form-relateNames" name="relateNames">
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <span class="input-group-addon">status</span>
+                            <input type="text" class="form-control" placeholder="status" id="form-status" name="status">
+                        </div>
+                        <br/>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="submitAlarm()" id="save" data-dismiss="modal">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <form id='tagClick' action='/commonUser' method='post'>
     <input type='hidden' name='userId' value="${user.userId}"/>
     <input type='hidden' name='userPassword' value="${user.userPwd}"/>
@@ -113,6 +160,45 @@
         $("#selectData").val(aName)
 //        alert(aName)
         document.getElementById('tagClick').submit();
+    }
+
+    function addRelateDev() {
+        $("#myModal").modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+    }
+
+    function submitAlarm() {
+        // document.getElementById('submitAlarm').submit();
+
+        var status = $("#form-status").val()
+        var relateNames = $("#form-relateNames").val()
+        var devEuiRelate = $("#form-devEuiRelate").val()
+        var level = $("#form-level").val()
+        var devEui = $("#form-devEui").val()
+        $.ajax({
+            type: 'POST',
+            url: "/addRelate",
+            async: false,
+            data: {
+                devEui: devEui,
+                level: level,
+                devEuiRelate: devEuiRelate,
+                relateNames: relateNames,
+                status: status
+            },
+            success: function (data) {
+                if(data=="1"){
+                    alert("添加成功")
+                    var aName = $("li[class='active']").children().attr('name')
+                    $("#selectData").val(aName)
+                    document.getElementById('tagClick').submit();
+                }else {
+                    alert("添加失败")
+                }
+            }
+        });
     }
 
 </script>

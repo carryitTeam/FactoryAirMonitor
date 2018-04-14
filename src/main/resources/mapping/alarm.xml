@@ -27,8 +27,8 @@
 
     <insert id="addAlarm" parameterType="com.carryit.base.fam.bean.Alarm"
             useGeneratedKeys="true" keyProperty="id">
-        insert into alarm(devEui,level,devEuiRelate,relateNames,status,createTime)
-        values(#{devEui},#{level},#{devEuiRelate},#{relateNames},#{status},#{createTime})
+        insert into alarm(devEui,level,devEuiRelate,relateNames,status)
+        values(#{devEui},#{level},#{devEuiRelate},#{relateNames},#{status})
     </insert>
 
     <update id="updateAlarm" parameterType="com.carryit.base.fam.bean.Alarm">

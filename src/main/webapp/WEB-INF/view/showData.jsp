@@ -97,7 +97,7 @@
             <tbody id="tData">
             <c:forEach var="dl" items="${datasList}">
                 <tr>
-                    <td><a onclick="showAll(this)" class="glyphicon glyphicon-plus" href="#"></a></td>
+                    <td><a onclick="showAll(this)" class="glyphicon glyphicon-plus" href="javascript:void(0)"></a></td>
                     <td>${dl.createTime}</td>
                     <td>${dl.appEui}</td>
                     <td>${dl.devEui}</td>
@@ -181,7 +181,7 @@
 
                         var trd = $("<tr>")
                         var tdd1 = $("<td>")
-                        var tdda = $("<a onclick='showAll(this)' class='glyphicon glyphicon-plus' href='#'>")
+                        var tdda = $("<a onclick='showAll(this)' class='glyphicon glyphicon-plus' href='javascript:void(0)'>")
                         tdd1.append(tdda)
                         var tdd2 = $("<td>")
                         tdd2.text(data.createTime)

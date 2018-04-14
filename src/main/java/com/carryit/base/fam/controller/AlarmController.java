@@ -17,17 +17,12 @@ public class AlarmController {
     @Autowired
     private IAlarmService alarmService;
 
-    @Autowired
-    private ServletContext servletContext;
-
 
     //添加alarm
     @PostMapping("/addRelate")
     public
     @ResponseBody
     Object addRelate(Alarm alarm){
-        Map<String, Boolean> alarmData = (Map<String, Boolean>) servletContext.getAttribute("alarmData");
-        alarmData.put(alarm.getDevEui(),false);
         int res=alarmService.addAlarm(alarm);
         return res;
     }
@@ -38,10 +33,6 @@ public class AlarmController {
     public
     @ResponseBody
     Object updateRelate(Alarm alarm){
-        Map<String, Boolean> alarmData = (Map<String, Boolean>) servletContext.getAttribute("alarmData");
-
-        alarmData.put(alarm.getDevEui(),false);
-
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         String changeTime = sdf.format(new Date());
@@ -55,10 +46,6 @@ public class AlarmController {
     public
     @ResponseBody
     Object deleteAlarm(Alarm alarm){
-
-        Map<String, Boolean> alarmData = (Map<String, Boolean>) servletContext.getAttribute("alarmData");
-
-        alarmData.put(String.valueOf(alarm.getId()),false);
 
         int res=alarmService.deleteAlarm(alarm);
         return  res;
