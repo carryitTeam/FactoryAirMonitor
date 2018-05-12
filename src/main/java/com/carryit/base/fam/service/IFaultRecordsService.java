@@ -12,4 +12,6 @@ public interface IFaultRecordsService {
     int addFaultRecords(FaultRecords faultRecords);
 
     List<FaultRecords> queryFaultRecordsByAppEui(FaultRecords faultRecords);
+
+    List<FaultRecords> queryAllFaultRecords();
 }

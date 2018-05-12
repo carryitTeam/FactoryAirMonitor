@@ -25,4 +25,9 @@ public class FaultRecordsService implements IFaultRecordsService {
     public List<FaultRecords> queryFaultRecordsByAppEui(FaultRecords faultRecords) {
         return faultRecordsDao.queryFaultRecordsByAppEui(faultRecords);
     }
+
+    @Override
+    public List<FaultRecords> queryAllFaultRecords() {
+        return faultRecordsDao.queryAllFaultRecords();
+    }
 }

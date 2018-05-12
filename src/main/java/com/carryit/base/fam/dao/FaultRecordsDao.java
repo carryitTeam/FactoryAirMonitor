@@ -13,4 +13,6 @@ public interface FaultRecordsDao {
 
     List<FaultRecords> queryFaultRecordsByAppEui(FaultRecords faultRecords);
 
+    List<FaultRecords> queryAllFaultRecords();
+
 }

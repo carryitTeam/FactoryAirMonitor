@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.carryit.base.fam.dao.GroupInfoDao">
+
+    <resultMap type="com.carryit.base.fam.bean.GroupInfo" id="GroupInfo">
+        <!-- column:库表的字段名 property:实体类里的属性名 -->
+        <id column="id" property="id"/>
+        <result column="groupName" property="groupName"/>
+        <result column="groupLocation" property="groupLocation"/>
+        <result column="groupComment" property="groupComment"/>
+        <result column="contactTelephoneNumber" property="contactTelephoneNumber"/>
+        <result column="contactUserName" property="contactUserName"/>
+        <result column="changeTime" property="changeTime"/>
+        <result column="createTime" property="createTime"/>
+    </resultMap>
+
+    <insert id="addGroupInfo" parameterType="com.carryit.base.fam.bean.GroupInfo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into groupInfos(groupName,groupLocation,groupComment,contactTelephoneNumber,contactUserName)
+        values(#{groupName},#{groupLocation},#{groupComment},#{contactTelephoneNumber},#{contactUserName})
+    </insert>
+
+    <delete id="deleteGroupInfo" parameterType="com.carryit.base.fam.bean.GroupInfo">
+        delete from groupInfo where id=#{id}
+    </delete>
+
+    <update id="updateGroupInfo" parameterType="com.carryit.base.fam.bean.GroupInfo">
+        update groupInfos set groupName=#{groupName},groupLocation=#{groupLocation},contactUserName=#{contactUserName},contactTelephoneNumber=#{contactTelephoneNumber},changeTime=#{changeTime}
+        where id=#{id}
+    </update>
+
+    <select id="queryGroupInfoById" parameterType="com.carryit.base.fam.bean.GroupInfo"
+            resultMap="GroupInfo">
+        select id, userId,userPwd, userName, userEmail, userRole,appEui, changeTime,createTime,groupId from groupInfos where userId=#{userId}
+    </select>
+
+    <select id="queryAllGroupInfo" resultMap="GroupInfo">
+        select id, groupName,groupLocation,groupComment,contactTelephoneNumber,contactUserName,changeTime,createTime from groupInfos
+    </select>
+
+</mapper>

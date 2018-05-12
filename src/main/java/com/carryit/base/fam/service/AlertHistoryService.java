@@ -40,4 +40,9 @@ public class AlertHistoryService implements IAlertHistoryService {
     public List<AlertHistory> queryAlertHistoryByAppEui(AlertHistory alertHistory) {
         return alertHistoryDao.queryAlertHistoryByAppEui(alertHistory);
     }
+
+    @Override
+    public List<AlertHistory> queryAllAlertHistory() {
+        return alertHistoryDao.queryAllAlertHistory();
+    }
 }

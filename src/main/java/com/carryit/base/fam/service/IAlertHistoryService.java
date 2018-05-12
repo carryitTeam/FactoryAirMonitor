@@ -18,4 +18,6 @@ public interface IAlertHistoryService {
     AlertHistory queryAlertHistoryByHistoryId(AlertHistory alertHistory);
 
     List<AlertHistory> queryAlertHistoryByAppEui(AlertHistory alertHistory);
+
+    List<AlertHistory> queryAllAlertHistory();
 }

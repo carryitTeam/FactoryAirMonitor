@@ -4,13 +4,13 @@ import com.carryit.base.fam.bean.*;
 import com.carryit.base.fam.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.logging.SimpleFormatter;
@@ -44,6 +44,10 @@ public class UserController {
     @Autowired
     private AlarmService alarmService;
 
+    @Autowired
+    private GroupInfoService groupInfoService;
+
+
     @PostMapping("/submitAddUser")
     public
     @ResponseBody
@@ -73,20 +77,88 @@ public class UserController {
         return res;
     }
 
-    @PostMapping("/checkUser")
-    public
-    @ResponseBody
-    Object checkUser(HttpServletRequest request) {
-
+    @RequestMapping("/checkUser")
+    public ModelAndView checkUser(HttpServletRequest request) {
+        ModelAndView model = new ModelAndView();
+        HttpSession userSession = request.getSession();
         User user = new User();
-        user.setUserId(request.getParameter("userId"));
+        String userId = request.getParameter("userId");
+        user.setUserId(userId);
         user.setUserPwd(request.getParameter("userPwd"));
-        User cuser = userService.checkUserByPwd(user);
-        if (cuser == null || cuser.getUserId() == null) {
-            return 0;
-        } else {
-            return cuser;
+        User cuser = null;
+
+        // 验证session
+        if (userId ==null ){
+            if(userSession.getAttribute("cuser") != null){
+                cuser = (User) userSession.getAttribute("cuser");
+            }else {
+                model.setViewName("redirect:/");
+            }
+        }else {
+            cuser = userService.checkUserByPwd(user);
         }
+        // 验证db是否成功
+        if (cuser == null || cuser.getUserId() == null) {
+            model.addObject("userId", userId);
+            model.setViewName("new/loginError");
+        } else {
+            userSession.setAttribute("cuser", cuser);
+            model.addObject("cuser", cuser);
+            if ("superAdmin".equalsIgnoreCase(cuser.getUserRole())){
+                List<GroupInfo> groupInfos = groupInfoService.queryAllGroupInfo();
+                model.addObject("groupInfos", groupInfos);
+            }
+            model.setViewName("new/main");
+        }
+        return model;
+    }
+
+    @RequestMapping("/userManager")
+    public ModelAndView userManager(HttpServletRequest request) {
+        ModelAndView modelAndView = new ModelAndView();
+        if (request.getSession().getAttribute("cuser") == null) {
+            modelAndView.setViewName("redirect:/");
+            return modelAndView;
+        }
+
+        User cuser = (User) request.getSession().getAttribute("cuser");
+        modelAndView.addObject("cuser", cuser);
+        if ("superAdmin".equalsIgnoreCase(cuser.getUserRole())) {
+            User user = new User();
+            user.setUserRole("user");
+            List<User> userList = userService.queryAllUsersByRole(user);
+            user.setUserRole("admin");
+            userList.addAll(userService.queryAllUsersByRole(user));
+            List<GroupInfo> groupInfos = groupInfoService.queryAllGroupInfo();
+            Map<Integer,GroupInfo> mapData = toMapData(groupInfos);
+            modelAndView.addObject("groupMapData", mapData);
+            modelAndView.addObject("userList", userList);
+        }
+        modelAndView.setViewName("new/userManager");
+        return modelAndView;
+    }
+
+    private Map<Integer,GroupInfo> toMapData(List<GroupInfo> groupInfos) {
+        Map<Integer,GroupInfo> groupInfoMap = new HashMap<>(100);
+        for (GroupInfo groupInfo: groupInfos){
+            groupInfoMap.put(groupInfo.getId(), groupInfo);
+        }
+        return groupInfoMap;
+    }
+
+    @RequestMapping("/userUpdateAndInsert")
+    public @ResponseBody
+    Object userUpdateAndInsert(HttpServletRequest request, @ModelAttribute User user) {
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        int res = -1;
+        if (user.getId() == null) {
+            res = userService.addUser(user);
+        } else {
+            user.setChangeTime(simpleDateFormat.format(new Date()));
+            res = userService.updateUser(user);
+        }
+        return res;
     }
 
     @PostMapping("/adminUser")
@@ -150,11 +222,11 @@ public class UserController {
             model.setViewName("alertData");
         } else if ("device".equalsIgnoreCase(select)) {
             List<Alarm> alarmList = new ArrayList<>();
-            for (String de: devEuis){
+            for (String de : devEuis) {
                 Alarm alarm = new Alarm();
                 alarm.setDevEui(de);
                 List<Alarm> tmpAlarms = alarmService.queryByDevEui(alarm);
-                if (!tmpAlarms.isEmpty()){
+                if (!tmpAlarms.isEmpty()) {
                     alarmList.addAll(tmpAlarms);
                 }
             }

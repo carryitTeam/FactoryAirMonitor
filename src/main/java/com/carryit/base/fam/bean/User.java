@@ -5,13 +5,33 @@ package com.carryit.base.fam.bean;
  */
 public class User {
 
-    private int id;
+    private Integer id;
 
     private String userId;
 
     private String userPwd;
 
     private String appEui;
+
+    private Integer groupId;
+
+    private String userName;
+
+    private String userEmail;
+
+    private String userRole;
+
+    private String changeTime;
+
+    private String createTime;
+
+    public Integer getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(Integer groupId) {
+        this.groupId = groupId;
+    }
 
     public String getAppEui() {
         return appEui;
@@ -29,21 +49,11 @@ public class User {
         this.userPwd = userPwd;
     }
 
-    private String userName;
-
-    private String userEmail;
-
-    private String userRole;
-
-    private String changeTime;
-
-    private String createTime;
-
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -102,6 +112,7 @@ public class User {
                 ", userId='" + userId + '\'' +
                 ", userPwd='" + userPwd + '\'' +
                 ", appEui='" + appEui + '\'' +
+                ", groupId=" + groupId +
                 ", userName='" + userName + '\'' +
                 ", userEmail='" + userEmail + '\'' +
                 ", userRole='" + userRole + '\'' +

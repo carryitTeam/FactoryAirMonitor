@@ -11,6 +11,10 @@
         <result column="faultContent" property="faultContent"/>
         <result column="createTime" property="createTime"/>
     </resultMap>
+    <select id="queryAllFaultRecords"
+            resultMap="FaultRecords">
+        select id,appEui,devEui,faultContent,createTime from faultrecords
+    </select>
 
     <select id="queryFaultRecordsByAppEui" parameterType="com.carryit.base.fam.bean.FaultRecords"
             resultMap="FaultRecords">

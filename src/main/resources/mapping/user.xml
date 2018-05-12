@@ -15,12 +15,13 @@
         <result column="appEui" property="appEui"/>
         <result column="changeTime" property="changeTime"/>
         <result column="createTime" property="createTime"/>
+        <result column="groupId" property="groupId"/>
     </resultMap>
 
     <insert id="addUser" parameterType="com.carryit.base.fam.bean.User"
             useGeneratedKeys="true" keyProperty="id">
-        insert into user(userId,userPwd,userName,userEmail,userRole,appEui)
-        values(#{userId},#{userPwd},#{userName},#{userEmail},#{userRole},#{appEui})
+        insert into user(userId,userPwd,userName,userEmail,userRole,appEui,groupId)
+        values(#{userId},#{userPwd},#{userName},#{userEmail},#{userRole},#{appEui},#{groupId})
     </insert>
 
     <delete id="deleteUser" parameterType="com.carryit.base.fam.bean.User">
@@ -34,17 +35,17 @@
 
     <select id="queryUsersById" parameterType="com.carryit.base.fam.bean.User"
             resultMap="User">
-        select id, userId,userPwd, userName, userEmail, userRole,appEui, changeTime,createTime from user where userId=#{userId}
+        select id, userId,userPwd, userName, userEmail, userRole,appEui, changeTime,createTime,groupId from user where userId=#{userId}
     </select>
 
     <select id="queryAllUsersByRole" parameterType="com.carryit.base.fam.bean.User"
             resultMap="User">
-        select id, userId,userPwd, userName, userEmail, userRole,appEui, changeTime,createTime from user where userRole=#{userRole}
+        select id, userId,userPwd, userName, userEmail, userRole,appEui, changeTime,createTime,groupId from user where userRole=#{userRole}
     </select>
 
     <select id="checkUserByPwd" parameterType="com.carryit.base.fam.bean.User"
             resultMap="User">
-        select id, userId,userPwd, userName, userEmail, userRole,appEui, changeTime,createTime from user where userId=#{userId} and userPwd= #{userPwd}
+        select id, userId,userPwd, userName, userEmail, userRole,appEui, changeTime,createTime,groupId from user where userId=#{userId} and userPwd= #{userPwd}
     </select>
 
 </mapper>

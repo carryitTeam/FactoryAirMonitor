@@ -13,6 +13,26 @@ public class DeviceConfig {
 
     private String createTime;
 
+    private String deviceType;
+
+    public String getDeviceType() {
+        return deviceType;
+    }
+
+    public void setDeviceType(String deviceType) {
+        this.deviceType = deviceType;
+    }
+
+    public int getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
+    }
+
+    private int groupId;
+
     public int getId() {
         return id;
     }
