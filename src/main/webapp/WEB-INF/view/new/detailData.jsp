@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+a<%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
@@ -61,17 +61,17 @@
         </div>
     </div>
     <ul class="app-menu">
-        <li><a class="app-menu__item" href="/checkUser"><i class="app-menu__icon fa fa-university"></i><span
+        <li><a class="app-menu__item active" href="/checkUser"><i class="app-menu__icon fa fa-university"></i><span
                 class="app-menu__label">主页</span></a></li>
         <li><a class="app-menu__item" href="/groupManager"><i class="app-menu__icon fa  fa-object-group"></i><span
                 class="app-menu__label">单位管理</span></a></li>
         <li><a class="app-menu__item" href="/userManager"><i class="app-menu__icon fa  fa-users"></i><span
                 class="app-menu__label">账号管理</span></a></li>
-        <li><a class="app-menu__item active" href="/topManager"><i class="app-menu__icon fa fa-share-alt"></i><span
+        <li><a class="app-menu__item" href="/topManager"><i class="app-menu__icon fa fa-share-alt"></i><span
                 class="app-menu__label">拓扑管理</span></a></li>
         <li><a class="app-menu__item" href="/alertManager"><i class="app-menu__icon fa fa-bell-o"></i><span
                 class="app-menu__label">报警管理</span></a></li>
-        <li><a class="app-menu__item" href="/topManager"><i class="app-menu__icon fa fa-file-text-o"></i><span
+        <li><a class="app-menu__item" href="/logManager"><i class="app-menu__icon fa fa-file-text-o"></i><span
                 class="app-menu__label">日志管理</span></a></li>
         <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i
                 class="app-menu__icon fa  fa-cogs"></i><span class="app-menu__label">配置管理</span><i
@@ -88,16 +88,40 @@
 <main class="app-content">
     <div class="app-title">
         <div>
-            <h1><i class="fa fa-share-alt"></i> 拓扑管理</h1>
-            <p>工厂设备拓扑结构</p>
+            <h1><i class="fa fa-university"></i> 主页</h1>
+            <p>单位信息列表/数据流量统计</p>
         </div>
         <ul class="app-breadcrumb breadcrumb">
-            <li class="breadcrumb-item"><i class="fa fa-share-alt"></i></li>
-            <li class="breadcrumb-item"><a href="#">拓扑管理</a></li>
+            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+            <li class="breadcrumb-item"><a href="/checkUser">主页</a></li>
+            <li class="breadcrumb-item"><a href="/devicesForGroup?groupId=${deviceConfigList.size()>0 ? deviceConfigList.get(0).groupId:0}">设备列表</a></li>
         </ul>
     </div>
     <div class="row">
-        <img src="/pic/f1.jpg" height="400" width="1000" />
+        <c:forEach items="${deviceConfigList}" var="device" varStatus="status">
+            <div class="col-md-4">
+                <div class="card mb-3
+                    <c:if test="${status.index % 6 ==0}"> border-primary</c:if>
+                    <c:if test="${status.index % 6 ==1}"> border-success</c:if>
+                    <c:if test="${status.index % 6 ==2}"> border-info</c:if>
+                    <c:if test="${status.index % 6 ==3}"> border-warning</c:if>
+                    <c:if test="${status.index % 6 ==4}"> border-dark</c:if>
+                    <c:if test="${status.index % 6 ==5}"> border-danger</c:if>
+                    ">
+                    <div class="card-body">
+                        <blockquote class="card-blockquote">
+                            <p>设备名称：<b>${device.deviceName}</b></p>
+                            <p>AppEui：<b>${device.appEui}</b></p>
+                            <p>DevEui：<b>${device.devEui}</b></p>
+                            <p>创建时间：<b>${device.createTime}</b></p>
+                            <footer>
+                                <cite title="传感器数据"><a href="/dataRetrieveByAppEui?appEui=${device.appEui}">详细传感器数据...</a></cite>
+                            </footer>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </c:forEach>
     </div>
 </main>
 <!-- Essential javascripts for application to work-->
@@ -109,23 +133,5 @@
 <script src="new/js/plugins/pace.min.js"></script>
 <!-- Page specific javascripts-->
 <script type="text/javascript" src="new/js/plugins/chart.js"></script>
-<!-- Google analytics script-->
-<script type="text/javascript">
-    if (document.location.hostname == 'pratikborsadiya.in') {
-        (function (i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r;
-            i[r] = i[r] || function () {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date();
-            a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
-            a.async = 1;
-            a.src = g;
-            m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-        ga('create', 'UA-72504830-1', 'auto');
-        ga('send', 'pageview');
-    }
-</script>
 </body>
 </html>

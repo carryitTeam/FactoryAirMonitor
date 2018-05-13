@@ -72,17 +72,17 @@
                 class="app-menu__label">拓扑管理</span></a></li>
         <li><a class="app-menu__item" href="/alertManager"><i class="app-menu__icon fa fa-bell-o"></i><span
                 class="app-menu__label">报警管理</span></a></li>
-        <li><a class="app-menu__item active" href="/logManager"><i class="app-menu__icon fa fa-file-text-o"></i><span
+        <li><a class="app-menu__item" href="/logManager"><i class="app-menu__icon fa fa-file-text-o"></i><span
                 class="app-menu__label">日志管理</span></a></li>
         <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i
                 class="app-menu__icon fa  fa-cogs"></i><span class="app-menu__label">配置管理</span><i
                 class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
-                <li><a class="treeview-item" href="ui-cards.html"><i class="icon fa fa-circle-o"></i> 设备</a></li>
-                <li><a class="treeview-item" href="widgets.html"><i class="icon fa fa-circle-o"></i> 传感器</a></li>
+                <li><a class="treeview-item" href="/deviceManager"><i class="icon fa fa-circle-o"></i> 设备</a></li>
+                <li><a class="treeview-item" href="/sensorManager"><i class="icon fa fa-circle-o"></i> 传感器</a></li>
             </ul>
         </li>
-        <li><a class="app-menu__item" href="/faultManager"><i class="app-menu__icon fa fa-window-close-o"></i><span
+        <li><a class="app-menu__item active" href="/faultManager"><i class="app-menu__icon fa fa-window-close-o"></i><span
                 class="app-menu__label">故障管理</span></a></li>
     </ul>
 </aside>

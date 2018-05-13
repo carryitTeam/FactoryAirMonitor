@@ -26,7 +26,7 @@
 
     <select id="queryAllUsersByAppEui" parameterType="com.carryit.base.fam.bean.Datas"
             resultMap="Datas">
-        select datas.id,datas.appEui,datas.devEui,datas.jsonData,datas.realData,datas.createTime from datas where appEui=#{appEui} and createTime>#{createTime} order by createTime desc limit 100
+        select datas.id,datas.appEui,datas.devEui,datas.jsonData,datas.realData,datas.createTime from datas where appEui=#{appEui} order by createTime desc limit 100
     </select>
 
     <select id="queryAllUsersByAppDevEui" parameterType="com.carryit.base.fam.bean.Datas"

@@ -5,7 +5,7 @@ package com.carryit.base.fam.bean;
  */
 public class DeviceConfig {
 
-    private int id;
+    private Integer id;
 
     private String appEui;
 
@@ -14,6 +14,36 @@ public class DeviceConfig {
     private String createTime;
 
     private String deviceType;
+
+    private String deviceName;
+
+    private String deviceComment;
+
+    private Integer parentId;
+
+    public Integer getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
+    }
+
+    public String getDeviceName() {
+        return deviceName;
+    }
+
+    public void setDeviceName(String deviceName) {
+        this.deviceName = deviceName;
+    }
+
+    public String getDeviceComment() {
+        return deviceComment;
+    }
+
+    public void setDeviceComment(String deviceComment) {
+        this.deviceComment = deviceComment;
+    }
 
     public String getDeviceType() {
         return deviceType;
@@ -27,17 +57,17 @@ public class DeviceConfig {
         return groupId;
     }
 
-    public void setGroupId(int groupId) {
+    public void setGroupId(Integer groupId) {
         this.groupId = groupId;
     }
 
-    private int groupId;
+    private Integer groupId;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

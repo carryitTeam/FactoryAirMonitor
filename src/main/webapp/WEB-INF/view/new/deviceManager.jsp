@@ -72,49 +72,69 @@
                 class="app-menu__label">拓扑管理</span></a></li>
         <li><a class="app-menu__item" href="/alertManager"><i class="app-menu__icon fa fa-bell-o"></i><span
                 class="app-menu__label">报警管理</span></a></li>
-        <li><a class="app-menu__item active" href="/logManager"><i class="app-menu__icon fa fa-file-text-o"></i><span
+        <li><a class="app-menu__item" href="/logManager"><i class="app-menu__icon fa fa-file-text-o"></i><span
                 class="app-menu__label">日志管理</span></a></li>
-        <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i
+        <li class="treeview is-expanded"><a class="app-menu__item" href="#" data-toggle="treeview"><i
                 class="app-menu__icon fa  fa-cogs"></i><span class="app-menu__label">配置管理</span><i
                 class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
-                <li><a class="treeview-item" href="/deviceManager"><i class="icon fa fa-circle-o"></i> 设备</a></li>
+                <li><a class="treeview-item active" href="/deviceManager"><i class="icon fa fa-circle-o"></i> 设备</a></li>
                 <li><a class="treeview-item" href="/sensorManager"><i class="icon fa fa-circle-o"></i> 传感器</a></li>
             </ul>
         </li>
-        <li><a class="app-menu__item" href="/faultManager"><i class="app-menu__icon fa fa-window-close-o"></i><span
+        <li><a class="app-menu__item" href="/faultManager"><i
+                class="app-menu__icon fa fa-window-close-o"></i><span
                 class="app-menu__label">故障管理</span></a></li>
     </ul>
 </aside>
 <main class="app-content">
     <div class="app-title">
         <div>
-            <h1><i class="fa fa-file-text-o"></i> 日志管理</h1>
-            <p>日志列表</p>
+            <h1><i class="fa fa-circle-o"></i> 设备管理</h1>
+            <p>设备列表</p>
         </div>
         <ul class="app-breadcrumb breadcrumb">
-            <li class="breadcrumb-item"><i class="fa fa-file-text-o"></i></li>
-            <li class="breadcrumb-item"><a href="#">日志管理</a></li>
+            <li class="breadcrumb-item"><i class="fa fa-circle-o"></i></li>
+            <li class="breadcrumb-item"><a href="#">设备管理</a></li>
         </ul>
     </div>
     <div class="row">
+        <div class="col-md-12">
+            <p class="bs-component">
+                <button class="btn btn-success" type="button" onclick="startModel(this)">添加设备</button>
+            </p>
+        </div>
         <div class="col-md-12">
             <div class="tile">
                 <div class="tile-body">
                     <table class="table table-hover table-bordered" id="sampleTable">
                         <thead>
                         <tr>
-                            <th>用户</th>
-                            <th>日志内容</th>
+                            <th>AppEui</th>
+                            <th>DevEui</th>
+                            <th>设备名</th>
+                            <th>所属单位</th>
+                            <th>备注</th>
                             <th>创建时间</th>
+                            <th>操作</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach items="${logOpsList}" var="log" varStatus="status">
+                        <c:forEach items="${deviceConfigList}" var="device" varStatus="status">
                             <tr>
-                                <td>${log.userId}</td>
-                                <td>${log.logContent}</td>
-                                <td>${log.createTime}</td>
+                                <td>${device.appEui}</td>
+                                <td>${device.devEui}</td>
+                                <td>${device.deviceName}</td>
+                                <td>${groupMapData.get(device.groupId).groupName}</td>
+                                <td>${device.deviceComment}</td>
+                                <td>${device.createTime}</td>
+                                <td id="${device.groupId}">
+                                    <div class="btn-group btn-group-toggle" data-toggle="buttons" id="${device.id}">
+                                        <label class="btn btn-info" onclick="startModel(this);">
+                                            <input type="checkbox" autocomplete="off"> 修改
+                                        </label>
+                                    </div>
+                                </td>
                             </tr>
                         </c:forEach>
                         </tbody>
@@ -130,7 +150,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">单位信息</h4>
+                <h4 class="modal-title" id="myModalLabel">设备信息</h4>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                 </button>
             </div>
@@ -138,33 +158,45 @@
                 <div class="tile-body">
                     <form class="form-horizontal">
                         <div class="form-group row">
-                            <label class="control-label col-md-3">单位id号</label>
+                            <label class="control-label col-md-3">设备id号</label>
                             <div class="col-md-8">
-                                <input class="form-control" type="text" placeholder="用户自增长ID" id="groupId" disabled="disabled">
+                                <input class="form-control" type="text" placeholder="自增长ID" id="deviceId"
+                                       disabled="disabled">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="control-label col-md-3">单位名称</label>
+                            <label class="control-label col-md-3">设备名称</label>
                             <div class="col-md-8">
-                                <input class="form-control" type="text" placeholder="单位名称" id="groupName">
+                                <input class="form-control" type="text" placeholder="设备名称" id="deviceName">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="control-label col-md-3">单位地址</label>
+                            <label class="control-label col-md-3">AppEui</label>
                             <div class="col-md-8">
-                                <textarea class="form-control" rows="2" placeholder="单位地址" id="groupLocation"></textarea>
+                                <input class="form-control" type="text" placeholder="AppEui" id="deviceAppEui">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="control-label col-md-3">联系人</label>
+                            <label class="control-label col-md-3">DevEui</label>
                             <div class="col-md-8">
-                                <input class="form-control col-md-8" placeholder="联系人" id="contactUserName">
+                                <input class="form-control" type="text" placeholder="DevEui" id="deviceDevEui">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="control-label col-md-3">联系电话</label>
+                            <label class="control-label col-md-3">备注</label>
                             <div class="col-md-8">
-                                <input class="form-control col-md-8"  placeholder="联系电话" id="contactTelephoneNumber">
+                                <textarea class="form-control" rows="2" placeholder="备注"
+                                          id="deviceComment"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="control-label col-md-3">隶属单位</label>
+                            <div class="col-md-8">
+                                <select class="form-control" id="userGroup">
+                                    <c:forEach items="${groupMapData}" var="gmd">
+                                        <option value="${gmd.key}">${gmd.value.groupName}</option>
+                                    </c:forEach>
+                                </select>
                             </div>
                         </div>
                     </form>
@@ -190,43 +222,53 @@
 <script type="text/javascript" src="new/js/plugins/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript">
     $('#sampleTable').DataTable();
+
     function startModel(node) {
         //加载模态框
         $('#groupManagerModel').modal();
         var p1 = $(node).parent();
-        var groupId = p1.attr("id");
-        var contactTelephoneNumber = p1.parent().prev().prev().text();
-        var contactUserName = p1.parent().prev().prev().prev().text();
-        var groupLocation = p1.parent().prev().prev().prev().prev().text();
-        var groupName = p1.parent().prev().prev().prev().prev().prev().text();
-        $("#groupId").val("")
-        $("#groupId").val(groupId);
-        $("#groupName").val("")
-        $("#groupName").val(groupName);
-        $("#groupLocation").val("")
-        $("#groupLocation").val(groupLocation);
-        $("#contactUserName").val("")
-        $("#contactUserName").val(contactUserName);
-        $("#contactTelephoneNumber").val("")
-        $("#contactTelephoneNumber").val(contactTelephoneNumber);
+        var deviceId = p1.attr("id");
+        var userGroupId = p1.parent().attr("id");
+        var deviceComment = p1.parent().prev().prev().text();
+        var deviceName = p1.parent().prev().prev().prev().prev().text();
+        var devEui = p1.parent().prev().prev().prev().prev().prev().text();
+        var appEui = p1.parent().prev().prev().prev().prev().prev().prev().text();
+        $("#deviceId").val("")
+        $("#deviceId").val(deviceId);
+        $("#deviceName").val("")
+        $("#deviceName").val(deviceName);
+        $("#deviceAppEui").val("")
+        $("#deviceAppEui").val(appEui);
+        $("#deviceDevEui").val("")
+        $("#deviceDevEui").val(devEui);
+        $("#deviceComment").val("")
+        $("#deviceComment").val(deviceComment);
+
+        if (deviceId == ""){
+            $("#userGroup").find("option").get(0).selected=true
+        }else {
+            $("#userGroup").find("option[value='"+userGroupId+"']").get(0).selected=true
+        }
     }
 
     function saveGroupData() {
-        var groupId = $("#groupId").val();
-        var groupName = $("#groupName").val();
-        var groupLocation = $("#groupLocation").val();
-        var contactUserName = $("#contactUserName").val();
-        var contactTelephoneNumber = $("#contactTelephoneNumber").val();
+        var id = $("#deviceId").val()
+        var deviceName = $("#deviceName").val()
+        var appEui = $("#deviceAppEui").val()
+        var devEui = $("#deviceDevEui").val()
+        var deviceComment = $("#deviceComment").val()
+        var groupId = $("#userGroup").find("option:selected").attr("value");
         $.ajax({
             type: 'POST',
-            url: "/groupUpdateAndInsert",
+            url: "/deviceUpdateAndInsert",
             async: false,
             data: {
-                id: groupId,
-                groupName: groupName,
-                groupLocation: groupLocation,
-                contactUserName: contactUserName,
-                contactTelephoneNumber: contactTelephoneNumber
+                id: id,
+                deviceName: deviceName,
+                appEui: appEui,
+                devEui: devEui,
+                deviceComment: deviceComment,
+                groupId:groupId
             },
             success: function (data) {
                 $('#groupManagerModel').modal('hide')
@@ -234,7 +276,7 @@
                     alert("修改失败")
                 } else {
                     alert("修改成功")
-                    window.location.href='/groupManager';
+                    window.location.href = '/deviceManager';
                 }
             }
         });

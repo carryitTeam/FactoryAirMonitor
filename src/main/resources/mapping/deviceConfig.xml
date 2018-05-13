@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.carryit.base.fam.dao.DeviceConfigDao">
+    <resultMap type="com.carryit.base.fam.bean.DeviceConfig" id="DeviceConfig">
+        <!-- column:库表的字段名 property:实体类里的属性名 -->
+        <id column="id" property="id"/>
+        <result column="appEui" property="appEui"/>
+        <result column="devEui" property="devEui"/>
+        <result column="groupId" property="groupId"/>
+        <result column="deviceType" property="deviceType"/>
+        <result column="deviceName" property="deviceName"/>
+        <result column="deviceComment" property="deviceComment"/>
+        <result column="createTime" property="createTime"/>
+        <result column="parentId" property="parentId"/>
+    </resultMap>
+
+    <select id="queryAllDeviceConfig"
+            resultMap="DeviceConfig">
+        select id,appEui,devEui,groupId,deviceType,deviceName,deviceComment,createTime,parentId from deviceconfig
+    </select>
+
+    <select id="queryDeviceConfigByGroupId" parameterType="com.carryit.base.fam.bean.DeviceConfig"
+            resultMap="DeviceConfig">
+        select id,appEui,devEui,groupId,deviceType,deviceName,deviceComment,createTime,parentId from deviceconfig where groupId=#{groupId}
+    </select>
+
+    <select id="queryDeviceConfigByType" parameterType="com.carryit.base.fam.bean.DeviceConfig"
+            resultMap="DeviceConfig">
+        select id,appEui,devEui,groupId,deviceType,deviceName,deviceComment,createTime,parentId from deviceconfig where deviceType=#{deviceType}
+    </select>
+
+    <insert id="addDeviceConfig" parameterType="com.carryit.base.fam.bean.DeviceConfig"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into deviceconfig(appEui,devEui,groupId,deviceType,deviceName,deviceComment)
+        values(#{appEui},#{devEui},#{groupId},#{deviceType},#{deviceName},#{deviceComment})
+    </insert>
+
+    <insert id="addSensorConfig" parameterType="com.carryit.base.fam.bean.DeviceConfig"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into deviceconfig(appEui,devEui,groupId,deviceType,deviceName,deviceComment,parentId)
+        values(#{appEui},#{devEui},#{groupId},#{deviceType},#{deviceName},#{deviceComment},#{parentId})
+    </insert>
+
+    <delete id="deleteDeviceConfigById" parameterType="com.carryit.base.fam.bean.DeviceConfig">
+        delete from deviceconfig where id=#{id}
+    </delete>
+
+    <update id="updateDeviceConfigById" parameterType="com.carryit.base.fam.bean.DeviceConfig">
+        update deviceconfig set deviceName=#{deviceName},appEui=#{appEui},devEui=#{devEui},groupId=#{groupId},
+        deviceComment=#{deviceComment}
+        where id=#{id}
+    </update>
+
+    <update id="updateSensorConfigById" parameterType="com.carryit.base.fam.bean.DeviceConfig">
+        update deviceconfig set deviceName=#{deviceName},appEui=#{appEui},devEui=#{devEui},groupId=#{groupId},parentId=#{parentId},
+        deviceComment=#{deviceComment}
+        where id=#{id}
+    </update>
+
+</mapper>

@@ -77,8 +77,8 @@
                 class="app-menu__icon fa  fa-cogs"></i><span class="app-menu__label">配置管理</span><i
                 class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
-                <li><a class="treeview-item" href="ui-cards.html"><i class="icon fa fa-circle-o"></i> 设备</a></li>
-                <li><a class="treeview-item" href="widgets.html"><i class="icon fa fa-circle-o"></i> 传感器</a></li>
+                <li><a class="treeview-item" href="/deviceManager"><i class="icon fa fa-circle-o"></i> 设备</a></li>
+                <li><a class="treeview-item" href="/sensorManager"><i class="icon fa fa-circle-o"></i> 传感器</a></li>
             </ul>
         </li>
         <li><a class="app-menu__item" href="/faultManager"><i class="app-menu__icon fa fa-window-close-o"></i><span
@@ -99,14 +99,14 @@
     <div class="row">
         <c:forEach items="${groupInfos}" var="groupInfo" varStatus="status">
             <div class="col-md-4">
-                <div class="card mb-3 text-white
-                <c:if test="${status.index % 6 ==0}"> bg-primary</c:if>
-                 <c:if test="${status.index % 6 ==1}"> bg-success</c:if>
-                 <c:if test="${status.index % 6 ==2}"> bg-info</c:if>
-                 <c:if test="${status.index % 6 ==3}"> bg-warning</c:if>
-                 <c:if test="${status.index % 6 ==4}"> bg-dark</c:if>
-                 <c:if test="${status.index % 6 ==5}"> bg-danger</c:if>
-                ">
+                    <div class="card mb-3
+                    <c:if test="${status.index % 6 ==0}"> border-primary</c:if>
+                    <c:if test="${status.index % 6 ==1}"> border-success</c:if>
+                    <c:if test="${status.index % 6 ==2}"> border-info</c:if>
+                    <c:if test="${status.index % 6 ==3}"> border-warning</c:if>
+                    <c:if test="${status.index % 6 ==4}"> border-dark</c:if>
+                    <c:if test="${status.index % 6 ==5}"> border-danger</c:if>
+                    ">
                     <div class="card-body">
                         <blockquote class="card-blockquote">
                             <p>单位名称：<b>${groupInfo.groupName}</b></p>
@@ -114,7 +114,7 @@
                             <p>负责人：<b>${groupInfo.contactUserName}</b></p>
                             <p>负责电话：<b>${groupInfo.contactTelephoneNumber}</b></p>
                             <footer>
-                                <cite title="Source Title">详细信息...</cite>
+                                <cite title="设备"><a href="/devicesForGroup?groupId=${groupInfo.id}">详细设备信息</a></cite>
                             </footer>
                         </blockquote>
                     </div>

@@ -1,15 +1,23 @@
 package com.carryit.base.fam.controller;
 
+import com.carryit.base.fam.bean.AlertHistory;
 import com.carryit.base.fam.bean.Datas;
+import com.carryit.base.fam.bean.DeviceConfig;
+import com.carryit.base.fam.bean.User;
 import com.carryit.base.fam.claa.LoraDataRetrieve;
 import com.carryit.base.fam.connection.CSQuit;
 import com.carryit.base.fam.connection.Connection;
+import com.carryit.base.fam.hpb.Change;
 import com.carryit.base.fam.init.SpringBeanFactory;
 import com.carryit.base.fam.service.DatasService;
+import com.carryit.base.fam.utils.Base64Utils;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -144,6 +152,39 @@ public class DatasController {
 //            }
         }
         return 1;
+    }
+
+    @RequestMapping("/dataRetrieveByAppEui")
+    public ModelAndView devicesForGroup(HttpServletRequest request) {
+        String appEui = request.getParameter("appEui");
+        ModelAndView modelAndView = new ModelAndView();
+        if (request.getSession().getAttribute("cuser") == null) {
+            modelAndView.setViewName("redirect:/");
+            return modelAndView;
+        }
+        User cuser = (User) request.getSession().getAttribute("cuser");
+        modelAndView.addObject("cuser", cuser);
+        if ("superAdmin".equalsIgnoreCase(cuser.getUserRole())) {
+            Datas datas = new Datas();
+            datas.setAppEui(appEui);
+            List<Datas> datasList = datasService.queryAllUsersByAppEui(datas);
+            Map<Integer, Map<String, String>> parseData = toCareMapData(datasList);
+            modelAndView.addObject("datasList", datasList);
+            modelAndView.addObject("parseData", parseData);
+        }
+        modelAndView.setViewName("new/detailDataInfo");
+        return modelAndView;
+    }
+
+    public Map<Integer, Map<String, String>> toCareMapData(List<Datas> datasList) {
+        Map<Integer, Map<String, String>> careDatas = new HashMap<>(1000);
+        for (Datas datas : datasList) {
+            String allContent = datas.getRealData();
+            Map<String, String> parseData = Change.strDatas(allContent);
+            parseData.put("careData", allContent);
+            careDatas.put(datas.getId(), parseData);
+        }
+        return careDatas;
     }
 
 }
