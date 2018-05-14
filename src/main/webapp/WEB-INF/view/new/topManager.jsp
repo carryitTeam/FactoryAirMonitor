@@ -35,8 +35,7 @@
     <!-- Navbar Right Menu-->
     <ul class="app-nav">
         <li class="app-search">
-            <input class="app-search__input" type="search" placeholder="Search">
-            <button class="app-search__button"><i class="fa fa-search"></i></button>
+            <h5>武汉环智净科技有限公司</h5>
         </li>
         <!-- User Menu-->
         <li class="dropdown"><a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Open Profile Menu"><i
@@ -97,7 +96,53 @@
         </ul>
     </div>
     <div class="row">
-        <img src="/pic/f1.jpg" height="400" width="1000" />
+        <div class="col-md-12">
+            <img src="/pic/f1.jpg" height="400" width="1000" />
+        </div>
+
+        <div class="col-md-12">
+            <div class="tile">
+                <div class="tile-body">
+                    <table class="table table-hover table-bordered" id="sampleTable">
+                        <thead>
+                        <tr>
+                            <th>AppEui</th>
+                            <th>DevEui</th>
+                            <th>传感器名</th>
+                            <th>所属单位</th>
+                            <th>所属设备</th>
+                            <th>备注</th>
+                            <th>创建时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach items="${sensorConfigList}" var="device" varStatus="status">
+                            <tr>
+                                <td>${device.appEui}</td>
+                                <td>${device.devEui}</td>
+                                <td>${device.deviceName}</td>
+                                <td>${groupMapData.get(deviceDataMap.get(device.parentId).groupId).groupName}</td>
+                                <td>${deviceDataMap.get(device.parentId).deviceName}</td>
+                                <td>${device.deviceComment}</td>
+                                <td>${device.createTime}</td>
+                                <td id="parentId_${device.parentId}">
+                                    <div class="btn-group btn-group-toggle" data-toggle="buttons" id="${device.id}">
+                                        <label class="btn btn-success" onclick="startModel(this)">
+                                            <input type="checkbox" autocomplete="off"> 启动
+                                        </label>
+                                        <label class="btn btn-warning" onclick="startModel(this)">
+                                            <input type="checkbox" autocomplete="off"> 暂停
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </main>
 <!-- Essential javascripts for application to work-->
@@ -110,22 +155,5 @@
 <!-- Page specific javascripts-->
 <script type="text/javascript" src="new/js/plugins/chart.js"></script>
 <!-- Google analytics script-->
-<script type="text/javascript">
-    if (document.location.hostname == 'pratikborsadiya.in') {
-        (function (i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r;
-            i[r] = i[r] || function () {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date();
-            a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
-            a.async = 1;
-            a.src = g;
-            m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-        ga('create', 'UA-72504830-1', 'auto');
-        ga('send', 'pageview');
-    }
-</script>
 </body>
 </html>

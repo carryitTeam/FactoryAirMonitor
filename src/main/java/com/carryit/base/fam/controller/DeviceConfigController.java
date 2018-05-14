@@ -145,4 +145,23 @@ public class DeviceConfigController {
         return modelAndView;
     }
 
+    @RequestMapping("/senorForDevice")
+    public ModelAndView senorForDevice(HttpServletRequest request) {
+        Integer parentId = Integer.parseInt(request.getParameter("parentId"));
+        ModelAndView modelAndView = new ModelAndView();
+        if (request.getSession().getAttribute("cuser") == null) {
+            modelAndView.setViewName("redirect:/");
+            return modelAndView;
+        }
+        User cuser = (User) request.getSession().getAttribute("cuser");
+        modelAndView.addObject("cuser", cuser);
+        if ("superAdmin".equalsIgnoreCase(cuser.getUserRole())) {
+            DeviceConfig deviceConfig = new DeviceConfig();
+            deviceConfig.setParentId(parentId);
+            List<DeviceConfig> deviceConfigList = deviceConfigService.queryDeviceConfigByParentId(deviceConfig);
+            modelAndView.addObject("deviceConfigList", deviceConfigList);
+        }
+        modelAndView.setViewName("new/detailSenorData");
+        return modelAndView;
+    }
 }

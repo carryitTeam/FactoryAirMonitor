@@ -21,6 +21,16 @@ public class DeviceConfig {
 
     private Integer parentId;
 
+    private String devicePort;
+
+    public String getDevicePort() {
+        return devicePort;
+    }
+
+    public void setDevicePort(String devicePort) {
+        this.devicePort = devicePort;
+    }
+
     public Integer getParentId() {
         return parentId;
     }
@@ -53,7 +63,7 @@ public class DeviceConfig {
         this.deviceType = deviceType;
     }
 
-    public int getGroupId() {
+    public Integer getGroupId() {
         return groupId;
     }
 

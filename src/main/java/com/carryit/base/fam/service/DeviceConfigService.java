@@ -52,4 +52,9 @@ public class DeviceConfigService implements IDeviceConfigService {
     public int addSensorConfig(DeviceConfig deviceConfig) {
         return deviceConfigDao.addSensorConfig(deviceConfig);
     }
+
+    @Override
+    public List<DeviceConfig> queryDeviceConfigByParentId(DeviceConfig deviceConfig) {
+        return deviceConfigDao.queryDeviceConfigByParentId(deviceConfig);
+    }
 }

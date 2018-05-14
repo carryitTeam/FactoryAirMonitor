@@ -35,8 +35,7 @@ a<%@ page language="java" contentType="text/html; charset=UTF-8"
     <!-- Navbar Right Menu-->
     <ul class="app-nav">
         <li class="app-search">
-            <input class="app-search__input" type="search" placeholder="Search">
-            <button class="app-search__button"><i class="fa fa-search"></i></button>
+            <h5>武汉环智净科技有限公司</h5>
         </li>
         <!-- User Menu-->
         <li class="dropdown"><a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Open Profile Menu"><i
@@ -115,7 +114,7 @@ a<%@ page language="java" contentType="text/html; charset=UTF-8"
                             <p>DevEui：<b>${device.devEui}</b></p>
                             <p>创建时间：<b>${device.createTime}</b></p>
                             <footer>
-                                <cite title="传感器数据"><a href="/dataRetrieveByAppEui?appEui=${device.appEui}">详细传感器数据...</a></cite>
+                                <cite title="传感器数据"><a href="/senorForDevice?parentId=${device.id}">传感器</a></cite>
                             </footer>
                         </blockquote>
                     </div>

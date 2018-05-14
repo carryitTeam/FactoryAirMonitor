@@ -25,4 +25,6 @@ public interface IDeviceConfigService {
 
     int addSensorConfig(DeviceConfig deviceConfig);
 
+    List<DeviceConfig>  queryDeviceConfigByParentId(DeviceConfig deviceConfig);
+
 }

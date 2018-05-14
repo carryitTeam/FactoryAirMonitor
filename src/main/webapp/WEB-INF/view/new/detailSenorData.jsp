@@ -1,5 +1,4 @@
-a
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+a<%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
@@ -94,37 +93,34 @@ a
         <ul class="app-breadcrumb breadcrumb">
             <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
             <li class="breadcrumb-item"><a href="/checkUser">主页</a></li>
-            <%--<li class="breadcrumb-item"><a href="/devicesForGroup?groupId=${deviceConfigList.size()>0 ? deviceConfigList.get(0).groupId:0}">设备列表</a></li>--%>
-            <li class="breadcrumb-item"><a href="/dataRetrieveByAppEui?appEui=${datasList.size()>0 ? datasList.get(0).appEui:0}">传感器数据</a></li>
+            <li class="breadcrumb-item"><a href="/devicesForGroup?groupId=${deviceConfigList.size()>0 ? deviceConfigList.get(0).groupId:0}">传感器列表</a></li>
         </ul>
     </div>
     <div class="row">
-        <div class="col-md-12">
-            <div class="tile">
-                <div class="tile-body">
-                    <table class="table table-hover table-bordered" id="sampleTable">
-                        <thead>
-                        <tr>
-                            <th>AppEui</th>
-                            <th>DevEui</th>
-                            <th>十六进制结果</th>
-                            <th>创建时间</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <c:forEach items="${datasList}" var="dl" varStatus="status">
-                            <tr>
-                                <td>${dl.appEui}</td>
-                                <td>${dl.devEui}</td>
-                                <td>${parseData.get(dl.id)}</td>
-                                <td>${dl.createTime}</td>
-                            </tr>
-                        </c:forEach>
-                        </tbody>
-                    </table>
+        <c:forEach items="${deviceConfigList}" var="device" varStatus="status">
+            <div class="col-md-4">
+                <div class="card mb-3
+                    <c:if test="${status.index % 6 ==0}"> border-primary</c:if>
+                    <c:if test="${status.index % 6 ==1}"> border-success</c:if>
+                    <c:if test="${status.index % 6 ==2}"> border-info</c:if>
+                    <c:if test="${status.index % 6 ==3}"> border-warning</c:if>
+                    <c:if test="${status.index % 6 ==4}"> border-dark</c:if>
+                    <c:if test="${status.index % 6 ==5}"> border-danger</c:if>
+                    ">
+                    <div class="card-body">
+                        <blockquote class="card-blockquote">
+                            <p>设备名称：<b>${device.deviceName}</b></p>
+                            <p>AppEui：<b>${device.appEui}</b></p>
+                            <p>DevEui：<b>${device.devEui}</b></p>
+                            <p>创建时间：<b>${device.createTime}</b></p>
+                            <footer>
+                                    <cite title="传感器数据"><a href="/dataRetrieveByAppEui?appEui=${device.appEui}">详细传感器数据...</a></cite>
+                            </footer>
+                        </blockquote>
+                    </div>
                 </div>
             </div>
-        </div>
+        </c:forEach>
     </div>
 </main>
 <!-- Essential javascripts for application to work-->
@@ -136,8 +132,5 @@ a
 <script src="new/js/plugins/pace.min.js"></script>
 <!-- Page specific javascripts-->
 <script type="text/javascript" src="new/js/plugins/chart.js"></script>
-<script type="text/javascript">
-    $('#sampleTable').DataTable();
-</script>
 </body>
 </html>

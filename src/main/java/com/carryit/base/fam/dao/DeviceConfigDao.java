@@ -25,4 +25,6 @@ public interface DeviceConfigDao {
     List<DeviceConfig> queryAllDeviceConfig();
 
     List<DeviceConfig> queryDeviceConfigByType(DeviceConfig deviceConfig);
+
+    List<DeviceConfig>  queryDeviceConfigByParentId(DeviceConfig deviceConfig);
 }

@@ -113,7 +113,7 @@
                         <tr>
                             <th>AppEui</th>
                             <th>DevEui</th>
-                            <th>设备名</th>
+                            <th>传感器名</th>
                             <th>所属单位</th>
                             <th>所属设备</th>
                             <th>备注</th>
