@@ -88,13 +88,13 @@ public class UserController {
         User cuser = null;
 
         // 验证session
-        if (userId ==null ){
-            if(userSession.getAttribute("cuser") != null){
+        if (userId == null) {
+            if (userSession.getAttribute("cuser") != null) {
                 cuser = (User) userSession.getAttribute("cuser");
-            }else {
+            } else {
                 model.setViewName("redirect:/");
             }
-        }else {
+        } else {
             cuser = userService.checkUserByPwd(user);
         }
         // 验证db是否成功
@@ -104,9 +104,16 @@ public class UserController {
         } else {
             userSession.setAttribute("cuser", cuser);
             model.addObject("cuser", cuser);
-            if ("superAdmin".equalsIgnoreCase(cuser.getUserRole())){
+            if ("superAdmin".equalsIgnoreCase(cuser.getUserRole())) {
                 List<GroupInfo> groupInfos = groupInfoService.queryAllGroupInfo();
                 model.addObject("groupInfos", groupInfos);
+            } else {
+                GroupInfo groupInfo = new GroupInfo();
+                groupInfo.setId(cuser.getGroupId());
+                GroupInfo groupInfos = groupInfoService.queryGroupInfoById(groupInfo);
+                List<GroupInfo> groupInfoList = new ArrayList<>();
+                groupInfoList.add(groupInfos);
+                model.addObject("groupInfos", groupInfoList);
             }
             model.setViewName("new/main");
         }
@@ -130,24 +137,33 @@ public class UserController {
             user.setUserRole("admin");
             userList.addAll(userService.queryAllUsersByRole(user));
             List<GroupInfo> groupInfos = groupInfoService.queryAllGroupInfo();
-            Map<Integer,GroupInfo> mapData = toMapData(groupInfos);
+            Map<Integer, GroupInfo> mapData = toMapData(groupInfos);
             modelAndView.addObject("groupMapData", mapData);
+            modelAndView.addObject("userList", userList);
+        } else if ("admin".equalsIgnoreCase(cuser.getUserRole())){
+            List<GroupInfo> groupInfos = groupInfoService.queryAllGroupInfo();
+            Map<Integer, GroupInfo> mapData = toMapData(groupInfos);
+            modelAndView.addObject("groupMapData", mapData);
+            User user = new User();
+            user.setGroupId(cuser.getGroupId());
+            List<User> userList = userService.queryAllUsersByGroupId(user);
             modelAndView.addObject("userList", userList);
         }
         modelAndView.setViewName("new/userManager");
         return modelAndView;
     }
 
-    private Map<Integer,GroupInfo> toMapData(List<GroupInfo> groupInfos) {
-        Map<Integer,GroupInfo> groupInfoMap = new HashMap<>(100);
-        for (GroupInfo groupInfo: groupInfos){
+    private Map<Integer, GroupInfo> toMapData(List<GroupInfo> groupInfos) {
+        Map<Integer, GroupInfo> groupInfoMap = new HashMap<>(100);
+        for (GroupInfo groupInfo : groupInfos) {
             groupInfoMap.put(groupInfo.getId(), groupInfo);
         }
         return groupInfoMap;
     }
 
     @RequestMapping("/userUpdateAndInsert")
-    public @ResponseBody
+    public
+    @ResponseBody
     Object userUpdateAndInsert(HttpServletRequest request, @ModelAttribute User user) {
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

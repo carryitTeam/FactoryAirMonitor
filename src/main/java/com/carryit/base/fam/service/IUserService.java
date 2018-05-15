@@ -20,6 +20,8 @@ public interface IUserService {
 
     List<User> queryAllUsersByRole(User user);
 
+    List<User> queryAllUsersByGroupId(User user);
+
     User checkUserByPwd(User user);
 
 }

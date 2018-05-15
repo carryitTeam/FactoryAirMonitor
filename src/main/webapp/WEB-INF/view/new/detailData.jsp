@@ -1,4 +1,5 @@
-a<%@ page language="java" contentType="text/html; charset=UTF-8"
+a
+<%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
@@ -28,62 +29,7 @@ a<%@ page language="java" contentType="text/html; charset=UTF-8"
           href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body class="app sidebar-mini rtl">
-<!-- Navbar-->
-<header class="app-header"><a class="app-header__logo" href="/">Carryit</a>
-    <!-- Sidebar toggle button--><a class="app-sidebar__toggle" href="#" data-toggle="sidebar"
-                                    aria-label="Hide Sidebar"></a>
-    <!-- Navbar Right Menu-->
-    <ul class="app-nav">
-        <li class="app-search">
-            <h5>武汉环智净科技有限公司</h5>
-        </li>
-        <!-- User Menu-->
-        <li class="dropdown"><a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Open Profile Menu"><i
-                class="fa fa-user fa-lg"></i></a>
-            <ul class="dropdown-menu settings-menu dropdown-menu-right">
-                <li><a class="dropdown-item" href="page-user.html"><i class="fa fa-cog fa-lg"></i> Settings</a></li>
-                <li><a class="dropdown-item" href="page-user.html"><i class="fa fa-user fa-lg"></i> Profile</a></li>
-                <li><a class="dropdown-item" href="page-login.html"><i class="fa fa-sign-out fa-lg"></i> Logout</a></li>
-            </ul>
-        </li>
-    </ul>
-</header>
-<!-- Sidebar menu-->
-<div class="app-sidebar__overlay" data-toggle="sidebar"></div>
-<aside class="app-sidebar">
-    <div class="app-sidebar__user"><img class="app-sidebar__user-avatar"
-                                        src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg"
-                                        alt="log">
-        <div>
-            <p class="app-sidebar__user-name">${cuser.userId}</p>
-            <p class="app-sidebar__user-designation">${cuser.userRole}</p>
-        </div>
-    </div>
-    <ul class="app-menu">
-        <li><a class="app-menu__item active" href="/checkUser"><i class="app-menu__icon fa fa-university"></i><span
-                class="app-menu__label">主页</span></a></li>
-        <li><a class="app-menu__item" href="/groupManager"><i class="app-menu__icon fa  fa-object-group"></i><span
-                class="app-menu__label">单位管理</span></a></li>
-        <li><a class="app-menu__item" href="/userManager"><i class="app-menu__icon fa  fa-users"></i><span
-                class="app-menu__label">账号管理</span></a></li>
-        <li><a class="app-menu__item" href="/topManager"><i class="app-menu__icon fa fa-share-alt"></i><span
-                class="app-menu__label">拓扑管理</span></a></li>
-        <li><a class="app-menu__item" href="/alertManager"><i class="app-menu__icon fa fa-bell-o"></i><span
-                class="app-menu__label">报警管理</span></a></li>
-        <li><a class="app-menu__item" href="/logManager"><i class="app-menu__icon fa fa-file-text-o"></i><span
-                class="app-menu__label">日志管理</span></a></li>
-        <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i
-                class="app-menu__icon fa  fa-cogs"></i><span class="app-menu__label">配置管理</span><i
-                class="treeview-indicator fa fa-angle-right"></i></a>
-            <ul class="treeview-menu">
-                <li><a class="treeview-item" href="/deviceManager"><i class="icon fa fa-circle-o"></i> 设备</a></li>
-                <li><a class="treeview-item" href="/sensorManager"><i class="icon fa fa-circle-o"></i> 传感器</a></li>
-            </ul>
-        </li>
-        <li><a class="app-menu__item" href="/faultManager"><i class="app-menu__icon fa fa-window-close-o"></i><span
-                class="app-menu__label">故障管理</span></a></li>
-    </ul>
-</aside>
+<jsp:include page="header_left.jsp" flush="true"/>
 <main class="app-content">
     <div class="app-title">
         <div>
@@ -93,19 +39,21 @@ a<%@ page language="java" contentType="text/html; charset=UTF-8"
         <ul class="app-breadcrumb breadcrumb">
             <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
             <li class="breadcrumb-item"><a href="/checkUser">主页</a></li>
-            <li class="breadcrumb-item"><a href="/devicesForGroup?groupId=${deviceConfigList.size()>0 ? deviceConfigList.get(0).groupId:0}">设备列表</a></li>
+            <li class="breadcrumb-item"><a
+                    href="/devicesForGroup?groupId=${deviceConfigList.size()>0 ? deviceConfigList.get(0).groupId:0}">设备列表</a>
+            </li>
         </ul>
     </div>
     <div class="row">
         <c:forEach items="${deviceConfigList}" var="device" varStatus="status">
             <div class="col-md-4">
-                <div class="card mb-3
-                    <c:if test="${status.index % 6 ==0}"> border-primary</c:if>
-                    <c:if test="${status.index % 6 ==1}"> border-success</c:if>
-                    <c:if test="${status.index % 6 ==2}"> border-info</c:if>
-                    <c:if test="${status.index % 6 ==3}"> border-warning</c:if>
-                    <c:if test="${status.index % 6 ==4}"> border-dark</c:if>
-                    <c:if test="${status.index % 6 ==5}"> border-danger</c:if>
+                <div class="card mb-3 text-white
+                    <c:if test="${status.index % 6 ==0}"> bg-primary</c:if>
+                    <c:if test="${status.index % 6 ==1}"> bg-success</c:if>
+                    <c:if test="${status.index % 6 ==2}"> bg-info</c:if>
+                    <c:if test="${status.index % 6 ==3}"> bg-warning</c:if>
+                    <c:if test="${status.index % 6 ==4}"> bg-dark</c:if>
+                    <c:if test="${status.index % 6 ==5}"> bg-danger</c:if>
                     ">
                     <div class="card-body">
                         <blockquote class="card-blockquote">

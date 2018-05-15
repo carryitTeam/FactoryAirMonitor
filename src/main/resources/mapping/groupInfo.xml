@@ -33,7 +33,7 @@
 
     <select id="queryGroupInfoById" parameterType="com.carryit.base.fam.bean.GroupInfo"
             resultMap="GroupInfo">
-        select id, userId,userPwd, userName, userEmail, userRole,appEui, changeTime,createTime,groupId from groupInfos where userId=#{userId}
+       select id, groupName,groupLocation,groupComment,contactTelephoneNumber,contactUserName,changeTime,createTime from groupInfos where id=#{id}
     </select>
 
     <select id="queryAllGroupInfo" resultMap="GroupInfo">

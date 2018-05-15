@@ -43,6 +43,11 @@ public class UserService implements IUserService{
     }
 
     @Override
+    public List<User> queryAllUsersByGroupId(User user) {
+        return userDao.queryAllUsersByGroupId(user);
+    }
+
+    @Override
     public User checkUserByPwd(User user) {
         return userDao.checkUserByPwd(user);
     }

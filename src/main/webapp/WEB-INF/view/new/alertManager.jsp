@@ -28,63 +28,7 @@
           href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body class="app sidebar-mini rtl">
-<!-- Navbar-->
-<header class="app-header"><a class="app-header__logo" href="/">Carryit</a>
-    <!-- Sidebar toggle button--><a class="app-sidebar__toggle" href="#" data-toggle="sidebar"
-                                    aria-label="Hide Sidebar"></a>
-    <!-- Navbar Right Menu-->
-    <ul class="app-nav">
-        <li class="app-search">
-            <h5>武汉环智净科技有限公司</h5>
-        </li>
-        <!-- User Menu-->
-        <li class="dropdown"><a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Open Profile Menu"><i
-                class="fa fa-user fa-lg"></i></a>
-            <ul class="dropdown-menu settings-menu dropdown-menu-right">
-                <li><a class="dropdown-item" href="page-user.html"><i class="fa fa-cog fa-lg"></i> Settings</a></li>
-                <li><a class="dropdown-item" href="page-user.html"><i class="fa fa-user fa-lg"></i> Profile</a></li>
-                <li><a class="dropdown-item" href="page-login.html"><i class="fa fa-sign-out fa-lg"></i> Logout</a></li>
-            </ul>
-        </li>
-    </ul>
-</header>
-<!-- Sidebar menu-->
-<div class="app-sidebar__overlay" data-toggle="sidebar"></div>
-<aside class="app-sidebar">
-    <div class="app-sidebar__user"><img class="app-sidebar__user-avatar"
-                                        src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg"
-                                        alt="log">
-        <div>
-            <p class="app-sidebar__user-name">${cuser.userId}</p>
-            <p class="app-sidebar__user-designation">${cuser.userRole}</p>
-        </div>
-    </div>
-    <ul class="app-menu">
-        <li><a class="app-menu__item" href="/checkUser"><i class="app-menu__icon fa fa-university"></i><span
-                class="app-menu__label">主页</span></a></li>
-        <li><a class="app-menu__item" href="/groupManager"><i
-                class="app-menu__icon fa  fa-object-group"></i><span
-                class="app-menu__label">单位管理</span></a></li>
-        <li><a class="app-menu__item" href="/userManager"><i class="app-menu__icon fa  fa-users"></i><span
-                class="app-menu__label">账号管理</span></a></li>
-        <li><a class="app-menu__item" href="/topManager"><i class="app-menu__icon fa fa-share-alt"></i><span
-                class="app-menu__label">拓扑管理</span></a></li>
-        <li><a class="app-menu__item active" href="/alertManager"><i class="app-menu__icon fa fa-bell-o"></i><span
-                class="app-menu__label">报警管理</span></a></li>
-        <li><a class="app-menu__item" href="/logManager"><i class="app-menu__icon fa fa-file-text-o"></i><span
-                class="app-menu__label">日志管理</span></a></li>
-        <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i
-                class="app-menu__icon fa  fa-cogs"></i><span class="app-menu__label">配置管理</span><i
-                class="treeview-indicator fa fa-angle-right"></i></a>
-            <ul class="treeview-menu">
-                <li><a class="treeview-item" href="/deviceManager"><i class="icon fa fa-circle-o"></i> 设备</a></li>
-                <li><a class="treeview-item" href="/sensorManager"><i class="icon fa fa-circle-o"></i> 传感器</a></li>
-            </ul>
-        </li>
-        <li><a class="app-menu__item" href="/faulttManager"><i class="app-menu__icon fa fa-window-close-o"></i><span
-                class="app-menu__label">故障管理</span></a></li>
-    </ul>
-</aside>
+<jsp:include page="header_left.jsp" flush="true"/>
 <main class="app-content">
     <div class="app-title">
         <div>
@@ -150,7 +94,8 @@
                         <div class="form-group row">
                             <label class="control-label col-md-3">单位id号</label>
                             <div class="col-md-8">
-                                <input class="form-control" type="text" placeholder="用户自增长ID" id="groupId" disabled="disabled">
+                                <input class="form-control" type="text" placeholder="用户自增长ID" id="groupId"
+                                       disabled="disabled">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -162,7 +107,8 @@
                         <div class="form-group row">
                             <label class="control-label col-md-3">单位地址</label>
                             <div class="col-md-8">
-                                <textarea class="form-control" rows="2" placeholder="单位地址" id="groupLocation"></textarea>
+                                <textarea class="form-control" rows="2" placeholder="单位地址"
+                                          id="groupLocation"></textarea>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -174,7 +120,7 @@
                         <div class="form-group row">
                             <label class="control-label col-md-3">联系电话</label>
                             <div class="col-md-8">
-                                <input class="form-control col-md-8"  placeholder="联系电话" id="contactTelephoneNumber">
+                                <input class="form-control col-md-8" placeholder="联系电话" id="contactTelephoneNumber">
                             </div>
                         </div>
                     </form>
@@ -244,7 +190,7 @@
                     alert("修改失败")
                 } else {
                     alert("修改成功")
-                    window.location.href='/groupManager';
+                    window.location.href = '/groupManager';
                 }
             }
         });
@@ -256,8 +202,8 @@
         (function (i, s, o, g, r, a, m) {
             i['GoogleAnalyticsObject'] = r;
             i[r] = i[r] || function () {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date();
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
             a = s.createElement(o),
                 m = s.getElementsByTagName(o)[0];
             a.async = 1;

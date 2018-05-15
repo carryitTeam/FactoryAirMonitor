@@ -43,6 +43,11 @@
         select id, userId,userPwd, userName, userEmail, userRole,appEui, changeTime,createTime,groupId from user where userRole=#{userRole}
     </select>
 
+    <select id="queryAllUsersByGroupId" parameterType="com.carryit.base.fam.bean.User"
+            resultMap="User">
+        select id, userId,userPwd, userName, userEmail, userRole,appEui, changeTime,createTime,groupId from user where groupId=#{groupId}
+    </select>
+
     <select id="checkUserByPwd" parameterType="com.carryit.base.fam.bean.User"
             resultMap="User">
         select id, userId,userPwd, userName, userEmail, userRole,appEui, changeTime,createTime,groupId from user where userId=#{userId} and userPwd= #{userPwd}

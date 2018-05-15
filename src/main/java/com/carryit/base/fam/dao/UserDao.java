@@ -19,6 +19,8 @@ public interface UserDao {
 
     List<User> queryAllUsersByRole(User user);
 
+    List<User> queryAllUsersByGroupId(User user);
+
     User checkUserByPwd(User user);
 
 }
