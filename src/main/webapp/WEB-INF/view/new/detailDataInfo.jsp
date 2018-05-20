@@ -7,6 +7,7 @@ a
 <head>
     <!-- Twitter meta-->
     <meta charset="utf-8">
+    <meta http-equiv="refresh" content="20">
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:site" content="@pratikborsadiya">
     <meta property="twitter:creator" content="@pratikborsadiya">
@@ -40,8 +41,24 @@ a
             <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
             <li class="breadcrumb-item"><a href="/checkUser">主页</a></li>
             <%--<li class="breadcrumb-item"><a href="/devicesForGroup?groupId=${deviceConfigList.size()>0 ? deviceConfigList.get(0).groupId:0}">设备列表</a></li>--%>
-            <li class="breadcrumb-item"><a href="/dataRetrieveByAppEui?appEui=${datasList.size()>0 ? datasList.get(0).appEui:0}">传感器数据</a></li>
+            <li class="breadcrumb-item"><a
+                    href="/dataRetrieveByAppEui?appEui=${datasList.size()>0 ? datasList.get(0).appEui:0}">传感器数据</a></li>
         </ul>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <c:if test="${startedApp.get(datasList.get(0).appEui)==true}">
+                <p class="text-success">AppEui:${datasList.get(0).appEui}启动状态</p>
+            </c:if>
+            <c:if test="${startedApp.get(datasList.get(0).appEui)==false}">
+                <p class="text-danger">AppEui:${datasList.get(0).appEui}暂停状态</p>
+            </c:if>
+        </div>
+        <div class="col-md-6">
+            <marquee>
+                <span style="font-weight: bolder;font-size: 20px;color: red;">数据自动刷新时间为：20s</span>
+            </marquee>
+        </div>
     </div>
     <div class="row">
         <div class="col-md-12">

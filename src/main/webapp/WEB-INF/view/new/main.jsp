@@ -51,7 +51,7 @@
                     <c:if test="${status.index % 6 ==4}"> border-dark</c:if>
                     <c:if test="${status.index % 6 ==5}"> border-danger</c:if>
                     ">
-                    <div class="card-body">
+                    <div class="card-body" style="background-color: #d6e9ea">
                         <blockquote class="card-blockquote">
                             <p>单位名称：<b>${groupInfo.groupName}</b></p>
                             <p>单位地址：<b>${groupInfo.groupLocation}</b></p>

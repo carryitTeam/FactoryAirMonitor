@@ -47,8 +47,8 @@ a
     <div class="row">
         <c:forEach items="${deviceConfigList}" var="device" varStatus="status">
             <div class="col-md-4">
-                <div class="card mb-3 text-white
-                    <c:if test="${status.index % 6 ==0}"> bg-info</c:if>
+                <div class="card mb-3 text-white bg-success
+                    <%--<c:if test="${status.index % 6 ==0}"> bg-info</c:if>--%>
                     <%--<c:if test="${status.index % 6 ==1}"> bg-success</c:if>--%>
                     <%--<c:if test="${status.index % 6 ==2}"> bg-info</c:if>--%>
                     <%--<c:if test="${status.index % 6 ==3}"> bg-warning</c:if>--%>
@@ -62,7 +62,7 @@ a
                             <p>DevEui：<b>${device.devEui}</b></p>
                             <p>创建时间：<b>${device.createTime}</b></p>
                             <footer>
-                                <cite title="传感器数据"><a href="/senorForDevice?parentId=${device.id}">传感器</a></cite>
+                                <cite title="传感器数据"><a href="/senorForDevice?parentId=${device.id}" style="color: #000;">传感器</a></cite>
                             </footer>
                         </blockquote>
                     </div>

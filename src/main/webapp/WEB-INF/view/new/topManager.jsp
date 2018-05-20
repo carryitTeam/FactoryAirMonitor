@@ -51,6 +51,7 @@
                     <table class="table table-hover table-bordered" id="sampleTable">
                         <thead>
                         <tr>
+                            <th>查看数据</th>
                             <th>AppEui</th>
                             <th>DevEui</th>
                             <th>传感器名</th>
@@ -64,6 +65,7 @@
                         <tbody>
                         <c:forEach items="${sensorConfigList}" var="device" varStatus="status">
                             <tr>
+                                <td><a href="/dataRetrieveByAppEui?appEui=${device.appEui}">查看</a></td>
                                 <td>${device.appEui}</td>
                                 <td>${device.devEui}</td>
                                 <td>${device.deviceName}</td>

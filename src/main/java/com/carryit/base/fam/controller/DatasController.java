@@ -164,6 +164,7 @@ public class DatasController {
 
     @RequestMapping("/dataRetrieveByAppEui")
     public ModelAndView devicesForGroup(HttpServletRequest request) {
+        HashMap<String, Boolean> startedApp = (HashMap<String, Boolean>) servletContext.getAttribute("startedApp");
         String appEui = request.getParameter("appEui");
         ModelAndView modelAndView = new ModelAndView();
         if (request.getSession().getAttribute("cuser") == null) {
@@ -179,6 +180,7 @@ public class DatasController {
             Map<Integer, Map<String, String>> parseData = toCareMapData(datasList);
             modelAndView.addObject("datasList", datasList);
             modelAndView.addObject("parseData", parseData);
+            modelAndView.addObject("startedApp", startedApp);
         }
         modelAndView.setViewName("new/detailDataInfo");
         return modelAndView;
