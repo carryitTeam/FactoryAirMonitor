@@ -48,12 +48,12 @@ a
         <c:forEach items="${deviceConfigList}" var="device" varStatus="status">
             <div class="col-md-4">
                 <div class="card mb-3 text-white
-                    <c:if test="${status.index % 6 ==0}"> bg-primary</c:if>
-                    <c:if test="${status.index % 6 ==1}"> bg-success</c:if>
-                    <c:if test="${status.index % 6 ==2}"> bg-info</c:if>
-                    <c:if test="${status.index % 6 ==3}"> bg-warning</c:if>
-                    <c:if test="${status.index % 6 ==4}"> bg-dark</c:if>
-                    <c:if test="${status.index % 6 ==5}"> bg-danger</c:if>
+                    <c:if test="${status.index % 6 ==0}"> bg-info</c:if>
+                    <%--<c:if test="${status.index % 6 ==1}"> bg-success</c:if>--%>
+                    <%--<c:if test="${status.index % 6 ==2}"> bg-info</c:if>--%>
+                    <%--<c:if test="${status.index % 6 ==3}"> bg-warning</c:if>--%>
+                    <%--<c:if test="${status.index % 6 ==4}"> bg-dark</c:if>--%>
+                    <%--<c:if test="${status.index % 6 ==5}"> bg-danger</c:if>--%>
                     ">
                     <div class="card-body">
                         <blockquote class="card-blockquote">

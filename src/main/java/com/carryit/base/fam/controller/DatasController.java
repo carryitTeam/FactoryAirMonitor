@@ -1,18 +1,18 @@
 package com.carryit.base.fam.controller;
 
-import com.carryit.base.fam.bean.AlertHistory;
 import com.carryit.base.fam.bean.Datas;
-import com.carryit.base.fam.bean.DeviceConfig;
 import com.carryit.base.fam.bean.User;
 import com.carryit.base.fam.claa.LoraDataRetrieve;
 import com.carryit.base.fam.connection.CSQuit;
 import com.carryit.base.fam.connection.Connection;
 import com.carryit.base.fam.hpb.Change;
 import com.carryit.base.fam.init.SpringBeanFactory;
-import com.carryit.base.fam.service.DatasService;
-import com.carryit.base.fam.utils.Base64Utils;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.carryit.base.fam.service.IAlertRuleService;
+import com.carryit.base.fam.service.impl.AlertRuleServiceTest;
+import com.carryit.base.fam.service.impl.DatasService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +21,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +39,16 @@ public class DatasController {
     private ServletContext servletContext;
 
     @Autowired
+    private AlertRuleServiceTest alertRuleServiceTest;
+
+    @Autowired
     private DatasService datasService;
+
+    //    @Value("${lora.host}")
+    private String loraHost = "139.129.216.128";
+
+    //    @Value("${lora.port}")
+    private String loraPort = "30002";
 
     @PostMapping("/refreshData")
     public
@@ -66,23 +74,25 @@ public class DatasController {
     @ResponseBody
     Object startReceiveData(HttpServletRequest request) {
         Map<String, LoraDataRetrieve> dataRetrieveMap = (Map<String, LoraDataRetrieve>) servletContext.getAttribute("dataRetrieveMap");
+        Map<String, Boolean> startedApp = (Map<String, Boolean>) servletContext.getAttribute("startedApp");
         if (dataRetrieveMap == null) {
-            dataRetrieveMap = new HashMap<>();
+            dataRetrieveMap = new HashMap<String, LoraDataRetrieve>();
         }
-        Map<String, Boolean> userData = (Map<String, Boolean>) servletContext.getAttribute("userData");
-        String userId = request.getParameter("userId");
+        if (startedApp == null) {
+            startedApp = new HashMap<String, Boolean>();
+        }
         String appEui = request.getParameter("appEui");
-        String appKey = userId + "_" + appEui;
-        if (userData.get(appKey) == true) {
+        String appKey = appEui;
+        if (startedApp.get(appKey) == true) {
             return 2;
         }
-        System.out.println(userId);
         LoraDataRetrieve loraDataRetrieve = SpringBeanFactory.getBean(LoraDataRetrieve.class);
         try {
             loraDataRetrieve.setAppEui(appEui);
-            loraDataRetrieve.setHost("139.129.216.128");
-            loraDataRetrieve.setPort(30002);
+            loraDataRetrieve.setHost(loraHost);
+            loraDataRetrieve.setPort(Integer.parseInt(loraPort));
             loraDataRetrieve.setRunFlag(true);
+            loraDataRetrieve.setAlertRuleService(alertRuleServiceTest);
             loraDataRetrieve.initConnection();
             Thread thread = new Thread(loraDataRetrieve);
             thread.start();
@@ -94,7 +104,7 @@ public class DatasController {
             }
 
             //发送join，注册app（公司）
-            userData.put(appKey, true);
+            startedApp.put(appKey, true);
             dataRetrieveMap.put(appKey, loraDataRetrieve);
             servletContext.setAttribute("dataRetrieveMap", dataRetrieveMap);
         } catch (Exception e) {
@@ -115,12 +125,10 @@ public class DatasController {
         if (dataRetrieveMap == null) {
             dataRetrieveMap = new HashMap<>();
         }
-        Map<String, Boolean> userData = (Map<String, Boolean>) servletContext.getAttribute("userData");
-        String userId = request.getParameter("userId");
+        Map<String, Boolean> startedApp = (Map<String, Boolean>) servletContext.getAttribute("startedApp");
         String appEui = request.getParameter("appEui");
-        System.out.println(userId);
-        String appKey = userId + "_" + appEui;
-        if (userData.get(appKey) == false) {
+        String appKey = appEui;
+        if (startedApp.get(appKey) == false) {
             return 2;
         }
         LoraDataRetrieve loraDataRetrieve = dataRetrieveMap.get(appKey);
@@ -140,7 +148,7 @@ public class DatasController {
             connection.putData(message);
             System.out.println("quit");
             //quit时，同时关闭取数线程，loraDataRetrieve.setRunFlag(false)
-            userData.put(appKey, false);
+            startedApp.put(appKey, false);
         } catch (Exception e) {
             e.printStackTrace();
             return 0;

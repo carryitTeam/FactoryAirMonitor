@@ -21,7 +21,7 @@
         <property name="username" value="${mysql.username}"/>
         <property name="password" value="${mysql.password}"/>
     </bean>
-    <context:property-placeholder location="classpath:jdbc.properties"/>
+    <context:property-placeholder location="classpath:properties/*.properties"/>
     <!-- spring和MyBatis整合，不需要mybatis的配置映射文件 -->
     <bean id="DataSource_sessionFactor" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="DataSource"/>

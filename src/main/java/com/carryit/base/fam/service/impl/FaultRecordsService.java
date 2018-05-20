@@ -1,7 +1,8 @@
-package com.carryit.base.fam.service;
+package com.carryit.base.fam.service.impl;
 
 import com.carryit.base.fam.bean.FaultRecords;
 import com.carryit.base.fam.dao.FaultRecordsDao;
+import com.carryit.base.fam.service.IFaultRecordsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

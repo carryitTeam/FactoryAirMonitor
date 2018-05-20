@@ -1,8 +1,9 @@
-package com.carryit.base.fam.service;
+package com.carryit.base.fam.service.impl;
 
 import com.carryit.base.fam.bean.Datas;
 import com.carryit.base.fam.bean.User;
 import com.carryit.base.fam.dao.DatasDao;
+import com.carryit.base.fam.service.IDatasService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

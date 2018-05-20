@@ -1,7 +1,8 @@
-package com.carryit.base.fam.service;
+package com.carryit.base.fam.service.impl;
 
 import com.carryit.base.fam.bean.User;
 import com.carryit.base.fam.dao.UserDao;
+import com.carryit.base.fam.service.IUserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -12,7 +13,7 @@ import java.util.List;
  */
 
 @Service("userService")
-public class UserService implements IUserService{
+public class UserService implements IUserService {
 
     @Resource
     private UserDao userDao;

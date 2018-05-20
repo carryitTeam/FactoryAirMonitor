@@ -1,7 +1,9 @@
 package com.carryit.base.fam.init;
 
+import com.carryit.base.fam.bean.DeviceConfig;
 import com.carryit.base.fam.bean.User;
-import com.carryit.base.fam.service.UserService;
+import com.carryit.base.fam.service.impl.DeviceConfigService;
+import com.carryit.base.fam.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,23 +20,18 @@ import java.util.Map;
 public class InitDataToMemory {
 
     @Autowired
-    private UserService userService;
+    private DeviceConfigService deviceConfigService;
 
     @Autowired
     private ServletContext servletContext;
 
-    public void initUserToMemory(){
-        User userRole = new User();
-        userRole.setUserRole("user");
-        List<User> users = userService.queryAllUsersByRole(userRole);
-        userRole.setUserRole("admin");
-        List<User> adminUsers = userService.queryAllUsersByRole(userRole);
-        users.addAll(adminUsers);
+    public void initUserToMemory() {
+        List<DeviceConfig> deviceConfigList = deviceConfigService.queryAllDeviceConfig();
 
-        Map<String,Boolean> userData = new HashMap<>();
-        for (User user: users){
-            userData.put(user.getUserId()+"_"+user.getAppEui(),false);
+        Map<String, Boolean> startedApp = new HashMap<>();
+        for (DeviceConfig deviceConfig : deviceConfigList) {
+            startedApp.put(deviceConfig.getAppEui(), false);
         }
-        servletContext.setAttribute("userData",userData);
+        servletContext.setAttribute("startedApp", startedApp);
     }
 }

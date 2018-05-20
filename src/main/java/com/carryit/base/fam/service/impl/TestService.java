@@ -1,4 +1,4 @@
-package com.carryit.base.fam.service;
+package com.carryit.base.fam.service.impl;
 
 import com.carryit.base.fam.dao.TestDao;
 import org.springframework.stereotype.Service;

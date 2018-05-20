@@ -1,8 +1,9 @@
-package com.carryit.base.fam.service;
+package com.carryit.base.fam.service.impl;
 
 import com.carryit.base.fam.bean.GroupInfo;
 import com.carryit.base.fam.bean.User;
 import com.carryit.base.fam.dao.GroupInfoDao;
+import com.carryit.base.fam.service.IGroupInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

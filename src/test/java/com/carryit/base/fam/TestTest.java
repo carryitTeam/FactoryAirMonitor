@@ -3,8 +3,14 @@ package com.carryit.base.fam;
 
 import com.carryit.base.fam.claa.LoraDataRetrieve;
 import com.carryit.base.fam.connection.*;
+import com.carryit.base.fam.service.impl.AlertRuleServiceTest;
 import com.carryit.base.fam.utils.Base64Utils;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
@@ -16,7 +22,16 @@ import static com.carryit.base.fam.utils.CmdMessageUtils.encapsulateContent;
 /**
  * Created by hlzou on 2018/1/15.
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "classpath:spring/spring-mybatis.xml")
 public class TestTest {
+
+    @Autowired
+    @Qualifier("loraDataRetrieve")
+    private LoraDataRetrieve loraDataRetrieve;
+
+    @Autowired
+    private AlertRuleServiceTest alertRuleServiceTest;
 
     @Test
     public void test9() {
@@ -79,11 +94,12 @@ public class TestTest {
     @Test
     public void test6() throws Exception {
         //获取数据
-        LoraDataRetrieve loraDataRetrieve = new LoraDataRetrieve();
+//        LoraDataRetrieve loraDataRetrieve = new LoraDataRetrieve();
         loraDataRetrieve.setAppEui("2c26c5045c000002");
         loraDataRetrieve.setHost("139.129.216.128");
         loraDataRetrieve.setPort(30002);
         loraDataRetrieve.setRunFlag(true);
+        loraDataRetrieve.setAlertRuleService(alertRuleServiceTest);
         loraDataRetrieve.initConnection();
         Thread thread = new Thread(loraDataRetrieve);
         thread.start();

@@ -1,7 +1,7 @@
 package com.carryit.base.fam.controller;
 
 import com.carryit.base.fam.bean.*;
-import com.carryit.base.fam.service.*;
+import com.carryit.base.fam.service.impl.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.logging.SimpleFormatter;
 
 /**
  * Created by hlzou on 2018/2/27.
@@ -140,7 +139,7 @@ public class UserController {
             Map<Integer, GroupInfo> mapData = toMapData(groupInfos);
             modelAndView.addObject("groupMapData", mapData);
             modelAndView.addObject("userList", userList);
-        } else if ("admin".equalsIgnoreCase(cuser.getUserRole())){
+        } else if ("admin".equalsIgnoreCase(cuser.getUserRole())) {
             List<GroupInfo> groupInfos = groupInfoService.queryAllGroupInfo();
             Map<Integer, GroupInfo> mapData = toMapData(groupInfos);
             modelAndView.addObject("groupMapData", mapData);

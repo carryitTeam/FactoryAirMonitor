@@ -3,7 +3,7 @@ package com.carryit.base.fam.controller;
 import com.carryit.base.fam.bean.AlertHistory;
 import com.carryit.base.fam.bean.User;
 import com.carryit.base.fam.hpb.Change;
-import com.carryit.base.fam.service.AlertHistoryService;
+import com.carryit.base.fam.service.impl.AlertHistoryService;
 import com.carryit.base.fam.utils.Base64Utils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;

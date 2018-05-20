@@ -1,7 +1,8 @@
-package com.carryit.base.fam.service;
+package com.carryit.base.fam.service.impl;
 
 import com.carryit.base.fam.bean.AlertHistory;
 import com.carryit.base.fam.dao.AlertHistoryDao;
+import com.carryit.base.fam.service.IAlertHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

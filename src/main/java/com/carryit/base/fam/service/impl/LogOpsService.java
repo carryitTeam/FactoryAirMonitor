@@ -1,7 +1,8 @@
-package com.carryit.base.fam.service;
+package com.carryit.base.fam.service.impl;
 
 import com.carryit.base.fam.bean.LogOps;
 import com.carryit.base.fam.dao.LogOpsDao;
+import com.carryit.base.fam.service.ILogOpsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

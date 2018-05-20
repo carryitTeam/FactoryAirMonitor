@@ -1,6 +1,6 @@
 package com.carryit.base.fam.controller;
 
-import com.carryit.base.fam.service.TestService;
+import com.carryit.base.fam.service.impl.TestService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;

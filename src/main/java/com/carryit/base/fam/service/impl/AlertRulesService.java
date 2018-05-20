@@ -1,7 +1,8 @@
-package com.carryit.base.fam.service;
+package com.carryit.base.fam.service.impl;
 
 import com.carryit.base.fam.bean.AlertRules;
 import com.carryit.base.fam.dao.AlertRulesDao;
+import com.carryit.base.fam.service.IAlertRulesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

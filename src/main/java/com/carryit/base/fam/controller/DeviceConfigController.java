@@ -2,11 +2,9 @@ package com.carryit.base.fam.controller;
 
 import com.carryit.base.fam.bean.DeviceConfig;
 import com.carryit.base.fam.bean.GroupInfo;
-import com.carryit.base.fam.bean.LogOps;
 import com.carryit.base.fam.bean.User;
-import com.carryit.base.fam.service.DeviceConfigService;
-import com.carryit.base.fam.service.GroupInfoService;
-import com.carryit.base.fam.service.LogOpsService;
+import com.carryit.base.fam.service.impl.DeviceConfigService;
+import com.carryit.base.fam.service.impl.GroupInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,8 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

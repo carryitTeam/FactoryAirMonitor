@@ -1,7 +1,8 @@
-package com.carryit.base.fam.service;
+package com.carryit.base.fam.service.impl;
 
 import com.carryit.base.fam.bean.DeviceConfig;
 import com.carryit.base.fam.dao.DeviceConfigDao;
+import com.carryit.base.fam.service.IDeviceConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

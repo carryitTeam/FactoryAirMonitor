@@ -1,14 +1,7 @@
 package com.carryit.base.fam.utils;
 
-import com.carryit.base.fam.bean.AlertHistory;
-import com.carryit.base.fam.bean.Datas;
-import com.carryit.base.fam.service.AlertHistoryService;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.carryit.base.fam.service.impl.AlertHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.carryit.base.fam.utils.ChangeToOneUtils;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 public class JudgeDemo {
     @Autowired

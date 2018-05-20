@@ -2,7 +2,7 @@ package com.carryit.base.fam.controller;
 
 import com.carryit.base.fam.bean.GroupInfo;
 import com.carryit.base.fam.bean.User;
-import com.carryit.base.fam.service.GroupInfoService;
+import com.carryit.base.fam.service.impl.GroupInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;

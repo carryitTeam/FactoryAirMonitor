@@ -2,20 +2,19 @@ package com.carryit.base.fam.claa;
 
 import com.carryit.base.fam.bean.AlertHistory;
 import com.carryit.base.fam.bean.Datas;
-import com.carryit.base.fam.bean.LoraData;
 import com.carryit.base.fam.connection.CSJoinReq;
 import com.carryit.base.fam.connection.Configure;
 import com.carryit.base.fam.connection.Connection;
 import com.carryit.base.fam.connection.TCPConnection;
-import com.carryit.base.fam.service.AlertHistoryService;
-import com.carryit.base.fam.service.DatasService;
+import com.carryit.base.fam.service.impl.AlertHistoryService;
+import com.carryit.base.fam.service.impl.DatasService;
+import com.carryit.base.fam.service.IAlertRuleService;
 import com.carryit.base.fam.utils.Base64Utils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.io.IOException;
 import java.net.SocketException;
 import java.util.*;
@@ -58,6 +57,16 @@ public class LoraDataRetrieve implements Runnable {
     private int port;
 
     private String appEui;
+
+    private IAlertRuleService alertRuleService;
+
+    public IAlertRuleService getAlertRuleService() {
+        return alertRuleService;
+    }
+
+    public void setAlertRuleService(IAlertRuleService alertRuleService) {
+        this.alertRuleService = alertRuleService;
+    }
 
     public String getAppEui() {
         return appEui;
@@ -165,7 +174,7 @@ public class LoraDataRetrieve implements Runnable {
                         List<Map<String, Object>> gwrx = (List<Map<String, Object>>) app.get("gwrx");
                         Object lsnr = gwrx.get(0).get("lsnr");
 
-                        if ((lsnr instanceof Integer && (int) lsnr > 9) || (lsnr instanceof Double) && (double) lsnr > 9) {
+                        if (alertRuleService.checkData(datas)){
                             AlertHistory alertHistory = new AlertHistory();
                             alertHistory.setAppEui(appEui);
                             alertHistory.setDevEui(devEui);

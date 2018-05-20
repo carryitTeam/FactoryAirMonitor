@@ -1,6 +1,7 @@
 package com.carryit.base.fam.service;
 
 import com.carryit.base.fam.bean.AlertHistory;
+import com.carryit.base.fam.service.impl.AlertHistoryService;
 import com.carryit.base.fam.utils.ChangeToOneUtils;
 import com.carryit.base.fam.utils.ChangeToSevenUtils;
 import com.carryit.base.fam.utils.ChangeToSixUtils;

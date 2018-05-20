@@ -7,7 +7,10 @@
 
     <mvc:annotation-driven/>
     <context:annotation-config/>
-    <context:component-scan base-package="com.carryit.base.fam.service,com.carryit.base.fam.dao"/>
+    <context:component-scan base-package="com.carryit.base.fam.service,com.carryit.base.fam.dao,
+com.carryit.base.fam.service,com.carryit.base.fam.claa,
+com.carryit.base.fam.service,com.carryit.base.fam.connection,
+com.carryit.base.fam.service,com.carryit.base.fam.service"/>
 
     <bean id="DataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close" autowire="no">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
@@ -25,7 +28,7 @@
         <property name="username" value="${mysql.username}"/>
         <property name="password" value="${mysql.password}"/>
     </bean>
-    <context:property-placeholder location="classpath:jdbc.properties"/>
+    <context:property-placeholder location="classpath:properties/*.properties"/>
     <!-- spring和MyBatis整合，不需要mybatis的配置映射文件 -->
     <bean id="DataSource_sessionFactor" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="DataSource"/>

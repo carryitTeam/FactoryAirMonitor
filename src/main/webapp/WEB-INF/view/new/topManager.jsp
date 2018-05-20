@@ -42,7 +42,7 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <img src="/pic/f1.jpg" height="400" width="1000" />
+            <img src="/pic/f1.jpg" height="400" width="1000"/>
         </div>
 
         <div class="col-md-12">
@@ -73,12 +73,18 @@
                                 <td>${device.createTime}</td>
                                 <td id="parentId_${device.parentId}">
                                     <div class="btn-group btn-group-toggle" data-toggle="buttons" id="${device.id}">
-                                        <label class="btn btn-success" onclick="startModel(this)">
-                                            <input type="checkbox" autocomplete="off"> 启动
-                                        </label>
-                                        <label class="btn btn-warning" onclick="startModel(this)">
-                                            <input type="checkbox" autocomplete="off"> 暂停
-                                        </label>
+                                        <c:if test="${startedApp.get(device.appEui)==true}">
+                                            <label class="btn btn-warning" onclick="startAndStopReceiveData(this)"
+                                                   id="${device.appEui}">
+                                                <input type="checkbox" autocomplete="off">暂停
+                                            </label>
+                                        </c:if>
+                                        <c:if test="${startedApp.get(device.appEui)==false}">
+                                            <label class="btn btn-success" onclick="startAndStopReceiveData(this)"
+                                                   id="${device.appEui}">
+                                                <input type="checkbox" autocomplete="off">启动
+                                            </label>
+                                        </c:if>
                                     </div>
                                 </td>
                             </tr>
@@ -100,5 +106,63 @@
 <!-- Page specific javascripts-->
 <script type="text/javascript" src="new/js/plugins/chart.js"></script>
 <!-- Google analytics script-->
+<script type="text/javascript">
+    function startAndStopReceiveData(node) {
+        var appEui = $(node).attr("id");
+        var currStatus = transferString($(node).text());
+        if (currStatus == '启动') {
+            $.ajax({
+                type: 'POST',
+                url: "startReceiveData",
+                async: false,
+                data: {
+                    appEui: appEui
+                },
+                success: function (data) {
+                    if (data == "1") {
+                        $(node).text("暂停");
+                        $(node).attr("class", "btn btn-warning")
+                        alert("该appEui启动成功...")
+                    } else if (data == 2) {
+                        alert("该appEui已启动...")
+                    } else if (data == 3) {
+                        alert("该appEui注册失败")
+                    }
+                }
+            });
+        } else if (currStatus == '暂停') {
+            $.ajax({
+                type: 'POST',
+                url: "stopReceiveData",
+                async: false,
+                data: {
+                    appEui: appEui
+                },
+                success: function (data) {
+                    if (data == "1") {
+                        $(node).text("启动");
+                        $(node).attr("class", "btn btn-success")
+                        alert("该appEui停止成功...")
+                    } else if (data == 2) {
+                        alert("该appEui已停止...")
+                    }
+                }
+            });
+        }
+    }
+
+    //替换所有的回车换行
+    function transferString(content) {
+        var string = content;
+        try {
+            string = string.replace(/\r\n/g, "")
+            string = string.replace(/\n/g, "");
+            string = string.replace(/\s+/g, "")
+        } catch (e) {
+            alert(e.message);
+        }
+        return string;
+    }
+</script>
 </body>
 </html>
