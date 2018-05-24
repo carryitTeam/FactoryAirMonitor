@@ -15,38 +15,39 @@
         <result column="createTime" property="createTime"/>
         <result column="parentId" property="parentId"/>
         <result column="devicePort" property="devicePort"/>
+        <result column="deviceLevel" property="deviceLevel"/>
     </resultMap>
 
     <select id="queryAllDeviceConfig"
             resultMap="DeviceConfig">
-        select id,appEui,devEui,groupId,deviceType,deviceName,deviceComment,createTime,parentId,devicePort from deviceconfig
+        select id,appEui,devEui,groupId,deviceType,deviceName,deviceComment,createTime,parentId,devicePort,deviceLevel from deviceconfig
     </select>
 
     <select id="queryDeviceConfigByGroupId" parameterType="com.carryit.base.fam.bean.DeviceConfig"
             resultMap="DeviceConfig">
-        select id,appEui,devEui,groupId,deviceType,deviceName,deviceComment,createTime,parentId,devicePort from deviceconfig where groupId=#{groupId}
+        select id,appEui,devEui,groupId,deviceType,deviceName,deviceComment,createTime,parentId,devicePort,deviceLevel from deviceconfig where groupId=#{groupId}
     </select>
 
     <select id="queryDeviceConfigByType" parameterType="com.carryit.base.fam.bean.DeviceConfig"
             resultMap="DeviceConfig">
-        select id,appEui,devEui,groupId,deviceType,deviceName,deviceComment,createTime,parentId,devicePort from deviceconfig where deviceType=#{deviceType}
+        select id,appEui,devEui,groupId,deviceType,deviceName,deviceComment,createTime,parentId,devicePort,deviceLevel from deviceconfig where deviceType=#{deviceType}
     </select>
 
     <select id="queryDeviceConfigByParentId" parameterType="com.carryit.base.fam.bean.DeviceConfig"
             resultMap="DeviceConfig">
-        select id,appEui,devEui,groupId,deviceType,deviceName,deviceComment,createTime,parentId,devicePort from deviceconfig where parentId=#{parentId}
+        select id,appEui,devEui,groupId,deviceType,deviceName,deviceComment,createTime,parentId,devicePort,deviceLevel from deviceconfig where parentId=#{parentId}
     </select>
 
     <insert id="addDeviceConfig" parameterType="com.carryit.base.fam.bean.DeviceConfig"
             useGeneratedKeys="true" keyProperty="id">
-        insert into deviceconfig(appEui,devEui,groupId,deviceType,deviceName,deviceComment,devicePort)
-        values(#{appEui},#{devEui},#{groupId},#{deviceType},#{deviceName},#{deviceComment},#{devicePort})
+        insert into deviceconfig(appEui,devEui,groupId,deviceType,deviceName,deviceComment)
+        values(#{appEui},#{devEui},#{groupId},#{deviceType},#{deviceName},#{deviceComment})
     </insert>
 
     <insert id="addSensorConfig" parameterType="com.carryit.base.fam.bean.DeviceConfig"
             useGeneratedKeys="true" keyProperty="id">
-        insert into deviceconfig(appEui,devEui,groupId,deviceType,deviceName,deviceComment,parentId)
-        values(#{appEui},#{devEui},#{groupId},#{deviceType},#{deviceName},#{deviceComment},#{parentId})
+        insert into deviceconfig(appEui,devEui,groupId,deviceType,deviceName,deviceComment,parentId,devicePort,deviceLevel)
+        values(#{appEui},#{devEui},#{groupId},#{deviceType},#{deviceName},#{deviceComment},#{parentId},#{devicePort},#{deviceLevel})
     </insert>
 
     <delete id="deleteDeviceConfigById" parameterType="com.carryit.base.fam.bean.DeviceConfig">
@@ -61,7 +62,7 @@
 
     <update id="updateSensorConfigById" parameterType="com.carryit.base.fam.bean.DeviceConfig">
         update deviceconfig set deviceName=#{deviceName},appEui=#{appEui},devEui=#{devEui},groupId=#{groupId},parentId=#{parentId},
-        deviceComment=#{deviceComment}
+        deviceComment=#{deviceComment},devicePort=#{devicePort},deviceLevel=#{deviceLevel}
         where id=#{id}
     </update>
 

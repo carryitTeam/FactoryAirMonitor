@@ -54,27 +54,29 @@
                             <th>查看数据</th>
                             <th>AppEui</th>
                             <th>DevEui</th>
-                            <th>传感器名</th>
+                            <th>设备名称</th>
                             <th>所属单位</th>
-                            <th>所属设备</th>
                             <th>备注</th>
                             <th>创建时间</th>
                             <th>操作</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach items="${sensorConfigList}" var="device" varStatus="status">
+                        <c:forEach items="${deviceConfigList}" var="device" varStatus="status">
                             <tr>
                                 <td><a href="/dataRetrieveByAppEui?appEui=${device.appEui}">查看</a></td>
                                 <td>${device.appEui}</td>
                                 <td>${device.devEui}</td>
                                 <td>${device.deviceName}</td>
-                                <td>${groupMapData.get(deviceDataMap.get(device.parentId).groupId).groupName}</td>
-                                <td>${deviceDataMap.get(device.parentId).deviceName}</td>
+                                <td>${groupMapData.get(device.groupId).groupName}</td>
                                 <td>${device.deviceComment}</td>
                                 <td>${device.createTime}</td>
                                 <td id="parentId_${device.parentId}">
-                                    <div class="btn-group btn-group-toggle" data-toggle="buttons" id="${device.id}">
+                                    <div class="btn-group btn-group-toggle" data-toggle="buttons" id="${device.id}"
+                                            <c:if test="${cuser.userRole=='user'}">
+                                                style="display: none"
+                                            </c:if>
+                                    >
                                         <c:if test="${startedApp.get(device.appEui)==true}">
                                             <label class="btn btn-warning" onclick="startAndStopReceiveData(this)"
                                                    id="${device.appEui}">

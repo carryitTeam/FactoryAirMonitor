@@ -62,7 +62,8 @@ a
                             <p>DevEui：<b>${device.devEui}</b></p>
                             <p>创建时间：<b>${device.createTime}</b></p>
                             <footer>
-                                <cite title="传感器数据"><a href="/senorForDevice?parentId=${device.id}" style="color: #000;">传感器</a></cite>
+                                <cite title="传感器数据"><a href="/senorForDevice?parentId=${device.id}" style="color: #000;">联动设备</a></cite>
+                                <cite title="传感器数据"><a href="/dataRetrieveByAppEui?appEui=${device.appEui}" style="color: #000;">传感器数据</a></cite>
                             </footer>
                         </blockquote>
                     </div>

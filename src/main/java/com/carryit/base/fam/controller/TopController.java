@@ -38,31 +38,24 @@ public class TopController {
         }
         User cuser = (User) request.getSession().getAttribute("cuser");
         modelAndView.addObject("cuser", cuser);
+        List<GroupInfo> groupInfos = groupInfoService.queryAllGroupInfo();
+        Map<Integer, GroupInfo> mapData = toMapData(groupInfos);
+        modelAndView.addObject("groupMapData", mapData);
+        modelAndView.addObject("startedApp", startedApp);
         if ("superAdmin".equalsIgnoreCase(cuser.getUserRole())) {
             DeviceConfig deviceConfig = new DeviceConfig();
             deviceConfig.setDeviceType("device");
             List<DeviceConfig> deviceConfigList = deviceConfigService.queryDeviceConfigByType(deviceConfig);
-
-            Map<Integer, DeviceConfig> mapDataDev = toMapDataDev(deviceConfigList);
-            deviceConfig.setDeviceType("sensor");
-            List<DeviceConfig> sensorConfigList = deviceConfigService.queryDeviceConfigByType(deviceConfig);
-            List<GroupInfo> groupInfos = groupInfoService.queryAllGroupInfo();
-            Map<Integer, GroupInfo> mapData = toMapData(groupInfos);
-            modelAndView.addObject("groupMapData", mapData);
-            modelAndView.addObject("deviceDataMap", mapDataDev);
-            modelAndView.addObject("sensorConfigList", sensorConfigList);
-            modelAndView.addObject("startedApp", startedApp);
+            deviceConfig.setDeviceType("device");
+            modelAndView.addObject("deviceConfigList", deviceConfigList);
+        }else {
+            DeviceConfig deviceConfig = new DeviceConfig();
+            deviceConfig.setGroupId(cuser.getGroupId());
+            List<DeviceConfig> deviceConfigList = deviceConfigService.queryDeviceConfigByGroupId(deviceConfig);
+            modelAndView.addObject("deviceConfigList", deviceConfigList);
         }
         modelAndView.setViewName("new/topManager");
         return modelAndView;
-    }
-
-    private Map<Integer, DeviceConfig> toMapDataDev(List<DeviceConfig> deviceConfigList) {
-        Map<Integer, DeviceConfig> deviceConfigHashMap = new HashMap<>(100);
-        for (DeviceConfig deviceConfig : deviceConfigList) {
-            deviceConfigHashMap.put(deviceConfig.getId(), deviceConfig);
-        }
-        return deviceConfigHashMap;
     }
 
     private Map<Integer, GroupInfo> toMapData(List<GroupInfo> groupInfos) {

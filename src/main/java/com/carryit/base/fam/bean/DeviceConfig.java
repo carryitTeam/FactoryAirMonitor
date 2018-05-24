@@ -23,6 +23,16 @@ public class DeviceConfig {
 
     private String devicePort;
 
+    private String deviceLevel;
+
+    public String getDeviceLevel() {
+        return deviceLevel;
+    }
+
+    public void setDeviceLevel(String deviceLevel) {
+        this.deviceLevel = deviceLevel;
+    }
+
     public String getDevicePort() {
         return devicePort;
     }

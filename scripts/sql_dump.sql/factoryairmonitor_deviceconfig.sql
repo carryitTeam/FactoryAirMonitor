@@ -33,9 +33,10 @@ CREATE TABLE `deviceconfig` (
   `deviceComment` varchar(100) DEFAULT NULL,
   `parentId` int(11) DEFAULT '-1',
   `devicePort` varchar(45) DEFAULT '0',
+  `deviceLevel` varchar(45) DEFAULT '1',
   PRIMARY KEY (`appEui`,`devEui`),
   KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +45,7 @@ CREATE TABLE `deviceconfig` (
 
 LOCK TABLES `deviceconfig` WRITE;
 /*!40000 ALTER TABLE `deviceconfig` DISABLE KEYS */;
-INSERT INTO `deviceconfig` VALUES (5,'1234','1234','2018-05-13 20:22:08',4,'device','xxx公司XXx设备','1234',-1,'8080'),(2,'23434','11111111','2018-05-13 11:43:41',-1,'sensor','test','test1231',5,'0'),(4,'2c26c5045c000002','4a77006600288a','2018-05-13 20:08:28',-1,'sensor','气体传感器','气体传感器',3,'0'),(1,'asdfasd','sdfas','2018-05-13 10:51:13',7,'device','unknown','test',-1,'0'),(3,'asdfasdf','asdfasdfasd','2018-05-13 18:35:00',2,'device','known','test',-1,'0');
+INSERT INTO `deviceconfig` VALUES (5,'1234','1234','2018-05-13 20:22:08',4,'device','xxx公司XXx设备','1234',-1,'8080','1'),(6,'234234','12312312','2018-05-25 03:00:10',-1,'sensor','1111','12312',3,'200','1'),(2,'23434','11111111','2018-05-13 11:43:41',-1,'sensor','test','test12311111',5,'23434','2'),(3,'2c26c5045c000002','4a77006600288a','2018-05-13 18:35:00',2,'device','known','test',-1,'0','1'),(4,'2c26c5045c0000021','4a77006600288a','2018-05-13 20:08:28',-1,'sensor','气体传感器','气体传感器',3,'0','1'),(1,'asdfasd','sdfas','2018-05-13 10:51:13',7,'device','unknown','test',-1,'0','1');
 /*!40000 ALTER TABLE `deviceconfig` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -57,4 +58,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-14 23:21:49
+-- Dump completed on 2018-05-25  3:01:46

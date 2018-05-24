@@ -173,15 +173,15 @@ public class DatasController {
         }
         User cuser = (User) request.getSession().getAttribute("cuser");
         modelAndView.addObject("cuser", cuser);
-        if ("superAdmin".equalsIgnoreCase(cuser.getUserRole())) {
-            Datas datas = new Datas();
-            datas.setAppEui(appEui);
-            List<Datas> datasList = datasService.queryAllUsersByAppEui(datas);
-            Map<Integer, Map<String, String>> parseData = toCareMapData(datasList);
-            modelAndView.addObject("datasList", datasList);
-            modelAndView.addObject("parseData", parseData);
-            modelAndView.addObject("startedApp", startedApp);
-        }
+//        if ("superAdmin".equalsIgnoreCase(cuser.getUserRole())) {
+        Datas datas = new Datas();
+        datas.setAppEui(appEui);
+        List<Datas> datasList = datasService.queryAllUsersByAppEui(datas);
+        Map<Integer, Map<String, String>> parseData = toCareMapData(datasList);
+        modelAndView.addObject("datasList", datasList);
+        modelAndView.addObject("parseData", parseData);
+        modelAndView.addObject("startedApp", startedApp);
+//        }
         modelAndView.setViewName("new/detailDataInfo");
         return modelAndView;
     }

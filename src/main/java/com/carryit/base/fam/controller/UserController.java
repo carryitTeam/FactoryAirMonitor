@@ -106,15 +106,17 @@ public class UserController {
             if ("superAdmin".equalsIgnoreCase(cuser.getUserRole())) {
                 List<GroupInfo> groupInfos = groupInfoService.queryAllGroupInfo();
                 model.addObject("groupInfos", groupInfos);
+                model.setViewName("new/main");
             } else {
-                GroupInfo groupInfo = new GroupInfo();
-                groupInfo.setId(cuser.getGroupId());
-                GroupInfo groupInfos = groupInfoService.queryGroupInfoById(groupInfo);
-                List<GroupInfo> groupInfoList = new ArrayList<>();
-                groupInfoList.add(groupInfos);
-                model.addObject("groupInfos", groupInfoList);
+//                GroupInfo groupInfo = new GroupInfo();
+//                groupInfo.setId(cuser.getGroupId());
+//                GroupInfo groupInfos = groupInfoService.queryGroupInfoById(groupInfo);
+//                List<GroupInfo> groupInfoList = new ArrayList<>();
+//                groupInfoList.add(groupInfos);
+//                model.addObject("groupInfos", groupInfoList);
+//                model.setViewName("new/main");
+                model.setViewName("redirect:/topManager");
             }
-            model.setViewName("new/main");
         }
         return model;
     }

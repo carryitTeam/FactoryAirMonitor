@@ -33,18 +33,18 @@
 <main class="app-content">
     <div class="app-title">
         <div>
-            <h1><i class="fa fa-circle-o"></i> 传感器管理</h1>
+            <h1><i class="fa fa-circle-o"></i> 联动报警设备管理</h1>
             <p>传感器列表</p>
         </div>
         <ul class="app-breadcrumb breadcrumb">
             <li class="breadcrumb-item"><i class="fa fa-circle-o"></i></li>
-            <li class="breadcrumb-item"><a href="#">传感器管理</a></li>
+            <li class="breadcrumb-item"><a href="#">联动报警设备管理</a></li>
         </ul>
     </div>
     <div class="row">
         <div class="col-md-12">
             <p class="bs-component">
-                <button class="btn btn-success" type="button" onclick="startModel(this)">添加传感器</button>
+                <button class="btn btn-success" type="button" onclick="startModel(this)">添加联动报警设备</button>
             </p>
         </div>
         <div class="col-md-12">
@@ -53,9 +53,11 @@
                     <table class="table table-hover table-bordered" id="sampleTable">
                         <thead>
                         <tr>
+                            <th>联动等级</th>
+                            <th>设备端口</th>
                             <th>AppEui</th>
                             <th>DevEui</th>
-                            <th>传感器名</th>
+                            <th>联动设备名</th>
                             <th>所属单位</th>
                             <th>所属设备</th>
                             <th>备注</th>
@@ -66,6 +68,8 @@
                         <tbody>
                         <c:forEach items="${sensorConfigList}" var="device" varStatus="status">
                             <tr>
+                                <td>${device.deviceLevel}</td>
+                                <td>${device.devicePort}</td>
                                 <td>${device.appEui}</td>
                                 <td>${device.devEui}</td>
                                 <td>${device.deviceName}</td>
@@ -95,7 +99,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">传感器信息</h4>
+                <h4 class="modal-title" id="myModalLabel">联动报警设备信息</h4>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                 </button>
             </div>
@@ -103,7 +107,7 @@
                 <div class="tile-body">
                     <form class="form-horizontal">
                         <div class="form-group row">
-                            <label class="control-label col-md-3">传感器id号</label>
+                            <label class="control-label col-md-3">设备id号</label>
                             <div class="col-md-8">
                                 <input class="form-control" type="text" placeholder="自增长ID" id="deviceId"
                                        disabled="disabled">
@@ -128,10 +132,25 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label class="control-label col-md-3">设备端口</label>
+                            <div class="col-md-8">
+                                <input class="form-control" type="text" placeholder="端口" id="devicePort">
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label class="control-label col-md-3">备注</label>
                             <div class="col-md-8">
                                 <textarea class="form-control" rows="2" placeholder="备注"
                                           id="deviceComment"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="control-label col-md-3">联动报警等级</label>
+                            <div class="col-md-8">
+                                <select class="form-control" id="deviceLevel">
+                                        <option value="1">一级</option>
+                                    <option value="2">二级</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -178,6 +197,8 @@
         var deviceName = p1.parent().prev().prev().prev().prev().prev().text();
         var devEui = p1.parent().prev().prev().prev().prev().prev().prev().text();
         var appEui = p1.parent().prev().prev().prev().prev().prev().prev().prev().text();
+        var devicePort=p1.parent().prev().prev().prev().prev().prev().prev().prev().text();
+        var deviceLevel=p1.parent().prev().prev().prev().prev().prev().prev().prev().prev().text();
         $("#deviceId").val("")
         $("#deviceId").val(deviceId);
         $("#deviceName").val("")
@@ -188,11 +209,15 @@
         $("#deviceDevEui").val(devEui);
         $("#deviceComment").val("")
         $("#deviceComment").val(deviceComment);
+        $("#devicePort").val("")
+        $("#devicePort").val(devicePort);
 
         if (deviceId == ""){
             $("#userGroup").find("option").get(0).selected=true
+            $("#deviceLevel").find("option").get(0).selected=true
         }else {
             $("#userGroup").find("option[value='"+userGroupId+"']").get(0).selected=true
+            $("#deviceLevel").find("option[value='"+deviceLevel+"']").get(0).selected=true
         }
     }
 
@@ -202,7 +227,9 @@
         var appEui = $("#deviceAppEui").val()
         var devEui = $("#deviceDevEui").val()
         var deviceComment = $("#deviceComment").val()
+        var devicePort = $("#devicePort").val()
         var parentId = $("#userGroup").find("option:selected").attr("value");
+        var deviceLevel = $("#deviceLevel").find("option:selected").attr("value");
         $.ajax({
             type: 'POST',
             url: "/sensorUpdateAndInsert",
@@ -213,7 +240,9 @@
                 appEui: appEui,
                 devEui: devEui,
                 deviceComment: deviceComment,
-                parentId:parentId
+                parentId:parentId,
+                devicePort:devicePort,
+                deviceLevel:deviceLevel
             },
             success: function (data) {
                 $('#groupManagerModel').modal('hide')

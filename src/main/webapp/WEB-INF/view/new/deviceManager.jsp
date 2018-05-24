@@ -32,18 +32,18 @@
 <main class="app-content">
     <div class="app-title">
         <div>
-            <h1><i class="fa fa-circle-o"></i> 设备管理</h1>
+            <h1><i class="fa fa-circle-o"></i> 数据传感设备管理</h1>
             <p>设备列表</p>
         </div>
         <ul class="app-breadcrumb breadcrumb">
             <li class="breadcrumb-item"><i class="fa fa-circle-o"></i></li>
-            <li class="breadcrumb-item"><a href="#">设备管理</a></li>
+            <li class="breadcrumb-item"><a href="#">数据传感设备管理</a></li>
         </ul>
     </div>
     <div class="row">
         <div class="col-md-12">
             <p class="bs-component">
-                <button class="btn btn-success" type="button" onclick="startModel(this)">添加设备</button>
+                <button class="btn btn-success" type="button" onclick="startModel(this)">添加数据传感设备</button>
             </p>
         </div>
         <div class="col-md-12">
@@ -52,7 +52,6 @@
                     <table class="table table-hover table-bordered" id="sampleTable">
                         <thead>
                         <tr>
-                            <th>设备端口</th>
                             <th>AppEui</th>
                             <th>DevEui</th>
                             <th>设备名</th>
@@ -65,7 +64,6 @@
                         <tbody>
                         <c:forEach items="${deviceConfigList}" var="device" varStatus="status">
                             <tr>
-                                <td>${device.devicePort}</td>
                                 <td>${device.appEui}</td>
                                 <td>${device.devEui}</td>
                                 <td>${device.deviceName}</td>
@@ -127,12 +125,6 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="control-label col-md-3">设备端口</label>
-                            <div class="col-md-8">
-                                <input class="form-control" type="text" placeholder="端口" id="devicePort">
-                            </div>
-                        </div>
-                        <div class="form-group row">
                             <label class="control-label col-md-3">备注</label>
                             <div class="col-md-8">
                                 <textarea class="form-control" rows="2" placeholder="备注"
@@ -183,7 +175,6 @@
         var deviceName = p1.parent().prev().prev().prev().prev().text();
         var devEui = p1.parent().prev().prev().prev().prev().prev().text();
         var appEui = p1.parent().prev().prev().prev().prev().prev().prev().text();
-        var devicePort=p1.parent().prev().prev().prev().prev().prev().prev().prev().text();
         $("#deviceId").val("")
         $("#deviceId").val(deviceId);
         $("#deviceName").val("")
@@ -194,8 +185,6 @@
         $("#deviceDevEui").val(devEui);
         $("#deviceComment").val("")
         $("#deviceComment").val(deviceComment);
-        $("#devicePort").val("")
-        $("#devicePort").val(devicePort);
 
         if (deviceId == ""){
             $("#userGroup").find("option").get(0).selected=true
@@ -210,7 +199,6 @@
         var appEui = $("#deviceAppEui").val()
         var devEui = $("#deviceDevEui").val()
         var deviceComment = $("#deviceComment").val()
-        var devicePort = $("#devicePort").val()
         var groupId = $("#userGroup").find("option:selected").attr("value");
         $.ajax({
             type: 'POST',
@@ -222,8 +210,7 @@
                 appEui: appEui,
                 devEui: devEui,
                 deviceComment: deviceComment,
-                groupId:groupId,
-                devicePort:devicePort
+                groupId:groupId
             },
             success: function (data) {
                 $('#groupManagerModel').modal('hide')

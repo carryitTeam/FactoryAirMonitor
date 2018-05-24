@@ -15,7 +15,7 @@ public class LogOutController {
         ModelAndView model = new ModelAndView();
         HttpSession userSession = request.getSession();
         userSession.removeAttribute("cuser");
-        model.setViewName("/index");
+        model.setViewName("/");
         return model;
     }
 }

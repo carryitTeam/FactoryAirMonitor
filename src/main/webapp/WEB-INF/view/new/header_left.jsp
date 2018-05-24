@@ -95,11 +95,11 @@
                 <li><a class="treeview-item
 <c:if test="${fn:contains(pageContext.request.requestURI,'deviceManager')}">
             active
-        </c:if>" href="/deviceManager"><i class="icon fa fa-circle-o"></i> 设备</a></li>
+        </c:if>" href="/deviceManager"><i class="icon fa fa-circle-o"></i> 数据传感设备</a></li>
                 <li><a class="treeview-item
 <c:if test="${fn:contains(pageContext.request.requestURI,'sensorManager')}">
             active
-        </c:if>" href="/sensorManager"><i class="icon fa fa-circle-o"></i> 传感器</a></li>
+        </c:if>" href="/sensorManager"><i class="icon fa fa-circle-o"></i> 联动报警设备</a></li>
             </ul>
         </li>
         <li><a class="app-menu__item

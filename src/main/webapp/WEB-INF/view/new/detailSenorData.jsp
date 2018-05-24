@@ -54,13 +54,11 @@ a<%@ page language="java" contentType="text/html; charset=UTF-8"
                     ">
                     <div class="card-body">
                         <blockquote class="card-blockquote">
-                            <p>传感器名称：<b>${device.deviceName}</b></p>
+                            <p>联动设备名称：<b>${device.deviceName}</b></p>
                             <p>AppEui：<b>${device.appEui}</b></p>
                             <p>DevEui：<b>${device.devEui}</b></p>
+                            <p>DevEui：<b>${device.devicePort}</b></p>
                             <p>创建时间：<b>${device.createTime}</b></p>
-                            <footer>
-                                    <cite title="传感器数据"><a href="/dataRetrieveByAppEui?appEui=${device.appEui}" style="color: #000;">详细传感器数据...</a></cite>
-                            </footer>
                         </blockquote>
                     </div>
                 </div>
