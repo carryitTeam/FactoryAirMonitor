@@ -43,8 +43,10 @@ public class DeviceConfigController {
             Map<Integer,GroupInfo> mapData = toMapData(groupInfos);
             modelAndView.addObject("groupMapData", mapData);
             modelAndView.addObject("deviceConfigList", deviceConfigList);
+            modelAndView.setViewName("new/deviceManager");
+        }else {
+            modelAndView.setViewName("redirect:/topManager");
         }
-        modelAndView.setViewName("new/deviceManager");
         return modelAndView;
     }
 
@@ -93,8 +95,10 @@ public class DeviceConfigController {
             modelAndView.addObject("groupMapData", mapData);
             modelAndView.addObject("deviceDataMap", mapDataDev);
             modelAndView.addObject("sensorConfigList", sensorConfigList);
+            modelAndView.setViewName("new/sensorManager");
+        }else {
+            modelAndView.setViewName("redirect:/topManager");
         }
-        modelAndView.setViewName("new/sensorManager");
         return modelAndView;
     }
 

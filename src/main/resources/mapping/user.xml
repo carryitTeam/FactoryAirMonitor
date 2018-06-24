@@ -29,7 +29,7 @@
     </delete>
 
     <update id="updateUser" parameterType="com.carryit.base.fam.bean.User">
-        update user set userName=#{userName},userEmail=#{userEmail},appEui=#{appEui},changeTime=#{changeTime}
+        update user set userName=#{userName}, userPwd=#{userPwd},userEmail=#{userEmail},appEui=#{appEui},changeTime=#{changeTime}
         where userId=#{userId}
     </update>
 

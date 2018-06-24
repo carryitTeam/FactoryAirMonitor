@@ -25,7 +25,7 @@ DROP TABLE IF EXISTS `deviceconfig`;
 CREATE TABLE `deviceconfig` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `appEui` varchar(100) NOT NULL,
-  `devEui` varchar(100) NOT NULL,
+  `devEui` varchar(100) DEFAULT NULL,
   `createTime` datetime DEFAULT CURRENT_TIMESTAMP,
   `groupId` int(11) DEFAULT '-1',
   `deviceType` varchar(45) DEFAULT NULL,
@@ -34,9 +34,11 @@ CREATE TABLE `deviceconfig` (
   `parentId` int(11) DEFAULT '-1',
   `devicePort` varchar(45) DEFAULT '0',
   `deviceLevel` varchar(45) DEFAULT '1',
-  PRIMARY KEY (`appEui`,`devEui`),
+  `payload` varchar(200) DEFAULT NULL,
+  `alertField` varchar(45) DEFAULT 'unknown',
+  `alertNumber` decimal(10,2) DEFAULT '1000000.00',
   KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -45,7 +47,7 @@ CREATE TABLE `deviceconfig` (
 
 LOCK TABLES `deviceconfig` WRITE;
 /*!40000 ALTER TABLE `deviceconfig` DISABLE KEYS */;
-INSERT INTO `deviceconfig` VALUES (5,'1234','1234','2018-05-13 20:22:08',4,'device','xxx公司XXx设备','1234',-1,'8080','1'),(6,'234234','12312312','2018-05-25 03:00:10',-1,'sensor','1111','12312',3,'200','1'),(2,'23434','11111111','2018-05-13 11:43:41',-1,'sensor','test','test12311111',5,'23434','2'),(3,'2c26c5045c000002','4a77006600288a','2018-05-13 18:35:00',2,'device','known','test',-1,'0','1'),(4,'2c26c5045c0000021','4a77006600288a','2018-05-13 20:08:28',-1,'sensor','气体传感器','气体传感器',3,'0','1'),(1,'asdfasd','sdfas','2018-05-13 10:51:13',7,'device','unknown','test',-1,'0','1');
+INSERT INTO `deviceconfig` VALUES (1,'2c26c5045c000002','4a770066003091','2018-06-23 21:15:09',1,'device','XXX传感器','XXXdd',-1,NULL,'1',NULL,'unknown',1000000.00),(3,'2c26c5045c000002','4a7700660030b1','2018-06-23 21:17:55',-1,'sensor','XXX联动设备',NULL,1,'10','2','6B000303FF209016  ','40015',1000000.00);
 /*!40000 ALTER TABLE `deviceconfig` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -58,4 +60,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-25  3:01:46
+-- Dump completed on 2018-06-24 14:22:16

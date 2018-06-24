@@ -16,8 +16,8 @@
     <meta property="og:url" content="http://pratikborsadiya.in/blog/vali-admin">
     <meta property="og:image" content="http://pratikborsadiya.in/blog/vali-admin/hero-social.png">
     <meta property="og:description"
-          content="Vali is a responsive and free admin theme built with Bootstrap 4, SASS and PUG.js. It's fully customizable and modular.">
-    <title>Vali Admin - Free Bootstrap 4 Admin Template</title>
+          content="EI">
+    <title>EI</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -51,7 +51,7 @@
                     <table class="table table-hover table-bordered" id="sampleTable">
                         <thead>
                         <tr>
-                            <th>查看数据</th>
+                            <th>操作</th>
                             <th>AppEui</th>
                             <th>DevEui</th>
                             <th>设备名称</th>
@@ -64,7 +64,9 @@
                         <tbody>
                         <c:forEach items="${deviceConfigList}" var="device" varStatus="status">
                             <tr>
-                                <td><a href="/dataRetrieveByAppEui?appEui=${device.appEui}">查看</a></td>
+                                <td><a href="/dataRetrieveByAppEui?appEui=${device.appEui}">查看数据</a>
+                                    <a href="/sensorManager">查看告警设备</a>
+                                </td>
                                 <td>${device.appEui}</td>
                                 <td>${device.devEui}</td>
                                 <td>${device.deviceName}</td>

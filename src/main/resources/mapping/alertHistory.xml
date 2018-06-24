@@ -26,7 +26,9 @@
 
     <select id="queryAlertHistoryByAppEui" parameterType="com.carryit.base.fam.bean.AlertHistory"
             resultMap="AlertHistory">
-        select id,historyId,userId,ruleId,appEui,devEui,isProcess,jsonData,changeTime,createTime from alerthistory where  appEui=#{appEui}
+        select id,historyId,userId,ruleId,appEui,devEui,isProcess,jsonData,changeTime,createTime from alerthistory where
+        appEui in (select appEui from deviceconfig where deviceType='device' and
+        groupId in (select groupId from user where userid=#{userId}) )
     </select>
 
     <select id="queryAllAlertHistory" parameterType="com.carryit.base.fam.bean.AlertHistory"
@@ -45,7 +47,7 @@
         where historyId=#{historyId}
     </update>
 
-    <delete id="deleteAlertHistory" parameterType="com.carryit.base.fam.bean.AlertHistory">
-        delete from alerthistory where historyId=#{historyId}
-    </delete>
+    <update id="deleteAlertHistory" parameterType="com.carryit.base.fam.bean.AlertHistory">
+        update alerthistory set isProcess=#{isProcess} where historyId=#{historyId}
+    </update>
 </mapper>

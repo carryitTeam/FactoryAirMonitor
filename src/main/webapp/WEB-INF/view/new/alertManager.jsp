@@ -16,8 +16,8 @@
     <meta property="og:url" content="http://pratikborsadiya.in/blog/vali-admin">
     <meta property="og:image" content="http://pratikborsadiya.in/blog/vali-admin/hero-social.png">
     <meta property="og:description"
-          content="Vali is a responsive and free admin theme built with Bootstrap 4, SASS and PUG.js. It's fully customizable and modular.">
-    <title>Vali Admin - Free Bootstrap 4 Admin Template</title>
+          content="EI">
+    <title>EI</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -47,8 +47,10 @@
                     <table class="table table-hover table-bordered" id="sampleTable">
                         <thead>
                         <tr>
-                            <th>AppEUI</th>
-                            <th>DevEUI</th>
+                            <th>报警级别</th>
+                            <th>报警id</th>
+                            <th>AppEUI(ID)</th>
+                            <th>DevEUI(设备编号)</th>
                             <th>十六进制结果</th>
                             <th>创建时间</th>
                             <th>是否处理</th>
@@ -57,13 +59,15 @@
                         <tbody>
                         <c:forEach items="${alertHistories}" var="ah" varStatus="status">
                             <tr>
+                                <td>${ah.faultContect}</td>
+                                <td>${ah.historyId}</td>
                                 <td>${ah.appEui}</td>
                                 <td>${ah.devEui}</td>
                                 <td>${careDatas.get(ah.id)}</td>
                                 <td>${ah.createTime}</td>
                                 <td>
                                     <c:if test="${ah.isProcess=='0'}">
-                                        <button class="btn btn-small btn-info">处理</button>
+                                        <button class="btn btn-small btn-info" onclick="dealAlert(this)">处理</button>
                                     </c:if>
                                     <c:if test="${ah.isProcess!='0'}">
                                         <button class="btn btn-small btn-warning">已处理</button>
@@ -80,61 +84,6 @@
 </main>
 
 
-<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="groupManagerModel">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">单位信息</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="tile-body">
-                    <form class="form-horizontal">
-                        <div class="form-group row">
-                            <label class="control-label col-md-3">单位id号</label>
-                            <div class="col-md-8">
-                                <input class="form-control" type="text" placeholder="用户自增长ID" id="groupId"
-                                       disabled="disabled">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="control-label col-md-3">单位名称</label>
-                            <div class="col-md-8">
-                                <input class="form-control" type="text" placeholder="单位名称" id="groupName">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="control-label col-md-3">单位地址</label>
-                            <div class="col-md-8">
-                                <textarea class="form-control" rows="2" placeholder="单位地址"
-                                          id="groupLocation"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="control-label col-md-3">联系人</label>
-                            <div class="col-md-8">
-                                <input class="form-control col-md-8" placeholder="联系人" id="contactUserName">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="control-label col-md-3">联系电话</label>
-                            <div class="col-md-8">
-                                <input class="form-control col-md-8" placeholder="联系电话" id="contactTelephoneNumber">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="saveGroupData();">Save changes</button>
-            </div>
-
-        </div>
-    </div>
-</div>
-
 <!-- Essential javascripts for application to work-->
 <script src="new/js/jquery-3.2.1.min.js"></script>
 <script src="new/js/popper.min.js"></script>
@@ -145,73 +94,30 @@
 <script type="text/javascript" src="new/js/plugins/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="new/js/plugins/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript">
-    $('#sampleTable').DataTable();
-    function startModel(node) {
-        //加载模态框
-        $('#groupManagerModel').modal();
-        var p1 = $(node).parent();
-        var groupId = p1.attr("id");
-        var contactTelephoneNumber = p1.parent().prev().prev().text();
-        var contactUserName = p1.parent().prev().prev().prev().text();
-        var groupLocation = p1.parent().prev().prev().prev().prev().text();
-        var groupName = p1.parent().prev().prev().prev().prev().prev().text();
-        $("#groupId").val("")
-        $("#groupId").val(groupId);
-        $("#groupName").val("")
-        $("#groupName").val(groupName);
-        $("#groupLocation").val("")
-        $("#groupLocation").val(groupLocation);
-        $("#contactUserName").val("")
-        $("#contactUserName").val(contactUserName);
-        $("#contactTelephoneNumber").val("")
-        $("#contactTelephoneNumber").val(contactTelephoneNumber);
-    }
 
-    function saveGroupData() {
-        var groupId = $("#groupId").val();
-        var groupName = $("#groupName").val();
-        var groupLocation = $("#groupLocation").val();
-        var contactUserName = $("#contactUserName").val();
-        var contactTelephoneNumber = $("#contactTelephoneNumber").val();
+    function dealAlert(node) {
+        var appEui =  $(node).parent().prev().prev().prev().prev().text();
+        var alertId = $(node).parent().prev().prev().prev().prev().prev().text();
         $.ajax({
             type: 'POST',
-            url: "/groupUpdateAndInsert",
+            url: "/dealAlert",
             async: false,
             data: {
-                id: groupId,
-                groupName: groupName,
-                groupLocation: groupLocation,
-                contactUserName: contactUserName,
-                contactTelephoneNumber: contactTelephoneNumber
+                appEui: appEui,
+                alertId:alertId
             },
             success: function (data) {
-                $('#groupManagerModel').modal('hide')
-                if (data == -1) {
-                    alert("修改失败")
-                } else {
-                    alert("修改成功")
-                    window.location.href = '/groupManager';
+                if (data == 0) {
+                    alert("处理失败")
+                }else if (data == -1) {
+                    alert("appEui未Join启动")
+                }else {
+                    alert("处理成功，处理了 "+data+" 个联动设备")
+                    $(node).text("已处理完")
+                    $(node).attr("disabled","disabled")
                 }
             }
         });
-    }
-</script>
-<!-- Google analytics script-->
-<script type="text/javascript">
-    if (document.location.hostname == 'pratikborsadiya.in') {
-        (function (i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r;
-            i[r] = i[r] || function () {
-                    (i[r].q = i[r].q || []).push(arguments)
-                }, i[r].l = 1 * new Date();
-            a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
-            a.async = 1;
-            a.src = g;
-            m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-        ga('create', 'UA-72504830-1', 'auto');
-        ga('send', 'pageview');
     }
 </script>
 </body>

@@ -22,7 +22,7 @@ public class CmdMessageUtils {
         return sb.toString().getBytes("UTF-8");
     }
 
-    public static String encapsulateContent(Object content) throws UnsupportedEncodingException {
+    public static String encapsulateContent(Object content) {
         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
         return gson.toJson(content);
     }

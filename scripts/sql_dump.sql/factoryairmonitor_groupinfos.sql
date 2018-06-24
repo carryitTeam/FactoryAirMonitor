@@ -32,7 +32,7 @@ CREATE TABLE `groupinfos` (
   `contactUserName` varchar(45) DEFAULT NULL,
   `contactTelephoneNumber` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +41,7 @@ CREATE TABLE `groupinfos` (
 
 LOCK TABLES `groupinfos` WRITE;
 /*!40000 ALTER TABLE `groupinfos` DISABLE KEYS */;
-INSERT INTO `groupinfos` VALUES (1,'公司a','北京-四环','asdfasdf','2018-05-12 11:05:48','2018-05-12 14:27:40','张三','13800000000'),(2,'公司b','上海','asdfasd','2018-05-12 11:05:48','2018-05-12 11:05:48','李四','13811111111'),(3,'公司c','武汉','asdfasd','2018-05-12 12:02:39','2018-05-12 12:02:39','王五','13822222222'),(4,'公司ad','北京','asdfasdf','2018-05-12 11:05:48','2018-05-12 14:13:46','张三','13800000000'),(5,'公司b2','上海-浦东','asdfasd','2018-05-12 11:05:48','2018-05-12 14:25:17','李是是是','13811111111'),(6,'公司cd','武汉','asdfasd','2018-05-12 12:02:39','2018-05-12 12:02:39','王五','13822222222'),(7,'carryit','上海-长宁区',NULL,NULL,'2018-05-12 14:36:14','hlzou','1111111111111111111111'),(8,'carry','shanghai',NULL,'2018-05-12 14:36:57','2018-05-12 14:36:57','zhl','123412341234'),(9,'asdf','dfdf',NULL,'2018-05-12 16:59:34','2018-05-12 16:59:34','asdf','12341234'),(10,'asd','asdf',NULL,'2018-05-12 17:18:43','2018-05-12 17:18:43','asdf','asdf');
+INSERT INTO `groupinfos` VALUES (1,'武汉市XXX公司','武汉市江夏区藏龙大道100号',NULL,'2018-06-23 21:12:48','2018-06-23 21:12:48','大奔','11111111111');
 /*!40000 ALTER TABLE `groupinfos` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-25  3:01:46
+-- Dump completed on 2018-06-24 14:22:16

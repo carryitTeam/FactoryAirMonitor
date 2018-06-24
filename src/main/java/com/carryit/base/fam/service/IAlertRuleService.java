@@ -1,8 +1,9 @@
 package com.carryit.base.fam.service;
 
 import com.carryit.base.fam.bean.Datas;
+import com.carryit.base.fam.bean.DeviceConfig;
 
 public interface IAlertRuleService {
 
-    boolean checkData(Datas datas);
+    int checkData(Datas datas, DeviceConfig deviceConfig);
 }

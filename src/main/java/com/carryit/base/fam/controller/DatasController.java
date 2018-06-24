@@ -10,6 +10,7 @@ import com.carryit.base.fam.init.SpringBeanFactory;
 import com.carryit.base.fam.service.IAlertRuleService;
 import com.carryit.base.fam.service.impl.AlertRuleServiceTest;
 import com.carryit.base.fam.service.impl.DatasService;
+import com.carryit.base.fam.service.impl.PushDataToCsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -43,6 +44,9 @@ public class DatasController {
 
     @Autowired
     private DatasService datasService;
+
+    @Autowired
+    private PushDataToCsService pushDataToCsService;
 
     //    @Value("${lora.host}")
     private String loraHost = "139.129.216.128";
@@ -139,13 +143,14 @@ public class DatasController {
             quit.setAppEUI(appEui);
             quit.setCMD("QUIT");
             quit.setCmdSeq(3);
-            String body = encapsulateContent(quit);
-            System.out.println(body);
-            quit.setHeader(Integer.toString(body.length()));
-            quit.setContent(body);
-            byte[] message = composeMessage(body);
+            pushDataToCsService.putDataForQUIT(connection,quit);
+//            String body = encapsulateContent(quit);
+//            System.out.println(body);
+//            quit.setHeader(Integer.toString(body.length()));
+//            quit.setContent(body);
+//            byte[] message = composeMessage(body);
+//            connection.putData(message);
             dataRetrieveMap.get(appKey).setRunFlag(false);
-            connection.putData(message);
             System.out.println("quit");
             //quit时，同时关闭取数线程，loraDataRetrieve.setRunFlag(false)
             startedApp.put(appKey, false);

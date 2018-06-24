@@ -2,13 +2,13 @@ package com.carryit.base.fam.claa;
 
 import com.carryit.base.fam.bean.AlertHistory;
 import com.carryit.base.fam.bean.Datas;
-import com.carryit.base.fam.connection.CSJoinReq;
-import com.carryit.base.fam.connection.Configure;
-import com.carryit.base.fam.connection.Connection;
-import com.carryit.base.fam.connection.TCPConnection;
+import com.carryit.base.fam.bean.DeviceConfig;
+import com.carryit.base.fam.connection.*;
 import com.carryit.base.fam.service.impl.AlertHistoryService;
 import com.carryit.base.fam.service.impl.DatasService;
 import com.carryit.base.fam.service.IAlertRuleService;
+import com.carryit.base.fam.service.impl.DeviceConfigService;
+import com.carryit.base.fam.service.impl.PushDataToCsService;
 import com.carryit.base.fam.utils.Base64Utils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +41,14 @@ public class LoraDataRetrieve implements Runnable {
 
     @Autowired
     private TCPConnection connection;
+
+    @Autowired
+    private PushDataToCsService pushDataToCsService;
+
+    @Autowired
+    private DeviceConfigService deviceConfigService;
+
+    private List<DeviceConfig> sensorConfigList;
 
     private boolean isAccept = false;
 
@@ -116,20 +124,18 @@ public class LoraDataRetrieve implements Runnable {
             jq.setChallenge("12345678");
             jq.setCmdSeq(Configure.cmdseq_counter);
             jq.setCMD("JOIN");
-            String body = encapsulateContent(jq);
-            System.out.println(body);
-            jq.setHeader(Integer.toString(body.length()));
-            jq.setContent(body);
-            byte[] message = composeMessage(body);
-            connection.putData(message);
+            pushDataToCsService.putDataForJOIN(connection, jq);
             System.out.println("join");
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @Override
     public void run() {
+        DeviceConfig deviceConfig = new DeviceConfig();
+        deviceConfig.setDeviceType("sensor");
+        sensorConfigList = deviceConfigService.queryDeviceConfigByType(deviceConfig);
         ObjectMapper objectMapper = new ObjectMapper();
         int i = 0;
         Long start = System.currentTimeMillis();
@@ -169,21 +175,41 @@ public class LoraDataRetrieve implements Runnable {
                         datas.setAppEui(appEui);
                         datas.setDevEui(devEui);
                         loraDataCache.add(datas);
-                        Map<String, Object> detail = (Map<String, Object>) dataMap.get("detail");
-                        Map<String, Object> app = (Map<String, Object>) detail.get("app");
-                        List<Map<String, Object>> gwrx = (List<Map<String, Object>>) app.get("gwrx");
-                        Object lsnr = gwrx.get(0).get("lsnr");
 
-                        if (alertRuleService.checkData(datas)){
-                            AlertHistory alertHistory = new AlertHistory();
-                            alertHistory.setAppEui(appEui);
-                            alertHistory.setDevEui(devEui);
-                            alertHistory.setJsonData(allContent);
-                            String id = Long.toString(new Date().getTime());
-                            alertHistory.setRuleId("ruleid_" + id);
-                            alertHistory.setHistoryId("historyId_" + id);
-                            alertHistory.setIsProcess("0");
-                            alertHistoryService.addAlertHistory(alertHistory);
+                        for (DeviceConfig sensor : sensorConfigList) {
+                            if (appEui.equalsIgnoreCase(sensor.getAppEui())) {
+                                int alertLevel = alertRuleService.checkData(datas,sensor);
+                                //启动联动设备（红灯）
+                                if (alertLevel > 0
+                                        && alertLevel == Integer.parseInt(sensor.getDeviceLevel())) {
+                                    AlertHistory alertHistory = new AlertHistory();
+                                    alertHistory.setAppEui(appEui);
+                                    alertHistory.setDevEui(devEui);
+                                    alertHistory.setJsonData(allContent);
+                                    String id = Long.toString(System.currentTimeMillis());
+                                    alertHistory.setRuleId("ruleid_" + id);
+                                    alertHistory.setHistoryId("historyId_" + id);
+                                    alertHistory.setIsProcess("0");
+                                    alertHistory.setFaultContect(String.valueOf(alertLevel));
+                                    alertHistoryService.addAlertHistory(alertHistory);
+
+
+                                    CSData2Dev data2Dev = new CSData2Dev();
+                                    data2Dev.setCMD("SENDTO");
+                                    data2Dev.setCmdSeq(5);
+                                    data2Dev.setAppEUI(appEui);
+                                    data2Dev.setDevEUI(sensor.getDevEui());
+                                    String pl = sensor.getPayload();
+                                    String[] pp = pl.split(",");
+                                    if (pp.length > 0) {
+                                        data2Dev.setPayload(pp[0]);
+                                    }
+                                    data2Dev.setPort(Integer.parseInt(sensor.getDevicePort()));
+                                    pushDataToCsService.putDataForSENDTO(connection, data2Dev);
+                                    Thread.sleep(1000);
+                                }
+                            }
+
                         }
                     }
                 }

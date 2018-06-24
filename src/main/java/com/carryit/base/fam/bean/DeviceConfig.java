@@ -25,6 +25,36 @@ public class DeviceConfig {
 
     private String deviceLevel;
 
+    private String payload;
+
+    private String alertField;
+
+    private double alertNumber=Double.MAX_VALUE;
+
+    public String getAlertField() {
+        return alertField;
+    }
+
+    public void setAlertField(String alertField) {
+        this.alertField = alertField;
+    }
+
+    public double getAlertNumber() {
+        return alertNumber;
+    }
+
+    public void setAlertNumber(double alertNumber) {
+        this.alertNumber = alertNumber;
+    }
+
+    public String getPayload() {
+        return payload;
+    }
+
+    public void setPayload(String payload) {
+        this.payload = payload;
+    }
+
     public String getDeviceLevel() {
         return deviceLevel;
     }

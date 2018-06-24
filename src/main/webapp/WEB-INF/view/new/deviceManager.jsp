@@ -16,8 +16,8 @@
     <meta property="og:url" content="http://pratikborsadiya.in/blog/vali-admin">
     <meta property="og:image" content="http://pratikborsadiya.in/blog/vali-admin/hero-social.png">
     <meta property="og:description"
-          content="Vali is a responsive and free admin theme built with Bootstrap 4, SASS and PUG.js. It's fully customizable and modular.">
-    <title>Vali Admin - Free Bootstrap 4 Admin Template</title>
+          content="EI">
+    <title>EI</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -52,8 +52,8 @@
                     <table class="table table-hover table-bordered" id="sampleTable">
                         <thead>
                         <tr>
-                            <th>AppEui</th>
-                            <th>DevEui</th>
+                            <th>AppEui(ID)</th>
+                            <th>DevEui(设备编号)</th>
                             <th>设备名</th>
                             <th>所属单位</th>
                             <th>备注</th>
@@ -113,13 +113,13 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="control-label col-md-3">AppEui</label>
+                            <label class="control-label col-md-3">AppEui(ID)</label>
                             <div class="col-md-8">
                                 <input class="form-control" type="text" placeholder="AppEui" id="deviceAppEui">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="control-label col-md-3">DevEui</label>
+                            <label class="control-label col-md-3">DevEui(设备编号)</label>
                             <div class="col-md-8">
                                 <input class="form-control" type="text" placeholder="DevEui" id="deviceDevEui">
                             </div>

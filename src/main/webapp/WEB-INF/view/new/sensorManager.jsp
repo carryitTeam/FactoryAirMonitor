@@ -17,8 +17,8 @@
     <meta property="og:url" content="http://pratikborsadiya.in/blog/vali-admin">
     <meta property="og:image" content="http://pratikborsadiya.in/blog/vali-admin/hero-social.png">
     <meta property="og:description"
-          content="Vali is a responsive and free admin theme built with Bootstrap 4, SASS and PUG.js. It's fully customizable and modular.">
-    <title>Vali Admin - Free Bootstrap 4 Admin Template</title>
+          content="EI">
+    <title>EI</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -53,14 +53,16 @@
                     <table class="table table-hover table-bordered" id="sampleTable">
                         <thead>
                         <tr>
-                            <th>联动等级</th>
+                            <th>联动报警等级</th>
+                            <th>报警字段</th>
+                            <th>报警阈值</th>
                             <th>设备端口</th>
-                            <th>AppEui</th>
-                            <th>DevEui</th>
+                            <th>AppEui(ID)</th>
+                            <th>DevEui(设备编号)</th>
                             <th>联动设备名</th>
                             <th>所属单位</th>
                             <th>所属设备</th>
-                            <th>备注</th>
+                            <th>payload</th>
                             <th>创建时间</th>
                             <th>操作</th>
                         </tr>
@@ -69,13 +71,15 @@
                         <c:forEach items="${sensorConfigList}" var="device" varStatus="status">
                             <tr>
                                 <td>${device.deviceLevel}</td>
+                                <td>${device.alertField}</td>
+                                <td>${device.alertNumber}</td>
                                 <td>${device.devicePort}</td>
                                 <td>${device.appEui}</td>
                                 <td>${device.devEui}</td>
                                 <td>${device.deviceName}</td>
                                 <td>${groupMapData.get(deviceDataMap.get(device.parentId).groupId).groupName}</td>
                                 <td>${deviceDataMap.get(device.parentId).deviceName}</td>
-                                <td>${device.deviceComment}</td>
+                                <td>${device.payload}</td>
                                 <td>${device.createTime}</td>
                                 <td id="parentId_${device.parentId}">
                                     <div class="btn-group btn-group-toggle" data-toggle="buttons" id="${device.id}">
@@ -116,32 +120,44 @@
                         <div class="form-group row">
                             <label class="control-label col-md-3">设备名称</label>
                             <div class="col-md-8">
-                                <input class="form-control" type="text" placeholder="设备名称" id="deviceName">
+                                <input class="form-control" type="text" placeholder="设备名称" id="deviceName"/>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="control-label col-md-3">AppEui</label>
+                            <label class="control-label col-md-3">AppEui(ID)</label>
                             <div class="col-md-8">
-                                <input class="form-control" type="text" placeholder="AppEui" id="deviceAppEui">
+                                <input class="form-control" type="text" placeholder="AppEui" id="deviceAppEui"/>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="control-label col-md-3">DevEui</label>
+                            <label class="control-label col-md-3">DevEui(设备编号)</label>
                             <div class="col-md-8">
-                                <input class="form-control" type="text" placeholder="DevEui" id="deviceDevEui">
+                                <input class="form-control" type="text" placeholder="DevEui" id="deviceDevEui"/>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="control-label col-md-3">设备端口</label>
                             <div class="col-md-8">
-                                <input class="form-control" type="text" placeholder="端口" id="devicePort">
+                                <input class="form-control" type="text" placeholder="端口" id="devicePort"/>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="control-label col-md-3">备注</label>
+                            <label class="control-label col-md-3">payload</label>
                             <div class="col-md-8">
-                                <textarea class="form-control" rows="2" placeholder="备注"
+                                <textarea class="form-control" rows="2" placeholder="6B000303FF209016"
                                           id="deviceComment"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="control-label col-md-3">报警字段</label>
+                            <div class="col-md-8">
+                                <input class="form-control" type="text" placeholder="报警字段" id="alertField"/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="control-label col-md-3">报警阈值</label>
+                            <div class="col-md-8">
+                                <input class="form-control" type="text" placeholder="报警阈值" id="alertNumber"/>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -197,8 +213,10 @@
         var deviceName = p1.parent().prev().prev().prev().prev().prev().text();
         var devEui = p1.parent().prev().prev().prev().prev().prev().prev().text();
         var appEui = p1.parent().prev().prev().prev().prev().prev().prev().prev().text();
-        var devicePort=p1.parent().prev().prev().prev().prev().prev().prev().prev().text();
-        var deviceLevel=p1.parent().prev().prev().prev().prev().prev().prev().prev().prev().text();
+        var devicePort=p1.parent().prev().prev().prev().prev().prev().prev().prev().prev().text();
+        var alertNumber=p1.parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().text();
+        var alertField=p1.parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text();
+        var deviceLevel=p1.parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text();
         $("#deviceId").val("")
         $("#deviceId").val(deviceId);
         $("#deviceName").val("")
@@ -211,6 +229,10 @@
         $("#deviceComment").val(deviceComment);
         $("#devicePort").val("")
         $("#devicePort").val(devicePort);
+        $("#alertField").val("")
+        $("#alertField").val(alertField);
+        $("#alertNumber").val("")
+        $("#alertNumber").val(alertNumber);
 
         if (deviceId == ""){
             $("#userGroup").find("option").get(0).selected=true
@@ -228,6 +250,8 @@
         var devEui = $("#deviceDevEui").val()
         var deviceComment = $("#deviceComment").val()
         var devicePort = $("#devicePort").val()
+        var alertField = $("#alertField").val()
+        var alertNumber = $("#alertNumber").val()
         var parentId = $("#userGroup").find("option:selected").attr("value");
         var deviceLevel = $("#deviceLevel").find("option:selected").attr("value");
         $.ajax({
@@ -239,10 +263,12 @@
                 deviceName: deviceName,
                 appEui: appEui,
                 devEui: devEui,
-                deviceComment: deviceComment,
+                payload: deviceComment,
                 parentId:parentId,
                 devicePort:devicePort,
-                deviceLevel:deviceLevel
+                deviceLevel:deviceLevel,
+                alertField:alertField,
+                alertNumber:alertNumber
             },
             success: function (data) {
                 $('#groupManagerModel').modal('hide')
