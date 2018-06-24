@@ -44,7 +44,11 @@
     <div class="row">
         <div class="col-md-12">
             <p class="bs-component">
-                <button class="btn btn-success" type="button" onclick="startModel(this)">添加联动报警设备</button>
+                <button class="btn btn-success" type="button" onclick="startModel(this)"
+                        <c:if test="${cuser.userRole=='user'}">
+                            disabled="disabled"
+                        </c:if>
+                >添加联动报警设备</button>
             </p>
         </div>
         <div class="col-md-12">
@@ -57,8 +61,8 @@
                             <th>报警字段</th>
                             <th>报警阈值</th>
                             <th>设备端口</th>
-                            <th>AppEui(ID)</th>
-                            <th>DevEui(设备编号)</th>
+                            <th>ID</th>
+                            <th>设备编号</th>
                             <th>联动设备名</th>
                             <th>所属单位</th>
                             <th>所属设备</th>
@@ -82,7 +86,11 @@
                                 <td>${device.payload}</td>
                                 <td>${device.createTime}</td>
                                 <td id="parentId_${device.parentId}">
-                                    <div class="btn-group btn-group-toggle" data-toggle="buttons" id="${device.id}">
+                                    <div class="btn-group btn-group-toggle" data-toggle="buttons" id="${device.id}"
+                                            <c:if test="${cuser.userRole=='user'}">
+                                                style="display: none"
+                                            </c:if>
+                                    >
                                         <label class="btn btn-info" onclick="startModel(this)">
                                             <input type="checkbox" autocomplete="off"> 修改
                                         </label>
@@ -124,13 +132,13 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="control-label col-md-3">AppEui(ID)</label>
+                            <label class="control-label col-md-3">ID</label>
                             <div class="col-md-8">
                                 <input class="form-control" type="text" placeholder="AppEui" id="deviceAppEui"/>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="control-label col-md-3">DevEui(设备编号)</label>
+                            <label class="control-label col-md-3">设备编号</label>
                             <div class="col-md-8">
                                 <input class="form-control" type="text" placeholder="DevEui" id="deviceDevEui"/>
                             </div>
@@ -201,6 +209,13 @@
 <script type="text/javascript" src="new/js/plugins/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="new/js/plugins/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript">
+    function checkEmpty(inputVal, showStr) {
+        if (inputVal.replace(/(^s*)|(s*$)/g, "").length == 0) {
+            alert(showStr + '不能为空');
+            return true;
+        }
+        return false;
+    }
     $('#sampleTable').DataTable();
 
     function startModel(node) {
@@ -254,6 +269,20 @@
         var alertNumber = $("#alertNumber").val()
         var parentId = $("#userGroup").find("option:selected").attr("value");
         var deviceLevel = $("#deviceLevel").find("option:selected").attr("value");
+
+        if (checkEmpty(deviceName, "deviceName")) {
+            return true;
+        }
+        if (checkEmpty(appEui, "appEui")) {
+            return true;
+        }
+        // if (checkEmpty(devEui, "devEui")) {
+        //     return true;
+        // }
+        if (checkEmpty(devicePort, "devicePort")) {
+            return true;
+        }
+
         $.ajax({
             type: 'POST',
             url: "/sensorUpdateAndInsert",

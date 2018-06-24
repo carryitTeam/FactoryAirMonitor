@@ -46,6 +46,7 @@
         </div>
     </div>
     <ul class="app-menu">
+<c:if test="${cuser.userRole=='superAdmin'}">
         <li><a class="app-menu__item
         <c:if test="${fn:contains(pageContext.request.requestURI,'main')||
         fn:contains(pageContext.request.requestURI,'detailDataInfo')||
@@ -55,6 +56,7 @@
         </c:if>
         " href="/checkUser"><i class="app-menu__icon fa fa-university"></i><span
                 class="app-menu__label">主页</span></a></li>
+</c:if>
         <c:if test="${cuser.userRole=='superAdmin'}">
             <li><a class="app-menu__item
 <c:if test="${fn:contains(pageContext.request.requestURI,'groupManager')}">

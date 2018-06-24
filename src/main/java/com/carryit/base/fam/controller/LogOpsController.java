@@ -26,10 +26,15 @@ public class LogOpsController {
         }
         User cuser = (User) request.getSession().getAttribute("cuser");
         modelAndView.addObject("cuser", cuser);
+        List<LogOps> logOpsList = null;
         if ("superAdmin".equalsIgnoreCase(cuser.getUserRole())) {
-            List<LogOps> logOpsList = logOpsService.queryAllLogOps();
-            modelAndView.addObject("logOpsList", logOpsList);
+            logOpsList = logOpsService.queryAllLogOps();
+        }else {
+            LogOps logOps = new LogOps();
+            logOps.setUserId(cuser.getUserId());
+            logOpsList = logOpsService.queryLogOpsByUid(logOps);
         }
+        modelAndView.addObject("logOpsList", logOpsList);
         modelAndView.setViewName("new/logManager");
         return modelAndView;
     }

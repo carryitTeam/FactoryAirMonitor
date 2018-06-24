@@ -152,6 +152,13 @@
 <script type="text/javascript" src="new/js/plugins/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="new/js/plugins/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript">
+    function checkEmpty(inputVal, showStr) {
+        if (inputVal.replace(/(^s*)|(s*$)/g, "").length == 0) {
+            alert(showStr + '不能为空');
+            return true;
+        }
+        return false;
+    }
     $('#sampleTable').DataTable();
     function startModel(node) {
         //加载模态框
@@ -180,6 +187,21 @@
         var groupLocation = $("#groupLocation").val();
         var contactUserName = $("#contactUserName").val();
         var contactTelephoneNumber = $("#contactTelephoneNumber").val();
+
+        if (checkEmpty(groupName, "groupName")) {
+            return true;
+        }
+        if (checkEmpty(groupLocation, "groupLocation")) {
+            return true;
+        }
+
+        if (checkEmpty(contactUserName, "contactUserName")) {
+            return true;
+        }
+        if (checkEmpty(contactTelephoneNumber, "contactTelephoneNumber")) {
+            return true;
+        }
+
         $.ajax({
             type: 'POST',
             url: "/groupUpdateAndInsert",

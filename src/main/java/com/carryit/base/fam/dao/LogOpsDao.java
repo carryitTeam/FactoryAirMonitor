@@ -12,7 +12,7 @@ public interface LogOpsDao {
 
     int addLogOps(LogOps logOps);
 
-    LogOps queryLogOpsByUid(LogOps logOps);
+    List<LogOps> queryLogOpsByUid(LogOps logOps);
 
     List<LogOps> queryAllLogOps();
 

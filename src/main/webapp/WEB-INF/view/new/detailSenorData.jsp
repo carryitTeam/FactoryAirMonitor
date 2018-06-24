@@ -55,9 +55,9 @@ a<%@ page language="java" contentType="text/html; charset=UTF-8"
                     <div class="card-body">
                         <blockquote class="card-blockquote">
                             <p>联动设备名称：<b>${device.deviceName}</b></p>
-                            <p>AppEui：<b>${device.appEui}</b></p>
-                            <p>DevEui：<b>${device.devEui}</b></p>
-                            <p>DevEui：<b>${device.devicePort}</b></p>
+                            <p>ID：<b>${device.appEui}</b></p>
+                            <p>设备编号：<b>${device.devEui}</b></p>
+                            <p>设备端口：<b>${device.devicePort}</b></p>
                             <p>创建时间：<b>${device.createTime}</b></p>
                         </blockquote>
                     </div>

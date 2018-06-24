@@ -20,7 +20,7 @@ public class LogOpsService implements ILogOpsService {
     }
 
     @Override
-    public LogOps queryLogOpsByUid(LogOps logOps) {
+    public List<LogOps> queryLogOpsByUid(LogOps logOps) {
         return logOpsDao.queryLogOpsByUid(logOps);
     }
 

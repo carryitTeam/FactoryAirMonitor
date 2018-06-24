@@ -67,8 +67,8 @@ a
                     <table class="table table-hover table-bordered" id="sampleTable">
                         <thead>
                         <tr>
-                            <th>AppEui</th>
-                            <th>DevEui</th>
+                            <th>ID</th>
+                            <th>设备编号</th>
                             <th>十六进制结果</th>
                             <th>创建时间</th>
                         </tr>

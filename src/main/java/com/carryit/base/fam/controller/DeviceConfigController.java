@@ -35,7 +35,7 @@ public class DeviceConfigController {
         }
         User cuser = (User) request.getSession().getAttribute("cuser");
         modelAndView.addObject("cuser", cuser);
-        if ("superAdmin".equalsIgnoreCase(cuser.getUserRole())) {
+//        if ("superAdmin".equalsIgnoreCase(cuser.getUserRole())) {
             DeviceConfig deviceConfig = new DeviceConfig();
             deviceConfig.setDeviceType("device");
             List<DeviceConfig> deviceConfigList = deviceConfigService.queryDeviceConfigByType(deviceConfig);
@@ -44,9 +44,9 @@ public class DeviceConfigController {
             modelAndView.addObject("groupMapData", mapData);
             modelAndView.addObject("deviceConfigList", deviceConfigList);
             modelAndView.setViewName("new/deviceManager");
-        }else {
-            modelAndView.setViewName("redirect:/topManager");
-        }
+//        }else {
+//            modelAndView.setViewName("redirect:/topManager");
+//        }
         return modelAndView;
     }
 
@@ -82,7 +82,7 @@ public class DeviceConfigController {
         }
         User cuser = (User) request.getSession().getAttribute("cuser");
         modelAndView.addObject("cuser", cuser);
-        if ("superAdmin".equalsIgnoreCase(cuser.getUserRole())) {
+//        if ("superAdmin".equalsIgnoreCase(cuser.getUserRole())) {
             DeviceConfig deviceConfig = new DeviceConfig();
             deviceConfig.setDeviceType("device");
             List<DeviceConfig> deviceConfigList = deviceConfigService.queryDeviceConfigByType(deviceConfig);
@@ -96,9 +96,9 @@ public class DeviceConfigController {
             modelAndView.addObject("deviceDataMap", mapDataDev);
             modelAndView.addObject("sensorConfigList", sensorConfigList);
             modelAndView.setViewName("new/sensorManager");
-        }else {
-            modelAndView.setViewName("redirect:/topManager");
-        }
+//        }else {
+//            modelAndView.setViewName("redirect:/topManager");
+//        }
         return modelAndView;
     }
 

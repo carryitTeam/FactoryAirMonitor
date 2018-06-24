@@ -52,8 +52,8 @@
                         <thead>
                         <tr>
                             <th>操作</th>
-                            <th>AppEui</th>
-                            <th>DevEui</th>
+                            <th>ID</th>
+                            <th>设备编号</th>
                             <th>设备名称</th>
                             <th>所属单位</th>
                             <th>备注</th>
@@ -64,7 +64,7 @@
                         <tbody>
                         <c:forEach items="${deviceConfigList}" var="device" varStatus="status">
                             <tr>
-                                <td><a href="/dataRetrieveByAppEui?appEui=${device.appEui}">查看数据</a>
+                                <td><a href="/dataRetrieveByAppEui?appEui=${device.appEui}">查看数据</a>&nbsp;&nbsp;
                                     <a href="/sensorManager">查看告警设备</a>
                                 </td>
                                 <td>${device.appEui}</td>

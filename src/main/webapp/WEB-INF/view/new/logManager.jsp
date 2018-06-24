@@ -69,59 +69,6 @@
 </main>
 
 
-<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="groupManagerModel">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">单位信息</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="tile-body">
-                    <form class="form-horizontal">
-                        <div class="form-group row">
-                            <label class="control-label col-md-3">单位id号</label>
-                            <div class="col-md-8">
-                                <input class="form-control" type="text" placeholder="用户自增长ID" id="groupId" disabled="disabled">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="control-label col-md-3">单位名称</label>
-                            <div class="col-md-8">
-                                <input class="form-control" type="text" placeholder="单位名称" id="groupName">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="control-label col-md-3">单位地址</label>
-                            <div class="col-md-8">
-                                <textarea class="form-control" rows="2" placeholder="单位地址" id="groupLocation"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="control-label col-md-3">联系人</label>
-                            <div class="col-md-8">
-                                <input class="form-control col-md-8" placeholder="联系人" id="contactUserName">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="control-label col-md-3">联系电话</label>
-                            <div class="col-md-8">
-                                <input class="form-control col-md-8"  placeholder="联系电话" id="contactTelephoneNumber">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="saveGroupData();">Save changes</button>
-            </div>
-
-        </div>
-    </div>
-</div>
-
 <!-- Essential javascripts for application to work-->
 <script src="new/js/jquery-3.2.1.min.js"></script>
 <script src="new/js/popper.min.js"></script>
@@ -133,73 +80,6 @@
 <script type="text/javascript" src="new/js/plugins/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript">
     $('#sampleTable').DataTable();
-    function startModel(node) {
-        //加载模态框
-        $('#groupManagerModel').modal();
-        var p1 = $(node).parent();
-        var groupId = p1.attr("id");
-        var contactTelephoneNumber = p1.parent().prev().prev().text();
-        var contactUserName = p1.parent().prev().prev().prev().text();
-        var groupLocation = p1.parent().prev().prev().prev().prev().text();
-        var groupName = p1.parent().prev().prev().prev().prev().prev().text();
-        $("#groupId").val("")
-        $("#groupId").val(groupId);
-        $("#groupName").val("")
-        $("#groupName").val(groupName);
-        $("#groupLocation").val("")
-        $("#groupLocation").val(groupLocation);
-        $("#contactUserName").val("")
-        $("#contactUserName").val(contactUserName);
-        $("#contactTelephoneNumber").val("")
-        $("#contactTelephoneNumber").val(contactTelephoneNumber);
-    }
-
-    function saveGroupData() {
-        var groupId = $("#groupId").val();
-        var groupName = $("#groupName").val();
-        var groupLocation = $("#groupLocation").val();
-        var contactUserName = $("#contactUserName").val();
-        var contactTelephoneNumber = $("#contactTelephoneNumber").val();
-        $.ajax({
-            type: 'POST',
-            url: "/groupUpdateAndInsert",
-            async: false,
-            data: {
-                id: groupId,
-                groupName: groupName,
-                groupLocation: groupLocation,
-                contactUserName: contactUserName,
-                contactTelephoneNumber: contactTelephoneNumber
-            },
-            success: function (data) {
-                $('#groupManagerModel').modal('hide')
-                if (data == -1) {
-                    alert("修改失败")
-                } else {
-                    alert("修改成功")
-                    window.location.href='/groupManager';
-                }
-            }
-        });
-    }
-</script>
-<!-- Google analytics script-->
-<script type="text/javascript">
-    if (document.location.hostname == 'pratikborsadiya.in') {
-        (function (i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r;
-            i[r] = i[r] || function () {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date();
-            a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
-            a.async = 1;
-            a.src = g;
-            m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-        ga('create', 'UA-72504830-1', 'auto');
-        ga('send', 'pageview');
-    }
 </script>
 </body>
 </html>

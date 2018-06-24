@@ -43,7 +43,12 @@
     <div class="row">
         <div class="col-md-12">
             <p class="bs-component">
-                <button class="btn btn-success" type="button" onclick="startModel(this)">添加数据传感设备</button>
+                <button class="btn btn-success" type="button" onclick="startModel(this)"
+                        <c:if test="${cuser.userRole=='user'}">
+                            disabled="disabled"
+                        </c:if>
+                >添加数据传感设备
+                </button>
             </p>
         </div>
         <div class="col-md-12">
@@ -52,8 +57,8 @@
                     <table class="table table-hover table-bordered" id="sampleTable">
                         <thead>
                         <tr>
-                            <th>AppEui(ID)</th>
-                            <th>DevEui(设备编号)</th>
+                            <th>ID</th>
+                            <th>设备编号</th>
                             <th>设备名</th>
                             <th>所属单位</th>
                             <th>备注</th>
@@ -71,7 +76,11 @@
                                 <td>${device.deviceComment}</td>
                                 <td>${device.createTime}</td>
                                 <td id="${device.groupId}">
-                                    <div class="btn-group btn-group-toggle" data-toggle="buttons" id="${device.id}">
+                                    <div class="btn-group btn-group-toggle" data-toggle="buttons" id="${device.id}"
+                                            <c:if test="${cuser.userRole=='user'}">
+                                                style="display: none"
+                                            </c:if>
+                                    >
                                         <label class="btn btn-info" onclick="startModel(this);">
                                             <input type="checkbox" autocomplete="off"> 修改
                                         </label>
@@ -98,7 +107,7 @@
             </div>
             <div class="modal-body">
                 <div class="tile-body">
-                    <form class="form-horizontal">
+                    <form class="form-horizontal" id="deviceForm">
                         <div class="form-group row">
                             <label class="control-label col-md-3">设备id号</label>
                             <div class="col-md-8">
@@ -109,19 +118,22 @@
                         <div class="form-group row">
                             <label class="control-label col-md-3">设备名称</label>
                             <div class="col-md-8">
-                                <input class="form-control" type="text" placeholder="设备名称" id="deviceName">
+                                <input class="form-control" type="text" placeholder="设备名称" id="deviceName"
+                                       required="required">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="control-label col-md-3">AppEui(ID)</label>
+                            <label class="control-label col-md-3">ID</label>
                             <div class="col-md-8">
-                                <input class="form-control" type="text" placeholder="AppEui" id="deviceAppEui">
+                                <input class="form-control" type="text" placeholder="AppEui" id="deviceAppEui"
+                                       required="required">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="control-label col-md-3">DevEui(设备编号)</label>
+                            <label class="control-label col-md-3">设备编号</label>
                             <div class="col-md-8">
-                                <input class="form-control" type="text" placeholder="DevEui" id="deviceDevEui">
+                                <input class="form-control" type="text" placeholder="DevEui" id="deviceDevEui"
+                                       required="required">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -146,7 +158,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="saveGroupData();">Save changes</button>
+                <button type="button" class="btn btn-primary" onclick="return saveGroupData();">Save changes</button>
             </div>
 
         </div>
@@ -163,6 +175,13 @@
 <script type="text/javascript" src="new/js/plugins/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="new/js/plugins/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript">
+    function checkEmpty(inputVal, showStr) {
+        if (inputVal.replace(/(^s*)|(s*$)/g, "").length == 0) {
+            alert(showStr + '不能为空');
+            return true;
+        }
+        return false;
+    }
     $('#sampleTable').DataTable();
 
     function startModel(node) {
@@ -186,10 +205,10 @@
         $("#deviceComment").val("")
         $("#deviceComment").val(deviceComment);
 
-        if (deviceId == ""){
-            $("#userGroup").find("option").get(0).selected=true
-        }else {
-            $("#userGroup").find("option[value='"+userGroupId+"']").get(0).selected=true
+        if (deviceId == "") {
+            $("#userGroup").find("option").get(0).selected = true
+        } else {
+            $("#userGroup").find("option[value='" + userGroupId + "']").get(0).selected = true
         }
     }
 
@@ -200,6 +219,17 @@
         var devEui = $("#deviceDevEui").val()
         var deviceComment = $("#deviceComment").val()
         var groupId = $("#userGroup").find("option:selected").attr("value");
+
+        if (checkEmpty(deviceName, "deviceName")) {
+            return true;
+        }
+        if (checkEmpty(appEui, "appEui")) {
+            return true;
+        }
+        if (checkEmpty(devEui, "devEui")) {
+            return true;
+        }
+
         $.ajax({
             type: 'POST',
             url: "/deviceUpdateAndInsert",
@@ -210,7 +240,7 @@
                 appEui: appEui,
                 devEui: devEui,
                 deviceComment: deviceComment,
-                groupId:groupId
+                groupId: groupId
             },
             success: function (data) {
                 $('#groupManagerModel').modal('hide')

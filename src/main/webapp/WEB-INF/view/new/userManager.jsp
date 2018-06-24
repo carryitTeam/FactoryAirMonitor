@@ -184,6 +184,13 @@
 <script type="text/javascript" src="new/js/plugins/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="new/js/plugins/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript">
+    function checkEmpty(inputVal, showStr) {
+        if (inputVal.replace(/(^s*)|(s*$)/g, "").length == 0) {
+            alert(showStr + '不能为空');
+            return true;
+        }
+        return false;
+    }
     $('#sampleTable').DataTable();
 
     function startModel(node) {
@@ -224,6 +231,19 @@
         var userName = $("#userName").val();
         var userEmail = $("#userEmail").val();
         var userId = $("#userId").val();
+
+        if (checkEmpty(userId, "userId")) {
+            return true;
+        }
+        if (checkEmpty(userName, "userName")) {
+            return true;
+        }
+        if (checkEmpty(userPwd, "userPwd")) {
+            return true;
+        }
+        if (checkEmpty(userEmail, "userEmail")) {
+            return true;
+        }
         $.ajax({
             type: 'POST',
             url: "/userUpdateAndInsert",
