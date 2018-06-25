@@ -71,12 +71,14 @@
 </main>
 
 
-<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="groupManagerModel">
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true"
+     id="groupManagerModel">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel">单位信息</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                <button type="button" class="close" data-dismiss="modal"><span
+                        aria-hidden="true">×</span>
                 </button>
             </div>
             <div class="modal-body">
@@ -85,31 +87,36 @@
                         <div class="form-group row">
                             <label class="control-label col-md-3">单位id号</label>
                             <div class="col-md-8">
-                                <input class="form-control" type="text" placeholder="用户自增长ID" id="groupId" disabled="disabled">
+                                <input class="form-control" type="text" placeholder="用户自增长ID"
+                                       id="groupId" disabled="disabled">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="control-label col-md-3">单位名称</label>
                             <div class="col-md-8">
-                                <input class="form-control" type="text" placeholder="单位名称" id="groupName">
+                                <input class="form-control" type="text" placeholder="单位名称"
+                                       id="groupName">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="control-label col-md-3">单位地址</label>
                             <div class="col-md-8">
-                                <textarea class="form-control" rows="2" placeholder="单位地址" id="groupLocation"></textarea>
+                                <textarea class="form-control" rows="2" placeholder="单位地址"
+                                          id="groupLocation"></textarea>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="control-label col-md-3">联系人</label>
                             <div class="col-md-8">
-                                <input class="form-control col-md-8" placeholder="联系人" id="contactUserName">
+                                <input class="form-control col-md-8" placeholder="联系人"
+                                       id="contactUserName">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="control-label col-md-3">联系电话</label>
                             <div class="col-md-8">
-                                <input class="form-control col-md-8"  placeholder="联系电话" id="contactTelephoneNumber">
+                                <input class="form-control col-md-8" placeholder="联系电话"
+                                       id="contactTelephoneNumber">
                             </div>
                         </div>
                     </form>
@@ -117,7 +124,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="saveGroupData();">Save changes</button>
+                <button type="button" class="btn btn-primary" onclick="saveGroupData();">Save
+                    changes
+                </button>
             </div>
 
         </div>
@@ -163,26 +172,26 @@
         var contactUserName = $("#contactUserName").val();
         var contactTelephoneNumber = $("#contactTelephoneNumber").val();
         $.ajax({
-            type: 'POST',
-            url: "/groupUpdateAndInsert",
-            async: false,
-            data: {
-                id: groupId,
-                groupName: groupName,
-                groupLocation: groupLocation,
-                contactUserName: contactUserName,
-                contactTelephoneNumber: contactTelephoneNumber
-            },
-            success: function (data) {
-                $('#groupManagerModel').modal('hide')
-                if (data == -1) {
-                    alert("修改失败")
-                } else {
-                    alert("修改成功")
-                    window.location.href='/groupManager';
-                }
-            }
-        });
+                   type: 'POST',
+                   url: "groupUpdateAndInsert",
+                   async: false,
+                   data: {
+                       id: groupId,
+                       groupName: groupName,
+                       groupLocation: groupLocation,
+                       contactUserName: contactUserName,
+                       contactTelephoneNumber: contactTelephoneNumber
+                   },
+                   success: function (data) {
+                       $('#groupManagerModel').modal('hide')
+                       if (data == -1) {
+                           alert("修改失败")
+                       } else {
+                           alert("修改成功")
+                           window.location.href = '/groupManager';
+                       }
+                   }
+               });
     }
 </script>
 <!-- Google analytics script-->
@@ -191,8 +200,8 @@
         (function (i, s, o, g, r, a, m) {
             i['GoogleAnalyticsObject'] = r;
             i[r] = i[r] || function () {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date();
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
             a = s.createElement(o),
                 m = s.getElementsByTagName(o)[0];
             a.async = 1;

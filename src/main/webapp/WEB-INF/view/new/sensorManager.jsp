@@ -48,7 +48,8 @@
                         <c:if test="${cuser.userRole=='user'}">
                             disabled="disabled"
                         </c:if>
-                >添加联动报警设备</button>
+                >添加联动报警设备
+                </button>
             </p>
         </div>
         <div class="col-md-12">
@@ -86,7 +87,8 @@
                                 <td>${device.payload}</td>
                                 <td>${device.createTime}</td>
                                 <td id="parentId_${device.parentId}">
-                                    <div class="btn-group btn-group-toggle" data-toggle="buttons" id="${device.id}"
+                                    <div class="btn-group btn-group-toggle" data-toggle="buttons"
+                                         id="${device.id}"
                                             <c:if test="${cuser.userRole=='user'}">
                                                 style="display: none"
                                             </c:if>
@@ -107,12 +109,14 @@
 </main>
 
 
-<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="groupManagerModel">
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true"
+     id="groupManagerModel">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel">联动报警设备信息</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                <button type="button" class="close" data-dismiss="modal"><span
+                        aria-hidden="true">×</span>
                 </button>
             </div>
             <div class="modal-body">
@@ -121,58 +125,66 @@
                         <div class="form-group row">
                             <label class="control-label col-md-3">设备id号</label>
                             <div class="col-md-8">
-                                <input class="form-control" type="text" placeholder="自增长ID" id="deviceId"
+                                <input class="form-control" type="text" placeholder="自增长ID"
+                                       id="deviceId"
                                        disabled="disabled">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="control-label col-md-3">设备名称</label>
                             <div class="col-md-8">
-                                <input class="form-control" type="text" placeholder="设备名称" id="deviceName"/>
+                                <input class="form-control" type="text" placeholder="设备名称"
+                                       id="deviceName"/>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="control-label col-md-3">ID</label>
                             <div class="col-md-8">
-                                <input class="form-control" type="text" placeholder="AppEui" id="deviceAppEui"/>
+                                <input class="form-control" type="text" placeholder="AppEui"
+                                       id="deviceAppEui"/>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="control-label col-md-3">设备编号</label>
                             <div class="col-md-8">
-                                <input class="form-control" type="text" placeholder="DevEui" id="deviceDevEui"/>
+                                <input class="form-control" type="text" placeholder="DevEui"
+                                       id="deviceDevEui"/>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="control-label col-md-3">设备端口</label>
                             <div class="col-md-8">
-                                <input class="form-control" type="text" placeholder="端口" id="devicePort"/>
+                                <input class="form-control" type="text" placeholder="端口"
+                                       id="devicePort"/>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="control-label col-md-3">payload</label>
                             <div class="col-md-8">
-                                <textarea class="form-control" rows="2" placeholder="6B000303FF209016"
+                                <textarea class="form-control" rows="2"
+                                          placeholder="6B000303FF209016"
                                           id="deviceComment"></textarea>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="control-label col-md-3">报警字段</label>
                             <div class="col-md-8">
-                                <input class="form-control" type="text" placeholder="报警字段" id="alertField"/>
+                                <input class="form-control" type="text" placeholder="报警字段"
+                                       id="alertField"/>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="control-label col-md-3">报警阈值</label>
                             <div class="col-md-8">
-                                <input class="form-control" type="text" placeholder="报警阈值" id="alertNumber"/>
+                                <input class="form-control" type="text" placeholder="报警阈值"
+                                       id="alertNumber"/>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="control-label col-md-3">联动报警等级</label>
                             <div class="col-md-8">
                                 <select class="form-control" id="deviceLevel">
-                                        <option value="1">一级</option>
+                                    <option value="1">一级</option>
                                     <option value="2">二级</option>
                                 </select>
                             </div>
@@ -192,7 +204,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="saveGroupData();">Save changes</button>
+                <button type="button" class="btn btn-primary" onclick="saveGroupData();">Save
+                    changes
+                </button>
             </div>
 
         </div>
@@ -228,10 +242,13 @@
         var deviceName = p1.parent().prev().prev().prev().prev().prev().text();
         var devEui = p1.parent().prev().prev().prev().prev().prev().prev().text();
         var appEui = p1.parent().prev().prev().prev().prev().prev().prev().prev().text();
-        var devicePort=p1.parent().prev().prev().prev().prev().prev().prev().prev().prev().text();
-        var alertNumber=p1.parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().text();
-        var alertField=p1.parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text();
-        var deviceLevel=p1.parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text();
+        var devicePort = p1.parent().prev().prev().prev().prev().prev().prev().prev().prev().text();
+        var alertNumber = p1.parent().prev().prev().prev().prev().prev().prev().prev().prev().prev()
+            .text();
+        var alertField = p1.parent().prev().prev().prev().prev().prev().prev().prev().prev().prev()
+            .prev().text();
+        var deviceLevel = p1.parent().prev().prev().prev().prev().prev().prev().prev().prev().prev()
+            .prev().prev().text();
         $("#deviceId").val("")
         $("#deviceId").val(deviceId);
         $("#deviceName").val("")
@@ -249,12 +266,12 @@
         $("#alertNumber").val("")
         $("#alertNumber").val(alertNumber);
 
-        if (deviceId == ""){
-            $("#userGroup").find("option").get(0).selected=true
-            $("#deviceLevel").find("option").get(0).selected=true
-        }else {
-            $("#userGroup").find("option[value='"+userGroupId+"']").get(0).selected=true
-            $("#deviceLevel").find("option[value='"+deviceLevel+"']").get(0).selected=true
+        if (deviceId == "") {
+            $("#userGroup").find("option").get(0).selected = true
+            $("#deviceLevel").find("option").get(0).selected = true
+        } else {
+            $("#userGroup").find("option[value='" + userGroupId + "']").get(0).selected = true
+            $("#deviceLevel").find("option[value='" + deviceLevel + "']").get(0).selected = true
         }
     }
 
@@ -284,49 +301,31 @@
         }
 
         $.ajax({
-            type: 'POST',
-            url: "/sensorUpdateAndInsert",
-            async: false,
-            data: {
-                id: id,
-                deviceName: deviceName,
-                appEui: appEui,
-                devEui: devEui,
-                payload: deviceComment,
-                parentId:parentId,
-                devicePort:devicePort,
-                deviceLevel:deviceLevel,
-                alertField:alertField,
-                alertNumber:alertNumber
-            },
-            success: function (data) {
-                $('#groupManagerModel').modal('hide')
-                if (data == -1) {
-                    alert("修改失败")
-                } else {
-                    alert("修改成功")
-                    window.location.href = '/sensorManager';
-                }
-            }
-        });
-    }
-</script>
-<!-- Google analytics script-->
-<script type="text/javascript">
-    if (document.location.hostname == 'pratikborsadiya.in') {
-        (function (i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r;
-            i[r] = i[r] || function () {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date();
-            a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
-            a.async = 1;
-            a.src = g;
-            m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-        ga('create', 'UA-72504830-1', 'auto');
-        ga('send', 'pageview');
+                   type: 'POST',
+                   url: "sensorUpdateAndInsert",
+                   async: false,
+                   data: {
+                       id: id,
+                       deviceName: deviceName,
+                       appEui: appEui,
+                       devEui: devEui,
+                       payload: deviceComment,
+                       parentId: parentId,
+                       devicePort: devicePort,
+                       deviceLevel: deviceLevel,
+                       alertField: alertField,
+                       alertNumber: alertNumber
+                   },
+                   success: function (data) {
+                       $('#groupManagerModel').modal('hide')
+                       if (data == -1) {
+                           alert("修改失败")
+                       } else {
+                           alert("修改成功")
+                           window.location.href = '/sensorManager';
+                       }
+                   }
+               });
     }
 </script>
 </body>

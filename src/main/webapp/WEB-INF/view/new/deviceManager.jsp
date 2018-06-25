@@ -76,7 +76,8 @@
                                 <td>${device.deviceComment}</td>
                                 <td>${device.createTime}</td>
                                 <td id="${device.groupId}">
-                                    <div class="btn-group btn-group-toggle" data-toggle="buttons" id="${device.id}"
+                                    <div class="btn-group btn-group-toggle" data-toggle="buttons"
+                                         id="${device.id}"
                                             <c:if test="${cuser.userRole=='user'}">
                                                 style="display: none"
                                             </c:if>
@@ -97,12 +98,14 @@
 </main>
 
 
-<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="groupManagerModel">
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true"
+     id="groupManagerModel">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel">设备信息</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                <button type="button" class="close" data-dismiss="modal"><span
+                        aria-hidden="true">×</span>
                 </button>
             </div>
             <div class="modal-body">
@@ -111,28 +114,32 @@
                         <div class="form-group row">
                             <label class="control-label col-md-3">设备id号</label>
                             <div class="col-md-8">
-                                <input class="form-control" type="text" placeholder="自增长ID" id="deviceId"
+                                <input class="form-control" type="text" placeholder="自增长ID"
+                                       id="deviceId"
                                        disabled="disabled">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="control-label col-md-3">设备名称</label>
                             <div class="col-md-8">
-                                <input class="form-control" type="text" placeholder="设备名称" id="deviceName"
+                                <input class="form-control" type="text" placeholder="设备名称"
+                                       id="deviceName"
                                        required="required">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="control-label col-md-3">ID</label>
                             <div class="col-md-8">
-                                <input class="form-control" type="text" placeholder="AppEui" id="deviceAppEui"
+                                <input class="form-control" type="text" placeholder="AppEui"
+                                       id="deviceAppEui"
                                        required="required">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="control-label col-md-3">设备编号</label>
                             <div class="col-md-8">
-                                <input class="form-control" type="text" placeholder="DevEui" id="deviceDevEui"
+                                <input class="form-control" type="text" placeholder="DevEui"
+                                       id="deviceDevEui"
                                        required="required">
                             </div>
                         </div>
@@ -158,7 +165,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="return saveGroupData();">Save changes</button>
+                <button type="button" class="btn btn-primary" onclick="return saveGroupData();">Save
+                    changes
+                </button>
             </div>
 
         </div>
@@ -231,45 +240,27 @@
         }
 
         $.ajax({
-            type: 'POST',
-            url: "/deviceUpdateAndInsert",
-            async: false,
-            data: {
-                id: id,
-                deviceName: deviceName,
-                appEui: appEui,
-                devEui: devEui,
-                deviceComment: deviceComment,
-                groupId: groupId
-            },
-            success: function (data) {
-                $('#groupManagerModel').modal('hide')
-                if (data == -1) {
-                    alert("修改失败")
-                } else {
-                    alert("修改成功")
-                    window.location.href = '/deviceManager';
-                }
-            }
-        });
-    }
-</script>
-<!-- Google analytics script-->
-<script type="text/javascript">
-    if (document.location.hostname == 'pratikborsadiya.in') {
-        (function (i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r;
-            i[r] = i[r] || function () {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date();
-            a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
-            a.async = 1;
-            a.src = g;
-            m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-        ga('create', 'UA-72504830-1', 'auto');
-        ga('send', 'pageview');
+                   type: 'POST',
+                   url: "deviceUpdateAndInsert",
+                   async: false,
+                   data: {
+                       id: id,
+                       deviceName: deviceName,
+                       appEui: appEui,
+                       devEui: devEui,
+                       deviceComment: deviceComment,
+                       groupId: groupId
+                   },
+                   success: function (data) {
+                       $('#groupManagerModel').modal('hide')
+                       if (data == -1) {
+                           alert("修改失败")
+                       } else {
+                           alert("修改成功")
+                           window.location.href = '/deviceManager';
+                       }
+                   }
+               });
     }
 </script>
 </body>

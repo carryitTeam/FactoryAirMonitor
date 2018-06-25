@@ -67,7 +67,9 @@
                                 <td>${ah.createTime}</td>
                                 <td>
                                     <c:if test="${ah.isProcess=='0'}">
-                                        <button class="btn btn-small btn-info" onclick="dealAlert(this)">处理</button>
+                                        <button class="btn btn-small btn-info"
+                                                onclick="dealAlert(this)">处理
+                                        </button>
                                     </c:if>
                                     <c:if test="${ah.isProcess!='0'}">
                                         <button class="btn btn-small btn-warning">已处理</button>
@@ -96,28 +98,28 @@
 <script type="text/javascript">
 
     function dealAlert(node) {
-        var appEui =  $(node).parent().prev().prev().prev().prev().text();
+        var appEui = $(node).parent().prev().prev().prev().prev().text();
         var alertId = $(node).parent().prev().prev().prev().prev().prev().text();
         $.ajax({
-            type: 'POST',
-            url: "/dealAlert",
-            async: false,
-            data: {
-                appEui: appEui,
-                alertId:alertId
-            },
-            success: function (data) {
-                if (data == 0) {
-                    alert("处理失败")
-                }else if (data == -1) {
-                    alert("appEui未Join启动")
-                }else {
-                    alert("处理成功，处理了 "+data+" 个联动设备")
-                    $(node).text("已处理完")
-                    $(node).attr("disabled","disabled")
-                }
-            }
-        });
+                   type: 'POST',
+                   url: "dealAlert",
+                   async: false,
+                   data: {
+                       appEui: appEui,
+                       alertId: alertId
+                   },
+                   success: function (data) {
+                       if (data == 0) {
+                           alert("处理失败")
+                       } else if (data == -1) {
+                           alert("appEui未Join启动")
+                       } else {
+                           alert("处理成功，处理了 " + data + " 个联动设备")
+                           $(node).text("已处理完")
+                           $(node).attr("disabled", "disabled")
+                       }
+                   }
+               });
     }
 </script>
 </body>

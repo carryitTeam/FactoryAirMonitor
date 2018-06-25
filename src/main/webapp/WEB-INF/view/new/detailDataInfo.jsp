@@ -39,10 +39,11 @@ a
         </div>
         <ul class="app-breadcrumb breadcrumb">
             <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-            <li class="breadcrumb-item"><a href="/checkUser">主页</a></li>
+            <li class="breadcrumb-item"><a href="checkUser">主页</a></li>
             <%--<li class="breadcrumb-item"><a href="/devicesForGroup?groupId=${deviceConfigList.size()>0 ? deviceConfigList.get(0).groupId:0}">设备列表</a></li>--%>
             <li class="breadcrumb-item"><a
-                    href="/dataRetrieveByAppEui?appEui=${datasList.size()>0 ? datasList.get(0).appEui:0}">传感器数据</a></li>
+                    href="dataRetrieveByAppEui?appEui=${datasList.size()>0 ? datasList.get(0).appEui:0}">传感器数据</a>
+            </li>
         </ul>
     </div>
     <div class="row">

@@ -1,4 +1,5 @@
-a<%@ page language="java" contentType="text/html; charset=UTF-8"
+a
+<%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
@@ -37,8 +38,10 @@ a<%@ page language="java" contentType="text/html; charset=UTF-8"
         </div>
         <ul class="app-breadcrumb breadcrumb">
             <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-            <li class="breadcrumb-item"><a href="/checkUser">主页</a></li>
-            <li class="breadcrumb-item"><a href="/devicesForGroup?groupId=${deviceConfigList.size()>0 ? deviceConfigList.get(0).groupId:0}">传感器列表</a></li>
+            <li class="breadcrumb-item"><a href="checkUser">主页</a></li>
+            <li class="breadcrumb-item"><a
+                    href="devicesForGroup?groupId=${deviceConfigList.size()>0 ? deviceConfigList.get(0).groupId:0}">传感器列表</a>
+            </li>
         </ul>
     </div>
     <div class="row">
