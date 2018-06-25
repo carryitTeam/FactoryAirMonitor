@@ -11,7 +11,9 @@ import com.carryit.base.fam.service.impl.DeviceConfigService;
 import com.carryit.base.fam.service.impl.PushDataToCsService;
 import com.carryit.base.fam.utils.Base64Utils;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -48,6 +50,13 @@ public class LoraDataRetrieve implements Runnable {
     @Autowired
     private DeviceConfigService deviceConfigService;
 
+
+    @Value("#{configProperties['lora.host']}")
+    private String host;
+
+    @Value("#{configProperties['lora.port']}")
+    private int port;
+
     private List<DeviceConfig> sensorConfigList;
 
     private boolean isAccept = false;
@@ -59,10 +68,6 @@ public class LoraDataRetrieve implements Runnable {
     public void setAccept(boolean accept) {
         isAccept = accept;
     }
-
-    private String host;
-
-    private int port;
 
     private String appEui;
 
@@ -147,7 +152,7 @@ public class LoraDataRetrieve implements Runnable {
             }
             System.out.println("--------------" + i);
             try {
-                Thread.sleep(100l);
+                Thread.sleep(100L);
                 String originData = new String(connection.getData());
                 if (i == 0 && originData.contains("JOIN ACCEPT")) {
                     isAccept = true;
@@ -178,7 +183,7 @@ public class LoraDataRetrieve implements Runnable {
 
                         for (DeviceConfig sensor : sensorConfigList) {
                             if (appEui.equalsIgnoreCase(sensor.getAppEui())) {
-                                int alertLevel = alertRuleService.checkData(datas,sensor);
+                                int alertLevel = alertRuleService.checkData(datas, sensor);
                                 //启动联动设备（红灯）
                                 if (alertLevel > 0
                                         && alertLevel == Integer.parseInt(sensor.getDeviceLevel())) {

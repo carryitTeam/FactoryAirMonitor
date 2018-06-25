@@ -2,8 +2,7 @@ package com.carryit.base.fam;
 
 
 import com.carryit.base.fam.claa.LoraDataRetrieve;
-import com.carryit.base.fam.connection.*;
-import com.carryit.base.fam.service.impl.AlertRuleServiceTest;
+import com.carryit.base.fam.service.impl.AlertRuleServiceTestImpl;
 import com.carryit.base.fam.utils.Base64Utils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,9 +14,6 @@ import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
 import java.util.Arrays;
-
-import static com.carryit.base.fam.utils.CmdMessageUtils.composeMessage;
-import static com.carryit.base.fam.utils.CmdMessageUtils.encapsulateContent;
 
 /**
  * Created by hlzou on 2018/1/15.
@@ -31,7 +27,7 @@ public class TestTest {
     private LoraDataRetrieve loraDataRetrieve;
 
     @Autowired
-    private AlertRuleServiceTest alertRuleServiceTest;
+    private AlertRuleServiceTestImpl alertRuleServiceTest;
 
     @Test
     public void test9() {

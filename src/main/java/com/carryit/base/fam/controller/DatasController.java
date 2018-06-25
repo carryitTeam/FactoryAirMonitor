@@ -7,13 +7,11 @@ import com.carryit.base.fam.connection.CSQuit;
 import com.carryit.base.fam.connection.Connection;
 import com.carryit.base.fam.hpb.Change;
 import com.carryit.base.fam.init.SpringBeanFactory;
-import com.carryit.base.fam.service.IAlertRuleService;
-import com.carryit.base.fam.service.impl.AlertRuleServiceTest;
+import com.carryit.base.fam.service.impl.AlertRuleServiceTestImpl;
 import com.carryit.base.fam.service.impl.DatasService;
 import com.carryit.base.fam.service.impl.PushDataToCsService;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,12 +20,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static com.carryit.base.fam.utils.CmdMessageUtils.composeMessage;
-import static com.carryit.base.fam.utils.CmdMessageUtils.encapsulateContent;
 
 /**
  * Created by hlzou on 2018/2/28.
@@ -40,19 +36,13 @@ public class DatasController {
     private ServletContext servletContext;
 
     @Autowired
-    private AlertRuleServiceTest alertRuleServiceTest;
+    private AlertRuleServiceTestImpl alertRuleServiceTest;
 
     @Autowired
     private DatasService datasService;
 
     @Autowired
     private PushDataToCsService pushDataToCsService;
-
-    //    @Value("${lora.host}")
-    private String loraHost = "139.129.216.128";
-
-    //    @Value("${lora.port}")
-    private String loraPort = "30002";
 
     @PostMapping("/refreshData")
     public
@@ -93,14 +83,12 @@ public class DatasController {
         LoraDataRetrieve loraDataRetrieve = SpringBeanFactory.getBean(LoraDataRetrieve.class);
         try {
             loraDataRetrieve.setAppEui(appEui);
-            loraDataRetrieve.setHost(loraHost);
-            loraDataRetrieve.setPort(Integer.parseInt(loraPort));
             loraDataRetrieve.setRunFlag(true);
             loraDataRetrieve.setAlertRuleService(alertRuleServiceTest);
             loraDataRetrieve.initConnection();
             Thread thread = new Thread(loraDataRetrieve);
             thread.start();
-            Thread.sleep(3000l);
+            Thread.sleep(3000L);
 
             if (!loraDataRetrieve.isAccept()) {
                 loraDataRetrieve.setRunFlag(false);
@@ -143,7 +131,7 @@ public class DatasController {
             quit.setAppEUI(appEui);
             quit.setCMD("QUIT");
             quit.setCmdSeq(3);
-            pushDataToCsService.putDataForQUIT(connection,quit);
+            pushDataToCsService.putDataForQUIT(connection, quit);
 //            String body = encapsulateContent(quit);
 //            System.out.println(body);
 //            quit.setHeader(Integer.toString(body.length()));

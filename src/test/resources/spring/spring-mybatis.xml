@@ -12,7 +12,8 @@ com.carryit.base.fam.service,com.carryit.base.fam.claa,
 com.carryit.base.fam.service,com.carryit.base.fam.connection,
 com.carryit.base.fam.service,com.carryit.base.fam.service"/>
 
-    <bean id="DataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close" autowire="no">
+    <bean id="DataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close"
+          autowire="no">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="testWhileIdle" value="false"/>
         <property name="testOnBorrow" value="false"/>
@@ -41,6 +42,19 @@ com.carryit.base.fam.service,com.carryit.base.fam.service"/>
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.carryit.base.fam.dao"/>
         <property name="sqlSessionFactoryBeanName" value="DataSource_sessionFactor"></property>
+    </bean>
+
+    <bean id="configProperties"
+          class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="locations">
+            <list>
+                <value>classpath:properties/system.properties</value>
+            </list>
+        </property>
+    </bean>
+    <bean id="propertyConfigurer"
+          class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
+        <property name="properties" ref="configProperties"/>
     </bean>
 
 </beans>
