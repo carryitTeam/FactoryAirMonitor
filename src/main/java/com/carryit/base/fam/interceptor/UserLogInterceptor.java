@@ -23,12 +23,13 @@ public class UserLogInterceptor implements HandlerInterceptor {
             return false;
         }
 
+        String clientIp = httpServletRequest.getRemoteAddr();
         User user = (User) cuser;
         //获取请求的url
         String url = httpServletRequest.getRequestURI();
         LogOps logOps = new LogOps();
         logOps.setUserId(user.getUserId());
-        logOps.setLogContent(url);
+        logOps.setLogContent("clientIp："+clientIp+"，url："+url);
         logOpsService.addLogOps(logOps);
         return true;
     }
