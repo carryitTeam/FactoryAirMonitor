@@ -42,7 +42,7 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <img src="/pic/f1.jpg" height="400" width="1000"/>
+            <img src="pic/f1.jpg" height="400" width="1000"/>
         </div>
 
         <div class="col-md-12">
@@ -64,8 +64,8 @@
                         <tbody>
                         <c:forEach items="${deviceConfigList}" var="device" varStatus="status">
                             <tr>
-                                <td><a href="/dataRetrieveByAppEui?appEui=${device.appEui}">查看数据</a>&nbsp;&nbsp;
-                                    <a href="/sensorManager">查看告警设备</a>
+                                <td><a href="dataRetrieveByAppEui?appEui=${device.appEui}">查看数据</a>&nbsp;&nbsp;
+                                    <a href="sensorManager">查看告警设备</a>
                                 </td>
                                 <td>${device.appEui}</td>
                                 <td>${device.devEui}</td>
@@ -74,19 +74,22 @@
                                 <td>${device.deviceComment}</td>
                                 <td>${device.createTime}</td>
                                 <td id="parentId_${device.parentId}">
-                                    <div class="btn-group btn-group-toggle" data-toggle="buttons" id="${device.id}"
+                                    <div class="btn-group btn-group-toggle" data-toggle="buttons"
+                                         id="${device.id}"
                                             <c:if test="${cuser.userRole=='user'}">
                                                 style="display: none"
                                             </c:if>
                                     >
                                         <c:if test="${startedApp.get(device.appEui)==true}">
-                                            <label class="btn btn-warning" onclick="startAndStopReceiveData(this)"
+                                            <label class="btn btn-warning"
+                                                   onclick="startAndStopReceiveData(this)"
                                                    id="${device.appEui}">
                                                 <input type="checkbox" autocomplete="off">暂停
                                             </label>
                                         </c:if>
                                         <c:if test="${startedApp.get(device.appEui)==false}">
-                                            <label class="btn btn-success" onclick="startAndStopReceiveData(this)"
+                                            <label class="btn btn-success"
+                                                   onclick="startAndStopReceiveData(this)"
                                                    id="${device.appEui}">
                                                 <input type="checkbox" autocomplete="off">启动
                                             </label>
@@ -118,42 +121,42 @@
         var currStatus = transferString($(node).text());
         if (currStatus == '启动') {
             $.ajax({
-                type: 'POST',
-                url: "startReceiveData",
-                async: false,
-                data: {
-                    appEui: appEui
-                },
-                success: function (data) {
-                    if (data == "1") {
-                        $(node).text("暂停");
-                        $(node).attr("class", "btn btn-warning")
-                        alert("该appEui启动成功...")
-                    } else if (data == 2) {
-                        alert("该appEui已启动...")
-                    } else if (data == 3) {
-                        alert("该appEui注册失败")
-                    }
-                }
-            });
+                       type: 'POST',
+                       url: "startReceiveData",
+                       async: false,
+                       data: {
+                           appEui: appEui
+                       },
+                       success: function (data) {
+                           if (data == "1") {
+                               $(node).text("暂停");
+                               $(node).attr("class", "btn btn-warning")
+                               alert("该appEui启动成功...")
+                           } else if (data == 2) {
+                               alert("该appEui已启动...")
+                           } else if (data == 3) {
+                               alert("该appEui注册失败")
+                           }
+                       }
+                   });
         } else if (currStatus == '暂停') {
             $.ajax({
-                type: 'POST',
-                url: "stopReceiveData",
-                async: false,
-                data: {
-                    appEui: appEui
-                },
-                success: function (data) {
-                    if (data == "1") {
-                        $(node).text("启动");
-                        $(node).attr("class", "btn btn-success")
-                        alert("该appEui停止成功...")
-                    } else if (data == 2) {
-                        alert("该appEui已停止...")
-                    }
-                }
-            });
+                       type: 'POST',
+                       url: "stopReceiveData",
+                       async: false,
+                       data: {
+                           appEui: appEui
+                       },
+                       success: function (data) {
+                           if (data == "1") {
+                               $(node).text("启动");
+                               $(node).attr("class", "btn btn-success")
+                               alert("该appEui停止成功...")
+                           } else if (data == 2) {
+                               alert("该appEui已停止...")
+                           }
+                       }
+                   });
         }
     }
 
