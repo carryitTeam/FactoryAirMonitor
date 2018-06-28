@@ -18,7 +18,9 @@
 
     <select id="queryFaultRecordsByAppEui" parameterType="com.carryit.base.fam.bean.FaultRecords"
             resultMap="FaultRecords">
-        select id,appEui,devEui,faultContent,createTime from faultrecords where  appEui=#{appEui}
+        select id,appEui,devEui,faultContent,createTime from faultrecords where  appEui
+        in (select appEui from deviceconfig where deviceType='device' and
+        groupId=#{appEui} )
     </select>
 
     <insert id="addFaultRecords" parameterType="com.carryit.base.fam.bean.FaultRecords"

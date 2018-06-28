@@ -5,6 +5,7 @@ import com.carryit.base.fam.bean.GroupInfo;
 import com.carryit.base.fam.bean.User;
 import com.carryit.base.fam.service.impl.DeviceConfigService;
 import com.carryit.base.fam.service.impl.GroupInfoService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,18 +44,17 @@ public class TopController {
         Map<Integer, GroupInfo> mapData = toMapData(groupInfos);
         modelAndView.addObject("groupMapData", mapData);
         modelAndView.addObject("startedApp", startedApp);
-        if ("superAdmin".equalsIgnoreCase(cuser.getUserRole())) {
-            DeviceConfig deviceConfig = new DeviceConfig();
-            deviceConfig.setDeviceType("device");
-            List<DeviceConfig> deviceConfigList = deviceConfigService.queryDeviceConfigByType(deviceConfig);
-            deviceConfig.setDeviceType("device");
-            modelAndView.addObject("deviceConfigList", deviceConfigList);
-        }else {
-            DeviceConfig deviceConfig = new DeviceConfig();
-            deviceConfig.setGroupId(cuser.getGroupId());
-            List<DeviceConfig> deviceConfigList = deviceConfigService.queryDeviceConfigByGroupId(deviceConfig);
-            modelAndView.addObject("deviceConfigList", deviceConfigList);
-        }
+//        if ("superAdmin".equalsIgnoreCase(cuser.getUserRole())) {
+//            DeviceConfig deviceConfig = new DeviceConfig();
+//            deviceConfig.setDeviceType("device");
+//            List<DeviceConfig> deviceConfigList = deviceConfigService.queryDeviceConfigByType(deviceConfig);
+//            modelAndView.addObject("deviceConfigList", deviceConfigList);
+//        }else {
+        DeviceConfig deviceConfig = new DeviceConfig();
+        deviceConfig.setGroupId(Integer.parseInt(request.getParameter("groupId")));
+        List<DeviceConfig> deviceConfigList = deviceConfigService.queryDeviceConfigByGroupId(deviceConfig);
+        modelAndView.addObject("deviceConfigList", deviceConfigList);
+//        }
         modelAndView.setViewName("new/topManager");
         return modelAndView;
     }

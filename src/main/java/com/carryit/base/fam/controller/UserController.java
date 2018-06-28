@@ -2,6 +2,7 @@ package com.carryit.base.fam.controller;
 
 import com.carryit.base.fam.bean.*;
 import com.carryit.base.fam.service.impl.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -97,27 +99,25 @@ public class UserController {
             cuser = userService.checkUserByPwd(user);
         }
         // 验证db是否成功
+        List<GroupInfo> groupInfos = new ArrayList<>();
         if (cuser == null || cuser.getUserId() == null) {
             model.addObject("userId", userId);
             model.setViewName("new/loginError");
         } else {
             userSession.setAttribute("cuser", cuser);
             model.addObject("cuser", cuser);
-            if ("superAdmin".equalsIgnoreCase(cuser.getUserRole())) {
-                List<GroupInfo> groupInfos = groupInfoService.queryAllGroupInfo();
-                model.addObject("groupInfos", groupInfos);
-                model.setViewName("new/main");
-            } else {
-//                GroupInfo groupInfo = new GroupInfo();
-//                groupInfo.setId(cuser.getGroupId());
-//                GroupInfo groupInfos = groupInfoService.queryGroupInfoById(groupInfo);
-//                List<GroupInfo> groupInfoList = new ArrayList<>();
-//                groupInfoList.add(groupInfos);
-//                model.addObject("groupInfos", groupInfoList);
-//                model.setViewName("new/main");
-                model.setViewName("redirect:/topManager");
+            if ("user".equalsIgnoreCase(cuser.getUserRole())) {
+                model.setViewName("redirect:menu?groupId=" + cuser.getGroupId());
+            } else if ("superAdmin".equalsIgnoreCase(cuser.getUserRole())) {
+                groupInfos = groupInfoService.queryAllGroupInfo();
+            } else if ("admin".equalsIgnoreCase(cuser.getUserRole())) {
+                GroupInfo groupInfo = new GroupInfo();
+                groupInfo.setId(cuser.getGroupId());
+                groupInfos.add(groupInfoService.queryGroupInfoById(groupInfo));
             }
         }
+        model.addObject("groupInfos", groupInfos);
+        model.setViewName("new/main");
         return model;
     }
 

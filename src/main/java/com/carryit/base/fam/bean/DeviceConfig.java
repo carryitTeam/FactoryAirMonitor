@@ -29,7 +29,7 @@ public class DeviceConfig {
 
     private String alertField;
 
-    private double alertNumber=Double.MAX_VALUE;
+    private double alertNumber = Double.MAX_VALUE;
 
     public String getAlertField() {
         return alertField;

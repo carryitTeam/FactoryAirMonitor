@@ -12,6 +12,7 @@ import com.carryit.base.fam.service.impl.DeviceConfigService;
 import com.carryit.base.fam.service.impl.PushDataToCsService;
 import com.carryit.base.fam.utils.Base64Utils;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -51,14 +53,14 @@ public class AlertController {
         User cuser = (User) request.getSession().getAttribute("cuser");
         modelAndView.addObject("cuser", cuser);
         List<AlertHistory> alertHistories = null;
-        if ("superAdmin".equalsIgnoreCase(cuser.getUserRole())) {
-            alertHistories = alertHistoryService.queryAllAlertHistory();
-
-        } else {
-            AlertHistory alertHistory = new AlertHistory();
-            alertHistory.setUserId(cuser.getUserId());
-            alertHistories = alertHistoryService.queryAlertHistoryByAppEui(alertHistory);
-        }
+//        if ("superAdmin".equalsIgnoreCase(cuser.getUserRole())) {
+//            alertHistories = alertHistoryService.queryAllAlertHistory();
+//
+//        } else {
+        AlertHistory alertHistory = new AlertHistory();
+        alertHistory.setUserId(request.getParameter("groupId"));
+        alertHistories = alertHistoryService.queryAlertHistoryByAppEui(alertHistory);
+//        }
         Map<Integer, Map<String, String>> careDatas = toCareMapData(alertHistories);
         modelAndView.addObject("alertHistories", alertHistories);
         modelAndView.addObject("careDatas", careDatas);
@@ -91,9 +93,9 @@ public class AlertController {
                     data2Dev.setDevEUI(sensor.getDevEui());
                     String pl = sensor.getPayload();
                     String[] pp = pl.split(",");
-                    if (pp.length==1){
+                    if (pp.length == 1) {
                         data2Dev.setPayload(pp[0]);
-                    }else if (pp.length==2) {
+                    } else if (pp.length == 2) {
                         data2Dev.setPayload(pp[1]);
                     }
                     data2Dev.setPort(Integer.parseInt(sensor.getDevicePort()));

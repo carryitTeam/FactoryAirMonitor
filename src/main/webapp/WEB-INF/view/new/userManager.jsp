@@ -263,7 +263,7 @@
                     alert("修改失败")
                 } else {
                     alert("修改成功")
-                    window.location.href = '/userManager';
+                    window.location.href = 'userManager';
                 }
             }
         });

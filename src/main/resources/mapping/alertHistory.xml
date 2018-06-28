@@ -28,7 +28,7 @@
             resultMap="AlertHistory">
         select id,historyId,userId,ruleId,appEui,devEui,isProcess,jsonData,changeTime,createTime from alerthistory where
         appEui in (select appEui from deviceconfig where deviceType='device' and
-        groupId in (select groupId from user where userid=#{userId}) )
+        groupId=#{userId} )
     </select>
 
     <select id="queryAllAlertHistory" parameterType="com.carryit.base.fam.bean.AlertHistory"

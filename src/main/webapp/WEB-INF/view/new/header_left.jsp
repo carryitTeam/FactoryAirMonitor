@@ -48,17 +48,22 @@
         </div>
     </div>
     <ul class="app-menu">
-        <c:if test="${cuser.userRole=='superAdmin'}">
-            <li><a class="app-menu__item
+        <li><a class="app-menu__item
         <c:if test="${fn:contains(pageContext.request.requestURI,'main')||
         fn:contains(pageContext.request.requestURI,'detailDataInfo')||
+         fn:contains(pageContext.request.requestURI,'menu')||
         fn:contains(pageContext.request.requestURI,'detailData')||
+        fn:contains(pageContext.request.requestURI,'topManager')||
+        fn:contains(pageContext.request.requestURI,'alertManager')||
+        fn:contains(pageContext.request.requestURI,'logManager')||
+        fn:contains(pageContext.request.requestURI,'deviceManager')||
+        fn:contains(pageContext.request.requestURI,'sensorManager')||
+        fn:contains(pageContext.request.requestURI,'faultManager')||
         fn:contains(pageContext.request.requestURI,'detailSenorData')}">
             active
         </c:if>
         " href="checkUser"><i class="app-menu__icon fa fa-university"></i><span
-                    class="app-menu__label">主页</span></a></li>
-        </c:if>
+                class="app-menu__label">主页</span></a></li>
         <c:if test="${cuser.userRole=='superAdmin'}">
             <li><a class="app-menu__item
 <c:if test="${fn:contains(pageContext.request.requestURI,'groupManager')}">
@@ -66,51 +71,51 @@
         </c:if>" href="groupManager"><i class="app-menu__icon fa  fa-object-group"></i><span
                     class="app-menu__label">单位管理</span></a></li>
         </c:if>
-        <c:if test="${cuser.userRole!='user'}">
+        <c:if test="${cuser.userRole=='superAdmin'}">
             <li><a class="app-menu__item
 <c:if test="${fn:contains(pageContext.request.requestURI,'userManager')}">
             active
         </c:if>" href="userManager"><i class="app-menu__icon fa  fa-users"></i><span
                     class="app-menu__label">账号管理</span></a></li>
         </c:if>
-        <li><a class="app-menu__item
-<c:if test="${fn:contains(pageContext.request.requestURI,'topManager')}">
-            active
-        </c:if>" href="topManager"><i class="app-menu__icon fa fa-share-alt"></i><span
-                class="app-menu__label">拓扑管理</span></a></li>
-        <li><a class="app-menu__item
-<c:if test="${fn:contains(pageContext.request.requestURI,'alertManager')}">
-            active
-        </c:if>" href="alertManager"><i class="app-menu__icon fa fa-bell-o"></i><span
-                class="app-menu__label">报警管理</span></a></li>
-        <li><a class="app-menu__item
-<c:if test="${fn:contains(pageContext.request.requestURI,'logManager')}">
-            active
-        </c:if>" href="logManager"><i class="app-menu__icon fa fa-file-text-o"></i><span
-                class="app-menu__label">日志管理</span></a></li>
-        <li class="treeview
-<c:if test="${fn:contains(pageContext.request.requestURI,'deviceManager')||fn:contains(pageContext.request.requestURI,'sensorManager')}">
-            is-expanded
-        </c:if>
-"><a class="app-menu__item" href="#" data-toggle="treeview"><i
-                class="app-menu__icon fa  fa-cogs"></i><span class="app-menu__label">配置管理</span><i
-                class="treeview-indicator fa fa-angle-right"></i></a>
-            <ul class="treeview-menu">
-                <li><a class="treeview-item
-<c:if test="${fn:contains(pageContext.request.requestURI,'deviceManager')}">
-            active
-        </c:if>" href="deviceManager"><i class="icon fa fa-circle-o"></i> 数据传感设备</a></li>
-                <li><a class="treeview-item
-<c:if test="${fn:contains(pageContext.request.requestURI,'sensorManager')}">
-            active
-        </c:if>" href="sensorManager"><i class="icon fa fa-circle-o"></i> 联动报警设备</a></li>
-            </ul>
-        </li>
-        <li><a class="app-menu__item
-<c:if test="${fn:contains(pageContext.request.requestURI,'faultManager')}">
-            active
-        </c:if>" href="faultManager"><i class="app-menu__icon fa fa-window-close-o"></i><span
-                class="app-menu__label">故障管理</span></a></li>
+        <%--<li><a class="app-menu__item--%>
+        <%--<c:if test="${fn:contains(pageContext.request.requestURI,'topManager')}">--%>
+        <%--active--%>
+        <%--</c:if>" href="topManager"><i class="app-menu__icon fa fa-share-alt"></i><span--%>
+        <%--class="app-menu__label">拓扑管理</span></a></li>--%>
+        <%--<li><a class="app-menu__item--%>
+        <%--<c:if test="${fn:contains(pageContext.request.requestURI,'alertManager')}">--%>
+        <%--active--%>
+        <%--</c:if>" href="alertManager"><i class="app-menu__icon fa fa-bell-o"></i><span--%>
+        <%--class="app-menu__label">报警管理</span></a></li>--%>
+        <%--<li><a class="app-menu__item--%>
+        <%--<c:if test="${fn:contains(pageContext.request.requestURI,'logManager')}">--%>
+        <%--active--%>
+        <%--</c:if>" href="logManager"><i class="app-menu__icon fa fa-file-text-o"></i><span--%>
+        <%--class="app-menu__label">日志管理</span></a></li>--%>
+        <%--<li class="treeview--%>
+        <%--<c:if test="${fn:contains(pageContext.request.requestURI,'deviceManager')||fn:contains(pageContext.request.requestURI,'sensorManager')}">--%>
+        <%--is-expanded--%>
+        <%--</c:if>--%>
+        <%--"><a class="app-menu__item" href="#" data-toggle="treeview"><i--%>
+        <%--class="app-menu__icon fa  fa-cogs"></i><span class="app-menu__label">配置管理</span><i--%>
+        <%--class="treeview-indicator fa fa-angle-right"></i></a>--%>
+        <%--<ul class="treeview-menu">--%>
+        <%--<li><a class="treeview-item--%>
+        <%--<c:if test="${fn:contains(pageContext.request.requestURI,'deviceManager')}">--%>
+        <%--active--%>
+        <%--</c:if>" href="deviceManager"><i class="icon fa fa-circle-o"></i> 数据传感设备</a></li>--%>
+        <%--<li><a class="treeview-item--%>
+        <%--<c:if test="${fn:contains(pageContext.request.requestURI,'sensorManager')}">--%>
+        <%--active--%>
+        <%--</c:if>" href="sensorManager"><i class="icon fa fa-circle-o"></i> 联动报警设备</a></li>--%>
+        <%--</ul>--%>
+        <%--</li>--%>
+        <%--<li><a class="app-menu__item--%>
+        <%--<c:if test="${fn:contains(pageContext.request.requestURI,'faultManager')}">--%>
+        <%--active--%>
+        <%--</c:if>" href="faultManager"><i class="app-menu__icon fa fa-window-close-o"></i><span--%>
+        <%--class="app-menu__label">故障管理</span></a></li>--%>
     </ul>
 </aside>
 

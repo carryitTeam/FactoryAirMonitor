@@ -33,7 +33,7 @@
     <div class="app-title">
         <div>
             <h1><i class="fa fa-university"></i> 主页</h1>
-            <p>单位信息列表/数据流量统计</p>
+            <p>详细信息</p>
         </div>
         <ul class="app-breadcrumb breadcrumb">
             <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
@@ -41,30 +41,51 @@
         </ul>
     </div>
     <div class="row">
-        <c:forEach items="${groupInfos}" var="groupInfo" varStatus="status">
-            <div class="col-md-4">
-                <div class="card mb-3
-                    <c:if test="${status.index % 6 ==0}"> border-primary</c:if>
-                    <c:if test="${status.index % 6 ==1}"> border-success</c:if>
-                    <c:if test="${status.index % 6 ==2}"> border-info</c:if>
-                    <c:if test="${status.index % 6 ==3}"> border-warning</c:if>
-                    <c:if test="${status.index % 6 ==4}"> border-dark</c:if>
-                    <c:if test="${status.index % 6 ==5}"> border-danger</c:if>
-                    ">
-                    <div class="card-body" style="background-color: #d6e9ea">
-                        <blockquote class="card-blockquote">
-                            <p>单位名称：<b>${groupInfo.groupName}</b></p>
-                            <p>单位地址：<b>${groupInfo.groupLocation}</b></p>
-                            <p>负责人：<b>${groupInfo.contactUserName}</b></p>
-                            <p>负责电话：<b>${groupInfo.contactTelephoneNumber}</b></p>
-                            <footer>
-                                <cite title="详细信息"><a href="menu?groupId=${groupInfo.id}">详细信息</a></cite>
-                            </footer>
-                        </blockquote>
-                    </div>
+        <div class="col-md-4">
+            <div class="card mb-3 border-primary">
+                <div class="card-body" style="background-color: #d6e9ea">
+                    <blockquote class="card-blockquote">
+                        <h3><a href="topManager?groupId=${groupId}">拓扑管理</a></h3>
+                    </blockquote>
                 </div>
             </div>
-        </c:forEach>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-3 border-primary">
+                <div class="card-body" style="background-color: #d6e9ea">
+                    <blockquote class="card-blockquote">
+                        <h3><a href="alertManager?groupId=${groupId}">报警管理</a></h3>
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-3 border-primary">
+                <div class="card-body" style="background-color: #d6e9ea">
+                    <blockquote class="card-blockquote">
+                        <h3><a href="faultManager?groupId=${groupId}">故障管理</a></h3>
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-3 border-primary">
+                <div class="card-body" style="background-color: #d6e9ea">
+                    <blockquote class="card-blockquote">
+                        <h3><a href="deviceManager?groupId=${groupId}">传感器设备配置</a></h3>
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-3 border-primary">
+                <div class="card-body" style="background-color: #d6e9ea">
+                    <blockquote class="card-blockquote">
+                        <h3><a href="sensorManager?groupId=${groupId}">联动设备配置</a></h3>
+                    </blockquote>
+                </div>
+            </div>
+        </div>
     </div>
 </main>
 <!-- Essential javascripts for application to work-->
