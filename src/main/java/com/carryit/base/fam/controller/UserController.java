@@ -106,13 +106,11 @@ public class UserController {
         } else {
             userSession.setAttribute("cuser", cuser);
             model.addObject("cuser", cuser);
-            if ("user".equalsIgnoreCase(cuser.getUserRole())) {
-                model.setViewName("redirect:menu?groupId=" + cuser.getGroupId());
-            } else if ("superAdmin".equalsIgnoreCase(cuser.getUserRole())) {
+            if ("superAdmin".equalsIgnoreCase(cuser.getUserRole())) {
                 groupInfos = groupInfoService.queryAllGroupInfo();
                 model.addObject("groupInfos", groupInfos);
                 model.setViewName("new/main");
-            } else if ("admin".equalsIgnoreCase(cuser.getUserRole())) {
+            } else {
                 GroupInfo groupInfo = new GroupInfo();
                 groupInfo.setId(cuser.getGroupId());
                 groupInfos.add(groupInfoService.queryGroupInfoById(groupInfo));

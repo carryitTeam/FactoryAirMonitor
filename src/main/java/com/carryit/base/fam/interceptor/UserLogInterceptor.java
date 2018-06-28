@@ -3,6 +3,7 @@ package com.carryit.base.fam.interceptor;
 import com.carryit.base.fam.bean.LogOps;
 import com.carryit.base.fam.bean.User;
 import com.carryit.base.fam.service.impl.LogOpsService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -19,7 +20,7 @@ public class UserLogInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         Object cuser = httpServletRequest.getSession().getAttribute("cuser");
-        if (cuser==null){
+        if (cuser == null) {
             return false;
         }
 
@@ -27,10 +28,12 @@ public class UserLogInterceptor implements HandlerInterceptor {
         User user = (User) cuser;
         //获取请求的url
         String url = httpServletRequest.getRequestURI();
-        LogOps logOps = new LogOps();
-        logOps.setUserId(user.getUserId());
-        logOps.setLogContent("clientIp："+clientIp+"，url："+url);
-        logOpsService.addLogOps(logOps);
+        if (url.contains("login")) {
+            LogOps logOps = new LogOps();
+            logOps.setUserId(user.getUserId());
+            logOps.setLogContent("clientIp：" + clientIp + "，url：" + url);
+            logOpsService.addLogOps(logOps);
+        }
         return true;
     }
 
