@@ -138,14 +138,18 @@ public class LoraDataRetrieve implements Runnable {
 
     @Override
     public void run() {
-        DeviceConfig deviceConfig = new DeviceConfig();
-        deviceConfig.setDeviceType("sensor");
-        sensorConfigList = deviceConfigService.queryDeviceConfigByType(deviceConfig);
         ObjectMapper objectMapper = new ObjectMapper();
         int i = 0;
         Long start = System.currentTimeMillis();
         StringBuffer dataCheck = new StringBuffer();
         while (isRunFlag()) {
+            DeviceConfig deviceConfig = new DeviceConfig();
+            deviceConfig.setAppEui(appEui);
+            List<DeviceConfig> deviceConfigList = deviceConfigService.queryDeviceConfigByAppEui(deviceConfig);
+            DeviceConfig dd = deviceConfigList.get(0);
+            dd.setParentId(dd.getId());
+            sensorConfigList = deviceConfigService.queryDeviceConfigByParentId(dd);
+
             if (connection == null || connection.isClosed()) {
                 initConnection();
                 System.out.println("--------------reset connection-----------------");
@@ -198,20 +202,21 @@ public class LoraDataRetrieve implements Runnable {
                                     alertHistory.setFaultContect(String.valueOf(alertLevel));
                                     alertHistoryService.addAlertHistory(alertHistory);
 
-
-                                    CSData2Dev data2Dev = new CSData2Dev();
-                                    data2Dev.setCMD("SENDTO");
-                                    data2Dev.setCmdSeq(5);
-                                    data2Dev.setAppEUI(appEui);
-                                    data2Dev.setDevEUI(sensor.getDevEui());
-                                    String pl = sensor.getPayload();
-                                    String[] pp = pl.split(",");
-                                    if (pp.length > 0) {
-                                        data2Dev.setPayload(pp[0]);
+                                    if ("no".equalsIgnoreCase(dd.getExcludeAlert())){
+                                        CSData2Dev data2Dev = new CSData2Dev();
+                                        data2Dev.setCMD("SENDTO");
+                                        data2Dev.setCmdSeq(5);
+                                        data2Dev.setAppEUI(appEui);
+                                        data2Dev.setDevEUI(sensor.getDevEui());
+                                        String pl = sensor.getPayload();
+                                        String[] pp = pl.split(",");
+                                        if (pp.length > 0) {
+                                            data2Dev.setPayload(pp[0]);
+                                        }
+                                        data2Dev.setPort(Integer.parseInt(sensor.getDevicePort()));
+                                        pushDataToCsService.putDataForSENDTO(connection, data2Dev);
+                                        Thread.sleep(1000);
                                     }
-                                    data2Dev.setPort(Integer.parseInt(sensor.getDevicePort()));
-                                    pushDataToCsService.putDataForSENDTO(connection, data2Dev);
-                                    Thread.sleep(1000);
                                 }
                             }
 

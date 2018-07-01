@@ -31,6 +31,36 @@ public class DeviceConfig {
 
     private double alertNumber = Double.MAX_VALUE;
 
+    private int leftX;
+
+    private int topY;
+
+    private String excludeAlert;
+
+    public String getExcludeAlert() {
+        return excludeAlert;
+    }
+
+    public void setExcludeAlert(String excludeAlert) {
+        this.excludeAlert = excludeAlert;
+    }
+
+    public int getLeftX() {
+        return leftX;
+    }
+
+    public void setLeftX(int leftX) {
+        this.leftX = leftX;
+    }
+
+    public int getTopY() {
+        return topY;
+    }
+
+    public void setTopY(int topY) {
+        this.topY = topY;
+    }
+
     public String getAlertField() {
         return alertField;
     }

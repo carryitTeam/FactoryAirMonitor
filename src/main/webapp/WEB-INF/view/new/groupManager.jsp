@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -53,6 +54,7 @@
                     <table class="table table-hover table-bordered" id="sampleTable">
                         <thead>
                         <tr>
+                            <th>工厂图地址</th>
                             <th>单位名称</th>
                             <th>单位地址</th>
                             <th>联系人</th>
@@ -64,6 +66,9 @@
                         <tbody>
                         <c:forEach items="${groupInfos}" var="groupInfo" varStatus="status">
                             <tr>
+                                <td>${fn:substring(groupInfo.factoryDiagramPath,0,20)}...
+                                    <label style="display: none">${groupInfo.factoryDiagramPath}</label>
+                                </td>
                                 <td>${groupInfo.groupName}</td>
                                 <td>${groupInfo.groupLocation}</td>
                                 <td>${groupInfo.contactUserName}</td>
@@ -72,11 +77,11 @@
                                 <td>
                                     <div class="btn-group btn-group-toggle" data-toggle="buttons"
                                          id="${groupInfo.id}">
-                                            <%--<label class="btn btn-success" onclick="startModel();">--%>
-                                            <%--<input type="checkbox" autocomplete="off"> 详情--%>
-                                            <%--</label>--%>
                                         <label class="btn btn-info" onclick="startModel(this);">
                                             <input type="checkbox" autocomplete="off"> 修改
+                                        </label>
+                                        <label class="btn btn-success" onclick="deleteGroup(this);">
+                                            <input type="checkbox" autocomplete="off"> 刪除
                                         </label>
                                     </div>
                                 </td>
@@ -139,6 +144,13 @@
                                        id="contactTelephoneNumber">
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label class="control-label col-md-3">工厂结构图地址</label>
+                            <div class="col-md-8">
+                                <input class="form-control col-md-8" placeholder="http://......."
+                                       id="factoryDiagramPath">
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -171,6 +183,31 @@
         return false;
     }
     $('#sampleTable').DataTable();
+
+    function deleteGroup(node){
+        var p1 = $(node).parent();
+        var groupId = p1.attr("id");
+        var r=confirm("是否确定删掉？")
+        if(!r){
+            return true
+        }
+        $.ajax({
+                   type: 'POST',
+                   url: "deleteGroup",
+                   async: false,
+                   data: {
+                       id: groupId
+                   },
+                   success: function (data) {
+                       if (data == -1) {
+                           alert("修改失败")
+                       } else {
+                           alert("修改成功")
+                           window.location.href = 'groupManager';
+                       }
+                   }
+               });
+    }
     function startModel(node) {
         //加载模态框
         $('#groupManagerModel').modal();
@@ -180,6 +217,8 @@
         var contactUserName = p1.parent().prev().prev().prev().text();
         var groupLocation = p1.parent().prev().prev().prev().prev().text();
         var groupName = p1.parent().prev().prev().prev().prev().prev().text();
+        var factoryDiagramPath = p1.parent().prev().prev().prev().prev().prev().prev().text();
+        factoryDiagramPath = factoryDiagramPath.split("\n")[1].trim()
         $("#groupId").val("")
         $("#groupId").val(groupId);
         $("#groupName").val("")
@@ -190,6 +229,8 @@
         $("#contactUserName").val(contactUserName);
         $("#contactTelephoneNumber").val("")
         $("#contactTelephoneNumber").val(contactTelephoneNumber);
+        $("#factoryDiagramPath").val("")
+        $("#factoryDiagramPath").val(factoryDiagramPath);
     }
 
     function saveGroupData() {
@@ -198,6 +239,7 @@
         var groupLocation = $("#groupLocation").val();
         var contactUserName = $("#contactUserName").val();
         var contactTelephoneNumber = $("#contactTelephoneNumber").val();
+        var factoryDiagramPath =  $("#factoryDiagramPath").val()
 
         if (checkEmpty(groupName, "groupName")) {
             return true;
@@ -222,7 +264,8 @@
                        groupName: groupName,
                        groupLocation: groupLocation,
                        contactUserName: contactUserName,
-                       contactTelephoneNumber: contactTelephoneNumber
+                       contactTelephoneNumber: contactTelephoneNumber,
+                       factoryDiagramPath:factoryDiagramPath
                    },
                    success: function (data) {
                        $('#groupManagerModel').modal('hide')
@@ -234,24 +277,6 @@
                        }
                    }
                });
-    }
-</script>
-<!-- Google analytics script-->
-<script type="text/javascript">
-    if (document.location.hostname == 'pratikborsadiya.in') {
-        (function (i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r;
-            i[r] = i[r] || function () {
-                    (i[r].q = i[r].q || []).push(arguments)
-                }, i[r].l = 1 * new Date();
-            a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
-            a.async = 1;
-            a.src = g;
-            m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-        ga('create', 'UA-72504830-1', 'auto');
-        ga('send', 'pageview');
     }
 </script>
 </body>

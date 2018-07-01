@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,7 +54,21 @@ public class TopController {
         DeviceConfig deviceConfig = new DeviceConfig();
         deviceConfig.setGroupId(Integer.parseInt(request.getParameter("groupId")));
         List<DeviceConfig> deviceConfigList = deviceConfigService.queryDeviceConfigByGroupId(deviceConfig);
+
+        GroupInfo groupInfo = new GroupInfo();
+        groupInfo.setId(deviceConfig.getGroupId());
+        groupInfo = groupInfoService.queryGroupInfoById(groupInfo);
+
+        List<DeviceConfig> groupAll = new ArrayList<>(10);
+        groupAll.addAll(deviceConfigList);
+        for (DeviceConfig dc :deviceConfigList){
+            DeviceConfig d = new DeviceConfig();
+            d.setParentId(dc.getId());
+            groupAll.addAll(deviceConfigService.queryDeviceConfigByParentId(d));
+        }
         modelAndView.addObject("deviceConfigList", deviceConfigList);
+        modelAndView.addObject("groupAll", groupAll);
+        modelAndView.addObject("groupInfo", groupInfo);
 //        }
         modelAndView.setViewName("new/topManager");
         return modelAndView;

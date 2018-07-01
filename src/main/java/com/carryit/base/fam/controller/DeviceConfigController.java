@@ -10,11 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -87,7 +89,7 @@ public class DeviceConfigController {
         }
         User cuser = (User) request.getSession().getAttribute("cuser");
         modelAndView.addObject("cuser", cuser);
-        List<DeviceConfig> sensorConfigList = null;
+        List<DeviceConfig> sensorConfigList = new ArrayList<>();
         DeviceConfig deviceConfig = new DeviceConfig();
         deviceConfig.setDeviceType("device");
         List<DeviceConfig> deviceConfigList = deviceConfigService.queryDeviceConfigByType(deviceConfig);
@@ -96,13 +98,13 @@ public class DeviceConfigController {
         Map<Integer, GroupInfo> mapData = toMapData(groupInfos);
         modelAndView.addObject("groupMapData", mapData);
         modelAndView.addObject("deviceDataMap", mapDataDev);
-//        if ("superAdmin".equalsIgnoreCase(cuser.getUserRole())) {
-//            deviceConfig.setDeviceType("sensor");
-//            sensorConfigList = deviceConfigService.queryDeviceConfigByType(deviceConfig);
-//        } else {
-        deviceConfig.setParentId(Integer.parseInt(request.getParameter("groupId")));
-        sensorConfigList = deviceConfigService.queryDeviceConfigByParentId(deviceConfig);
-//        }
+        deviceConfig.setGroupId(Integer.parseInt(request.getParameter("groupId")));
+        List<DeviceConfig> tmp = deviceConfigService.queryDeviceConfigByGroupId(deviceConfig);
+        if (tmp.size()>0){
+            deviceConfig = tmp.get(0);
+            deviceConfig.setParentId(deviceConfig.getId());
+            sensorConfigList = deviceConfigService.queryDeviceConfigByParentId(deviceConfig);
+        }
         modelAndView.addObject("sensorConfigList", sensorConfigList);
         modelAndView.setViewName("new/sensorManager");
         return modelAndView;
@@ -128,6 +130,20 @@ public class DeviceConfigController {
 //            deviceConfig.se(simpleDateFormat.format(new Date()));
             res = deviceConfigService.updateSensorConfigById(deviceConfig);
         }
+        return res;
+    }
+
+    @RequestMapping("/updateXY")
+    public @ResponseBody
+    Object updateXY(HttpServletRequest request) {
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        Integer leftX = Integer.parseInt(request.getParameter("leftX"));
+        Integer topY = Integer.parseInt(request.getParameter("topY"));
+        DeviceConfig deviceConfig = new DeviceConfig();
+        deviceConfig.setId(id);
+        deviceConfig.setLeftX(leftX);
+        deviceConfig.setTopY(topY);
+        int res = deviceConfigService.updateDeviceXYById(deviceConfig);
         return res;
     }
 
@@ -169,5 +185,11 @@ public class DeviceConfigController {
         }
         modelAndView.setViewName("new/detailSenorData");
         return modelAndView;
+    }
+
+    @RequestMapping("/deleteDeviceConfig")
+    public @ResponseBody
+    Object deleteDeviceConfig(HttpServletRequest request, @ModelAttribute DeviceConfig deviceConfig) {
+        return deviceConfigService.deleteDeviceConfigById(deviceConfig);
     }
 }

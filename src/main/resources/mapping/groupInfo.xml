@@ -14,30 +14,32 @@
         <result column="contactUserName" property="contactUserName"/>
         <result column="changeTime" property="changeTime"/>
         <result column="createTime" property="createTime"/>
+        <result column="factoryDiagramPath" property="factoryDiagramPath"/>
     </resultMap>
 
     <insert id="addGroupInfo" parameterType="com.carryit.base.fam.bean.GroupInfo"
             useGeneratedKeys="true" keyProperty="id">
-        insert into groupInfos(groupName,groupLocation,groupComment,contactTelephoneNumber,contactUserName)
-        values(#{groupName},#{groupLocation},#{groupComment},#{contactTelephoneNumber},#{contactUserName})
+        insert into groupInfos(groupName,groupLocation,groupComment,contactTelephoneNumber,contactUserName,factoryDiagramPath)
+        values(#{groupName},#{groupLocation},#{groupComment},#{contactTelephoneNumber},#{contactUserName},#{factoryDiagramPath})
     </insert>
 
     <delete id="deleteGroupInfo" parameterType="com.carryit.base.fam.bean.GroupInfo">
-        delete from groupInfo where id=#{id}
+        delete from groupinfos where id=#{id}
     </delete>
 
     <update id="updateGroupInfo" parameterType="com.carryit.base.fam.bean.GroupInfo">
-        update groupInfos set groupName=#{groupName},groupLocation=#{groupLocation},contactUserName=#{contactUserName},contactTelephoneNumber=#{contactTelephoneNumber},changeTime=#{changeTime}
+        update groupInfos set groupName=#{groupName},groupLocation=#{groupLocation},contactUserName=#{contactUserName},
+        contactTelephoneNumber=#{contactTelephoneNumber},changeTime=#{changeTime},factoryDiagramPath=#{factoryDiagramPath}
         where id=#{id}
     </update>
 
     <select id="queryGroupInfoById" parameterType="com.carryit.base.fam.bean.GroupInfo"
             resultMap="GroupInfo">
-       select id, groupName,groupLocation,groupComment,contactTelephoneNumber,contactUserName,changeTime,createTime from groupInfos where id=#{id}
+       select id, groupName,groupLocation,groupComment,contactTelephoneNumber,contactUserName,changeTime,createTime,factoryDiagramPath from groupInfos where id=#{id}
     </select>
 
     <select id="queryAllGroupInfo" resultMap="GroupInfo">
-        select id, groupName,groupLocation,groupComment,contactTelephoneNumber,contactUserName,changeTime,createTime from groupInfos
+        select id, groupName,groupLocation,groupComment,contactTelephoneNumber,contactUserName,changeTime,createTime,factoryDiagramPath from groupInfos
     </select>
 
 </mapper>

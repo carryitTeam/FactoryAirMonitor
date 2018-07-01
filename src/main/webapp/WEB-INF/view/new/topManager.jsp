@@ -22,7 +22,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Main CSS-->
-    <link rel="stylesheet" type="text/css" href="new/css/main.css">
+    <link rel="stylesheet" type="text/css" href="new/css/main.css"/>
+    <link rel="stylesheet" type="text/css" href="new/css/style.css"/>
     <!-- Font-icon css-->
     <link rel="stylesheet" type="text/css"
           href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -42,9 +43,34 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <img src="pic/f1.jpg" height="400" width="1000"/>
+            <%--<img src="pic/f1.jpg" height="400" width="1000"/>--%>
+            <div class='drag-box drag-box-6'
+                    <c:if test="${groupInfo.factoryDiagramPath!=''}">
+                        style='background: url("${groupInfo.factoryDiagramPath}");
+                        background-size: 100% 100%;
+                        background-repeat: no-repeat;'
+                    </c:if>
+            >
+                <c:forEach items="${groupAll}" var="g">
+                    <div class='drag drag-6'
+                         style="left: ${g.leftX}px;top: ${g.topY}px;width: 30px;height: 30px"
+                         id="pic_${g.id}">
+                        <img
+                        <c:if test="${g.deviceType=='sensor'}">
+                                title="报警器:${g.deviceName},阈值:${g.alertNumber}"
+                                src="new/img/alert.png"
+                        </c:if>
+                        <c:if test="${g.deviceType=='device'}">
+                                title="传感器:${g.deviceName}" src="new/img/sensor.png"
+                        </c:if>
+                                width=30px height=30px" style="box-shadow: 0px 0px 20px #05ed0c;">
+                        <c:if test="${g.deviceType=='sensor'}"><p>联动设备</p></c:if>
+                        <c:if test="${g.deviceType=='device'}"><p>传感设备</p></c:if>
+                    </div>
+                </c:forEach>
+            </div>
         </div>
-
+        </div>
         <div class="col-md-12">
             <div class="tile">
                 <div class="tile-body">
@@ -65,7 +91,7 @@
                         <c:forEach items="${deviceConfigList}" var="device" varStatus="status">
                             <tr>
                                 <td><a href="dataRetrieveByAppEui?appEui=${device.appEui}">查看数据</a>&nbsp;&nbsp;
-                                    <a href="sensorManager">查看告警设备</a>
+                                    <a href="sensorManager?groupId=${device.groupId}">查看告警设备</a>
                                 </td>
                                 <td>${device.appEui}</td>
                                 <td>${device.devEui}</td>
@@ -110,6 +136,7 @@
 <script src="new/js/popper.min.js"></script>
 <script src="new/js/bootstrap.min.js"></script>
 <script src="new/js/main.js"></script>
+<script src="new/js/drag.js"></script>
 <!-- The javascript plugin to display page loading on top-->
 <script src="new/js/plugins/pace.min.js"></script>
 <!-- Page specific javascripts-->
@@ -172,6 +199,35 @@
         }
         return string;
     }
+</script>
+
+<script>
+    $(function () {
+        $('.drag-box-6 .drag').each(function (node, index) {
+            var cid = $(index).attr("id");
+            $(this).myDrag({
+                               randomPosition: false,
+                               picId: cid,
+                               dragEnd: function (x, y) {
+                                   console.log('停止拖动了! — 坐标 x：' + x + ' y：' + y);
+                                   cid = this.picId.split("_")[1]
+                                   $.ajax({
+                                              type: 'POST',
+                                              url: "updateXY",
+                                              async: false,
+                                              data: {
+                                                  id: cid,
+                                                  leftX: x,
+                                                  topY: y
+                                              },
+                                              success: function (data) {
+                                                  console.log('success for 坐标 x：' + x + ' y：' + y);
+                                              }
+                                          });
+                               }
+                           });
+        });
+    });
 </script>
 </body>
 </html>

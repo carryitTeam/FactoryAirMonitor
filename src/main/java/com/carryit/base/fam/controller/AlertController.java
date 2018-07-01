@@ -68,6 +68,26 @@ public class AlertController {
         return modelAndView;
     }
 
+    @RequestMapping("/alertHistoryManager")
+    public ModelAndView alertHistoryManager(HttpServletRequest request) {
+        ModelAndView modelAndView = new ModelAndView();
+        if (request.getSession().getAttribute("cuser") == null) {
+            modelAndView.setViewName("redirect:/");
+            return modelAndView;
+        }
+        User cuser = (User) request.getSession().getAttribute("cuser");
+        modelAndView.addObject("cuser", cuser);
+        List<AlertHistory> alertHistories = null;
+        AlertHistory alertHistory = new AlertHistory();
+        alertHistory.setUserId(request.getParameter("groupId"));
+        alertHistories = alertHistoryService.queryAlertProcessHistoryByAppEui(alertHistory);
+        Map<Integer, Map<String, String>> careDatas = toCareMapData(alertHistories);
+        modelAndView.addObject("alertHistories", alertHistories);
+        modelAndView.addObject("careDatas", careDatas);
+        modelAndView.setViewName("new/alertManager");
+        return modelAndView;
+    }
+
     @RequestMapping("/dealAlert")
     public @ResponseBody
     Object dealAlert(HttpServletRequest request) throws Exception {

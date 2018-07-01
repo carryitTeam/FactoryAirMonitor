@@ -13,6 +13,8 @@ public interface UserDao {
 
     int deleteUser(User user);
 
+    int deleteUserByGroupId(User user);
+
     int updateUser(User user);
 
     User queryUsersById(User user);

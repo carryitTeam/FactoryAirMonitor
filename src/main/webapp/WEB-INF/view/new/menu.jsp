@@ -54,7 +54,16 @@
             <div class="card mb-3 border-primary">
                 <div class="card-body" style="background-color: #d6e9ea">
                     <blockquote class="card-blockquote">
-                        <h3><a href="alertManager?groupId=${groupId}">报警管理</a></h3>
+                        <h3><a href="alertManager?groupId=${groupId}">实时报警管理</a></h3>
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-3 border-primary">
+                <div class="card-body" style="background-color: #d6e9ea">
+                    <blockquote class="card-blockquote">
+                        <h3><a href="alertHistoryManager?groupId=${groupId}">历史报警管理</a></h3>
                     </blockquote>
                 </div>
             </div>

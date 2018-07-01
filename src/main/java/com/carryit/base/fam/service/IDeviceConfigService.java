@@ -13,7 +13,13 @@ public interface IDeviceConfigService {
 
     int deleteDeviceConfigById(DeviceConfig deviceConfig);
 
+    int deleteDeviceConfigByGroupId(DeviceConfig deviceConfig);
+
+    int deleteDeviceConfigByParentId(DeviceConfig deviceConfig);
+
     int updateDeviceConfigById(DeviceConfig deviceConfig);
+
+    int updateDeviceXYById(DeviceConfig deviceConfig);
 
     List<DeviceConfig> queryDeviceConfigByGroupId(DeviceConfig deviceConfig);
 
@@ -26,5 +32,9 @@ public interface IDeviceConfigService {
     int addSensorConfig(DeviceConfig deviceConfig);
 
     List<DeviceConfig>  queryDeviceConfigByParentId(DeviceConfig deviceConfig);
+
+    List<DeviceConfig> querySensorConfigByDeviceAppEui(DeviceConfig deviceConfig);
+
+    List<DeviceConfig> queryDeviceConfigByAppEui(DeviceConfig deviceConfig);
 
 }

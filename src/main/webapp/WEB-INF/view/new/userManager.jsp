@@ -43,7 +43,8 @@
     <div class="row">
         <div class="col-md-12">
             <p class="bs-component">
-                <button class="btn btn-success" type="button" onclick="startModel(this)">添加用户信息</button>
+                <button class="btn btn-success" type="button" onclick="startModel(this)">添加用户信息
+                </button>
             </p>
         </div>
         <div class="col-md-12">
@@ -73,12 +74,16 @@
                                 <td>${groupMapData.get(user.groupId).groupName}</td>
                                 <td>${user.createTime}</td>
                                 <td id="${user.groupId}">
-                                    <div class="btn-group btn-group-toggle" data-toggle="buttons" id="${user.id}">
+                                    <div class="btn-group btn-group-toggle" data-toggle="buttons"
+                                         id="${user.id}">
                                             <%--<label class="btn btn-success" onclick="startModel();">--%>
                                             <%--<input type="checkbox" autocomplete="off"> 详情--%>
                                             <%--</label>--%>
                                         <label class="btn btn-info" onclick="startModel(this);">
                                             <input type="checkbox" autocomplete="off"> 修改
+                                        </label>
+                                        <label class="btn btn-success" onclick="deleteUser(this);">
+                                            <input type="checkbox" autocomplete="off"> 刪除
                                         </label>
                                     </div>
                                 </td>
@@ -93,12 +98,14 @@
 </main>
 
 
-<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="userManagerModel">
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true"
+     id="userManagerModel">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel">用户信息</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                <button type="button" class="close" data-dismiss="modal"><span
+                        aria-hidden="true">×</span>
                 </button>
             </div>
             <div class="modal-body">
@@ -107,32 +114,37 @@
                         <div class="form-group row">
                             <label class="control-label col-md-3">用户id号</label>
                             <div class="col-md-8">
-                                <input class="form-control" type="text" placeholder="用户自增长ID" id="idd"
+                                <input class="form-control" type="text" placeholder="用户自增长ID"
+                                       id="idd"
                                        disabled="disabled">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="control-label col-md-3">用户ID</label>
                             <div class="col-md-8">
-                                <input class="form-control" type="text" placeholder="用户ID" id="userId">
+                                <input class="form-control" type="text" placeholder="用户ID"
+                                       id="userId">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="control-label col-md-3">用户妮名</label>
                             <div class="col-md-8">
-                                <input class="form-control" type="text" placeholder="用户妮名" id="userName">
+                                <input class="form-control" type="text" placeholder="用户妮名"
+                                       id="userName">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="control-label col-md-3">用户Email</label>
                             <div class="col-md-8">
-                                <input class="form-control" type="text" placeholder="用户邮箱" id="userEmail">
+                                <input class="form-control" type="text" placeholder="用户邮箱"
+                                       id="userEmail">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="control-label col-md-3">用户密码</label>
                             <div class="col-md-8">
-                                <input class="form-control" type="password" placeholder="用户密码" id="userPassword">
+                                <input class="form-control" type="password" placeholder="用户密码"
+                                       id="userPassword">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -140,13 +152,15 @@
                             <div class="col-md-8">
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="userRole" id="userRole1" value="user" checked>
+                                        <input type="radio" name="userRole" id="userRole1"
+                                               value="user" checked>
                                         user
                                     </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="userRole" id="userRole2" value="admin">
+                                        <input type="radio" name="userRole" id="userRole2"
+                                               value="admin">
                                         admin
                                     </label>
                                 </div>
@@ -167,7 +181,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="saveUserData();">Save changes</button>
+                <button type="button" class="btn btn-primary" onclick="saveUserData();">Save
+                    changes
+                </button>
             </div>
 
         </div>
@@ -191,8 +207,33 @@
         }
         return false;
     }
+
     $('#sampleTable').DataTable();
 
+    function deleteUser(node) {
+        var p1 = $(node).parent();
+        var userId = p1.parent().prev().prev().prev().prev().prev().prev().prev().text();
+        var r=confirm("是否确定删掉？")
+        if(!r){
+            return true
+        }
+        $.ajax({
+                   type: 'POST',
+                   url: "deleteUser",
+                   async: false,
+                   data: {
+                       userId: userId
+                   },
+                   success: function (data) {
+                       if (data == -1) {
+                           alert("修改失败")
+                       } else {
+                           alert("修改成功")
+                           window.location.href = 'userManager';
+                       }
+                   }
+               });
+    }
     function startModel(node) {
         //加载模态框
         $('#userManagerModel').modal();
@@ -245,28 +286,28 @@
             return true;
         }
         $.ajax({
-            type: 'POST',
-            url: "userUpdateAndInsert",
-            async: false,
-            data: {
-                id: id,
-                userId: userId,
-                userName: userName,
-                userRole: userRole,
-                userEmail: userEmail,
-                userPwd: userPwd,
-                groupId: groupId
-            },
-            success: function (data) {
-                $('#userManagerModel').modal('hide')
-                if (data == -1) {
-                    alert("修改失败")
-                } else {
-                    alert("修改成功")
-                    window.location.href = 'userManager';
-                }
-            }
-        });
+                   type: 'POST',
+                   url: "userUpdateAndInsert",
+                   async: false,
+                   data: {
+                       id: id,
+                       userId: userId,
+                       userName: userName,
+                       userRole: userRole,
+                       userEmail: userEmail,
+                       userPwd: userPwd,
+                       groupId: groupId
+                   },
+                   success: function (data) {
+                       $('#userManagerModel').modal('hide')
+                       if (data == -1) {
+                           alert("修改失败")
+                       } else {
+                           alert("修改成功")
+                           window.location.href = 'userManager';
+                       }
+                   }
+               });
     }
 </script>
 </body>

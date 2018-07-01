@@ -10,6 +10,15 @@ public class GroupInfo {
     private String changeTime;
     private String contactUserName;
     private String contactTelephoneNumber;
+    private String factoryDiagramPath;
+
+    public String getFactoryDiagramPath() {
+        return factoryDiagramPath;
+    }
+
+    public void setFactoryDiagramPath(String factoryDiagramPath) {
+        this.factoryDiagramPath = factoryDiagramPath;
+    }
 
     public String getContactTelephoneNumber() {
         return contactTelephoneNumber;

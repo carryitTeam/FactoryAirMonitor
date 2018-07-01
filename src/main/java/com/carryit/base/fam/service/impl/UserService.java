@@ -52,4 +52,9 @@ public class UserService implements IUserService {
     public User checkUserByPwd(User user) {
         return userDao.checkUserByPwd(user);
     }
+
+    @Override
+    public int deleteUserByGroupId(User user) {
+        return userDao.deleteUserByGroupId(user);
+    }
 }

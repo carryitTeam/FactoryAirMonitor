@@ -179,4 +179,11 @@ public class UserController {
         return res;
     }
 
+    @RequestMapping("/deleteUser")
+    public
+    @ResponseBody
+    Object deleteUser(HttpServletRequest request, @ModelAttribute User user) {
+        return userService.deleteUser(user);
+    }
+
 }

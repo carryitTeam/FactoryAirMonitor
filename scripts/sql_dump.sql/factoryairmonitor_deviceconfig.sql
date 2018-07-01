@@ -1,8 +1,8 @@
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
--- Host: localhost    Database: factoryairmonitor
+-- Host: 47.96.185.51    Database: factoryairmonitor
 -- ------------------------------------------------------
--- Server version	5.7.20-log
+-- Server version	5.6.40
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -37,8 +37,11 @@ CREATE TABLE `deviceconfig` (
   `payload` varchar(200) DEFAULT NULL,
   `alertField` varchar(45) DEFAULT 'unknown',
   `alertNumber` decimal(10,2) DEFAULT '1000000.00',
+  `leftX` int(11) DEFAULT '100',
+  `topY` int(11) DEFAULT '50',
+  `excludeAlert` varchar(45) DEFAULT 'yes',
   KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -47,7 +50,7 @@ CREATE TABLE `deviceconfig` (
 
 LOCK TABLES `deviceconfig` WRITE;
 /*!40000 ALTER TABLE `deviceconfig` DISABLE KEYS */;
-INSERT INTO `deviceconfig` VALUES (1,'2c26c5045c000002','4a770066003091','2018-06-23 21:15:09',1,'device','XXX传感器','XXXdd',-1,NULL,'1',NULL,'unknown',1000000.00),(3,'2c26c5045c000002','4a7700660030b1','2018-06-23 21:17:55',-1,'sensor','XXX联动设备',NULL,1,'10','2','6B000303FF209016  ','40015',1000000.00);
+INSERT INTO `deviceconfig` VALUES (1,'2c26c5045c000002','4a770066003091','2018-06-23 21:15:09',1,'device','XXX传感器','XXXdd',-1,NULL,'1',NULL,'unknown',1000000.00,280,269,'no'),(3,'2c26c5045c000002','4a7700660030b1','2018-06-23 21:17:55',-1,'sensor','XXX联动设备',NULL,1,'10','2','6B000303FF209016  ','40015',1000.00,91,110,'yes');
 /*!40000 ALTER TABLE `deviceconfig` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -60,4 +63,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-06-24 14:22:16
+-- Dump completed on 2018-07-01 16:14:04

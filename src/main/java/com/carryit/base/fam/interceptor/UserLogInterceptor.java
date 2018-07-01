@@ -28,7 +28,7 @@ public class UserLogInterceptor implements HandlerInterceptor {
         User user = (User) cuser;
         //获取请求的url
         String url = httpServletRequest.getRequestURI();
-        if (url.contains("login")) {
+        if (url.contains("log")) {
             LogOps logOps = new LogOps();
             logOps.setUserId(user.getUserId());
             logOps.setLogContent("clientIp：" + clientIp + "，url：" + url);

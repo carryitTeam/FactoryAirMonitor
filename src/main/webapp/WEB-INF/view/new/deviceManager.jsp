@@ -57,6 +57,7 @@
                     <table class="table table-hover table-bordered" id="sampleTable">
                         <thead>
                         <tr>
+                            <th>是否屏蔽联动设备报警</th>
                             <th>ID</th>
                             <th>设备编号</th>
                             <th>设备名</th>
@@ -69,6 +70,7 @@
                         <tbody>
                         <c:forEach items="${deviceConfigList}" var="device" varStatus="status">
                             <tr>
+                                <td>${device.excludeAlert}</td>
                                 <td>${device.appEui}</td>
                                 <td>${device.devEui}</td>
                                 <td>${device.deviceName}</td>
@@ -84,6 +86,9 @@
                                     >
                                         <label class="btn btn-info" onclick="startModel(this);">
                                             <input type="checkbox" autocomplete="off"> 修改
+                                        </label>
+                                        <label class="btn btn-success" onclick="deleteDevice(this);">
+                                            <input type="checkbox" autocomplete="off"> 刪除
                                         </label>
                                     </div>
                                 </td>
@@ -160,6 +165,24 @@
                                 </select>
                             </div>
                         </div>
+
+                        <div class="form-group row">
+                            <label class="control-label col-md-3">是否屏蔽告警</label>
+                            <div class="col-md-8">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="excludeAlert" value="yes" checked>
+                                        yes
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="excludeAlert" value="no">
+                                        no
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -191,7 +214,34 @@
         }
         return false;
     }
+
     $('#sampleTable').DataTable();
+
+    function deleteDevice(node) {
+        var p1 = $(node).parent();
+        var deviceId = p1.attr("id");
+        var groupId = p1.parent().attr("id").split("_")[1];
+        var r=confirm("是否确定删掉？")
+        if(!r){
+            return true
+        }
+        $.ajax({
+                   type: 'POST',
+                   url: "deleteDeviceConfig",
+                   async: false,
+                   data: {
+                       id: deviceId
+                   },
+                   success: function (data) {
+                       if (data == -1) {
+                           alert("修改失败")
+                       } else {
+                           alert("修改成功")
+                           window.location.href = 'deviceManager?groupId=' + groupId;
+                       }
+                   }
+               });
+    }
 
     function startModel(node) {
         //加载模态框
@@ -203,6 +253,7 @@
         var deviceName = p1.parent().prev().prev().prev().prev().text();
         var devEui = p1.parent().prev().prev().prev().prev().prev().text();
         var appEui = p1.parent().prev().prev().prev().prev().prev().prev().text();
+        var excludeAlert = p1.parent().prev().prev().prev().prev().prev().prev().prev().text();
         $("#deviceId").val("")
         $("#deviceId").val(deviceId);
         $("#deviceName").val("")
@@ -216,8 +267,11 @@
 
         if (deviceId == "") {
             $("#userGroup").find("option").get(0).selected = true
+            $("input:radio[name='excludeAlert']").get(0).checked = true
         } else {
             $("#userGroup").find("option[value='" + userGroupId + "']").get(0).selected = true
+            $("input:radio[name='excludeAlert'][value='" + excludeAlert + "']").get(0).checked =
+                true
         }
     }
 
@@ -228,6 +282,7 @@
         var devEui = $("#deviceDevEui").val()
         var deviceComment = $("#deviceComment").val()
         var groupId = $("#userGroup").find("option:selected").attr("value");
+        var excludeAlert = $("input[name='excludeAlert']:checked").val();
 
         if (checkEmpty(deviceName, "deviceName")) {
             return true;
@@ -249,7 +304,8 @@
                        appEui: appEui,
                        devEui: devEui,
                        deviceComment: deviceComment,
-                       groupId: groupId
+                       groupId: groupId,
+                       excludeAlert: excludeAlert
                    },
                    success: function (data) {
                        $('#groupManagerModel').modal('hide')
@@ -257,7 +313,7 @@
                            alert("修改失败")
                        } else {
                            alert("修改成功")
-                           window.location.href = 'deviceManager';
+                           window.location.href = 'deviceManager?groupId=' + groupId;
                        }
                    }
                });

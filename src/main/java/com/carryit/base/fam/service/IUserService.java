@@ -24,4 +24,6 @@ public interface IUserService {
 
     User checkUserByPwd(User user);
 
+    int deleteUserByGroupId(User user);
+
 }

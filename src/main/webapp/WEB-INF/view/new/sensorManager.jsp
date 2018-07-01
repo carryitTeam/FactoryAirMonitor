@@ -86,7 +86,7 @@
                                 <td>${deviceDataMap.get(device.parentId).deviceName}</td>
                                 <td>${device.payload}</td>
                                 <td>${device.createTime}</td>
-                                <td id="parentId_${device.parentId}">
+                                <td id="parentId_${device.parentId}_${deviceDataMap.get(device.parentId).groupId}">
                                     <div class="btn-group btn-group-toggle" data-toggle="buttons"
                                          id="${device.id}"
                                             <c:if test="${cuser.userRole=='user'}">
@@ -95,6 +95,9 @@
                                     >
                                         <label class="btn btn-info" onclick="startModel(this)">
                                             <input type="checkbox" autocomplete="off"> 修改
+                                        </label>
+                                        <label class="btn btn-success" onclick="deleteDevice(this);">
+                                            <input type="checkbox" autocomplete="off"> 刪除
                                         </label>
                                     </div>
                                 </td>
@@ -194,7 +197,8 @@
                             <div class="col-md-8">
                                 <select class="form-control" id="userGroup">
                                     <c:forEach items="${deviceDataMap}" var="gmd">
-                                        <option value="${gmd.key}">${gmd.value.deviceName}</option>
+                                        <option value="${gmd.key}"
+                                                id="${gmd.key}_${gmd.value.groupId}">${gmd.value.deviceName}</option>
                                     </c:forEach>
                                 </select>
                             </div>
@@ -230,7 +234,34 @@
         }
         return false;
     }
+
     $('#sampleTable').DataTable();
+
+    function deleteDevice(node) {
+        var p1 = $(node).parent();
+        var deviceId = p1.attr("id");
+        var groupId = p1.parent().attr("id").split("_")[2];
+        var r=confirm("是否确定删掉？")
+        if(!r){
+            return true
+        }
+        $.ajax({
+                   type: 'POST',
+                   url: "deleteDeviceConfig",
+                   async: false,
+                   data: {
+                       id: deviceId
+                   },
+                   success: function (data) {
+                       if (data == -1) {
+                           alert("修改失败")
+                       } else {
+                           alert("修改成功")
+                           window.location.href = 'sensorManager?groupId=' + groupId;
+                       }
+                   }
+               });
+    }
 
     function startModel(node) {
         //加载模态框
@@ -285,6 +316,7 @@
         var alertField = $("#alertField").val()
         var alertNumber = $("#alertNumber").val()
         var parentId = $("#userGroup").find("option:selected").attr("value");
+        var groupId = $("#userGroup").find("option:selected").attr("id").split("_")[1];
         var deviceLevel = $("#deviceLevel").find("option:selected").attr("value");
 
         if (checkEmpty(deviceName, "deviceName")) {
@@ -322,7 +354,7 @@
                            alert("修改失败")
                        } else {
                            alert("修改成功")
-                           window.location.href = 'sensorManager';
+                           window.location.href = 'sensorManager?groupId=' + groupId;
                        }
                    }
                });

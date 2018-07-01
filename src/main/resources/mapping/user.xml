@@ -28,6 +28,10 @@
         delete from user where userId=#{userId}
     </delete>
 
+    <delete id="deleteUserByGroupId" parameterType="com.carryit.base.fam.bean.User">
+        delete from user where groupId=#{groupId}
+    </delete>
+
     <update id="updateUser" parameterType="com.carryit.base.fam.bean.User">
         update user set userName=#{userName}, userPwd=#{userPwd},userEmail=#{userEmail},
         appEui=#{appEui},changeTime=#{changeTime}

@@ -22,4 +22,6 @@ public interface AlertHistoryDao {
 
     List<AlertHistory> queryAllAlertHistory();
 
+    List<AlertHistory> queryAlertProcessHistoryByAppEui(AlertHistory alertHistory);
+
 }

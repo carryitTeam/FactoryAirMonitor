@@ -1,8 +1,8 @@
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
--- Host: localhost    Database: factoryairmonitor
+-- Host: 47.96.185.51    Database: factoryairmonitor
 -- ------------------------------------------------------
--- Server version	5.7.20-log
+-- Server version	5.6.40
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -31,8 +31,9 @@ CREATE TABLE `groupinfos` (
   `changeTime` datetime DEFAULT CURRENT_TIMESTAMP,
   `contactUserName` varchar(45) DEFAULT NULL,
   `contactTelephoneNumber` varchar(45) DEFAULT NULL,
+  `factoryDiagramPath` varchar(400) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +42,7 @@ CREATE TABLE `groupinfos` (
 
 LOCK TABLES `groupinfos` WRITE;
 /*!40000 ALTER TABLE `groupinfos` DISABLE KEYS */;
-INSERT INTO `groupinfos` VALUES (1,'武汉市XXX公司','武汉市江夏区藏龙大道100号',NULL,'2018-06-23 21:12:48','2018-06-23 21:12:48','大奔','11111111111');
+INSERT INTO `groupinfos` VALUES (1,'武汉市XXX公司','武汉市江夏区藏龙大道100号',NULL,'2018-06-23 21:12:48','2018-07-01 11:26:30','大奔','111111111','http://5b0988e595225.cdn.sohucs.com/images/20170907/73a47a287e63440192d173f5d317891b.jpeg'),(2,'武汉新能源研究院','武汉市东湖新技术开发区未来科技城',NULL,'2018-06-27 14:34:21','2018-07-01 11:52:54','罗小盛','23211253556','http://5b0988e595225.cdn.sohucs.com/images/20170907/73a47a287e63440192d173f5d317891b.jpeg');
 /*!40000 ALTER TABLE `groupinfos` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-06-24 14:22:16
+-- Dump completed on 2018-07-01 16:14:06

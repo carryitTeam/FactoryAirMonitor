@@ -1,8 +1,8 @@
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
--- Host: localhost    Database: factoryairmonitor
+-- Host: 47.96.185.51    Database: factoryairmonitor
 -- ------------------------------------------------------
--- Server version	5.7.20-log
+-- Server version	5.6.40
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -35,7 +35,7 @@ CREATE TABLE `user` (
   `groupId` int(11) DEFAULT '-1',
   PRIMARY KEY (`userId`),
   KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +44,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (13,'admin','admin','admin','admin@qq.com','superAdmin',NULL,'2018-03-03 20:07:14','2018-03-03 20:07:14',5),(14,'daben','123456','大奔','111111@qq.com','user',NULL,'2018-06-23 21:36:32','2018-06-23 21:13:38',1);
+INSERT INTO `user` VALUES (13,'admin','admin','admin','admin@qq.com','superAdmin',NULL,'2018-03-03 20:07:14','2018-03-03 20:07:14',5),(14,'daben','123456','大奔1','111111@qq.com','user',NULL,'2018-06-27 14:38:04','2018-06-23 21:13:38',1),(15,'user','123456','123123','421251014@qq.com','admin',NULL,'2018-06-28 22:51:37','2018-06-28 21:41:25',2);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -57,4 +57,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-06-24 14:22:16
+-- Dump completed on 2018-07-01 16:14:06

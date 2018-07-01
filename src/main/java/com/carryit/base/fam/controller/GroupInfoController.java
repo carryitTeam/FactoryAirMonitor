@@ -1,8 +1,12 @@
 package com.carryit.base.fam.controller;
 
+import com.carryit.base.fam.bean.DeviceConfig;
 import com.carryit.base.fam.bean.GroupInfo;
 import com.carryit.base.fam.bean.User;
+import com.carryit.base.fam.service.impl.DeviceConfigService;
 import com.carryit.base.fam.service.impl.GroupInfoService;
+import com.carryit.base.fam.service.impl.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,6 +24,12 @@ public class GroupInfoController {
 
     @Autowired
     private GroupInfoService groupInfoService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private DeviceConfigService deviceConfigService;
 
     @RequestMapping("/groupManager")
     public ModelAndView groupManager(HttpServletRequest request) {
@@ -52,6 +62,26 @@ public class GroupInfoController {
             res = groupInfoService.updateGroupInfo(groupInfo);
         }
         return res;
+    }
+
+    @RequestMapping("/deleteGroup")
+    public @ResponseBody
+    Object deleteGroup(HttpServletRequest request, @ModelAttribute GroupInfo groupInfo) {
+        groupInfoService.deleteGroupInfo(groupInfo);
+        User user = new User();
+        user.setGroupId(groupInfo.getId());
+        userService.deleteUserByGroupId(user);
+
+        DeviceConfig deviceConfig = new DeviceConfig();
+        deviceConfig.setGroupId(groupInfo.getId());
+        List<DeviceConfig> deviceConfigList = deviceConfigService.queryDeviceConfigByGroupId(deviceConfig);
+        if (deviceConfigList.size()>0){
+            DeviceConfig d1 = deviceConfigList.get(0);
+            d1.setParentId(d1.getId());
+            deviceConfigService.deleteDeviceConfigByParentId(d1);
+            deviceConfigService.deleteDeviceConfigByGroupId(deviceConfig);
+        }
+        return 1;
     }
 
 }

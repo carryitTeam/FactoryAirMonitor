@@ -25,8 +25,23 @@ public class DeviceConfigService implements IDeviceConfigService {
     }
 
     @Override
+    public int deleteDeviceConfigByGroupId(DeviceConfig deviceConfig) {
+        return deviceConfigDao.deleteDeviceConfigByGroupId(deviceConfig);
+    }
+
+    @Override
+    public int deleteDeviceConfigByParentId(DeviceConfig deviceConfig) {
+        return deviceConfigDao.deleteDeviceConfigByParentId(deviceConfig);
+    }
+
+    @Override
     public int updateDeviceConfigById(DeviceConfig deviceConfig) {
         return deviceConfigDao.updateDeviceConfigById(deviceConfig);
+    }
+
+    @Override
+    public int updateDeviceXYById(DeviceConfig deviceConfig) {
+        return deviceConfigDao.updateDeviceXYById(deviceConfig);
     }
 
     @Override
@@ -57,5 +72,15 @@ public class DeviceConfigService implements IDeviceConfigService {
     @Override
     public List<DeviceConfig> queryDeviceConfigByParentId(DeviceConfig deviceConfig) {
         return deviceConfigDao.queryDeviceConfigByParentId(deviceConfig);
+    }
+
+    @Override
+    public List<DeviceConfig> querySensorConfigByDeviceAppEui(DeviceConfig deviceConfig) {
+        return deviceConfigDao.querySensorConfigByDeviceAppEui(deviceConfig);
+    }
+
+    @Override
+    public List<DeviceConfig> queryDeviceConfigByAppEui(DeviceConfig deviceConfig) {
+        return deviceConfigDao.queryDeviceConfigByAppEui(deviceConfig);
     }
 }
