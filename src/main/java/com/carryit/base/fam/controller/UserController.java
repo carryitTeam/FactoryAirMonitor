@@ -115,7 +115,7 @@ public class UserController {
                 groupInfo.setId(cuser.getGroupId());
                 groupInfos.add(groupInfoService.queryGroupInfoById(groupInfo));
                 model.addObject("groupInfos", groupInfos);
-                model.setViewName("new/main");
+                model.setViewName("redirect:topManager");
             }
         }
 

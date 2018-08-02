@@ -58,7 +58,7 @@ public class AlertController {
 //
 //        } else {
         AlertHistory alertHistory = new AlertHistory();
-        alertHistory.setUserId(request.getParameter("groupId"));
+        alertHistory.setUserId(String.valueOf(cuser.getGroupId()));
         alertHistories = alertHistoryService.queryAlertHistoryByAppEui(alertHistory);
 //        }
         Map<Integer, Map<String, String>> careDatas = toCareMapData(alertHistories);
@@ -78,9 +78,13 @@ public class AlertController {
         User cuser = (User) request.getSession().getAttribute("cuser");
         modelAndView.addObject("cuser", cuser);
         List<AlertHistory> alertHistories = null;
-        AlertHistory alertHistory = new AlertHistory();
-        alertHistory.setUserId(request.getParameter("groupId"));
-        alertHistories = alertHistoryService.queryAlertProcessHistoryByAppEui(alertHistory);
+        if ("superAdmin".equalsIgnoreCase(cuser.getUserRole())) {
+            alertHistories = alertHistoryService.queryAllAlertHistory();
+        } else {
+            AlertHistory alertHistory = new AlertHistory();
+            alertHistory.setUserId(String.valueOf(cuser.getGroupId()));
+            alertHistories = alertHistoryService.queryAlertProcessHistoryByAppEui(alertHistory);
+        }
         Map<Integer, Map<String, String>> careDatas = toCareMapData(alertHistories);
         modelAndView.addObject("alertHistories", alertHistories);
         modelAndView.addObject("careDatas", careDatas);

@@ -29,13 +29,13 @@ public class FaultController {
         User cuser = (User) request.getSession().getAttribute("cuser");
         modelAndView.addObject("cuser", cuser);
         List<FaultRecords> faultRecords = null;
-//        if ("superAdmin".equalsIgnoreCase(cuser.getUserRole())) {
-//           faultRecords = faultRecordsService.queryAllFaultRecords();
-//        }else {
-        FaultRecords faultRecord = new FaultRecords();
-        faultRecord.setAppEui(request.getParameter("groupId"));
-        faultRecords = faultRecordsService.queryFaultRecordsByAppEui(faultRecord);
-//        }
+        if ("superAdmin".equalsIgnoreCase(cuser.getUserRole())) {
+            faultRecords = faultRecordsService.queryAllFaultRecords();
+        } else {
+            FaultRecords faultRecord = new FaultRecords();
+            faultRecord.setAppEui(String.valueOf(cuser.getGroupId()));
+            faultRecords = faultRecordsService.queryFaultRecordsByAppEui(faultRecord);
+        }
         modelAndView.addObject("faultRecords", faultRecords);
         modelAndView.setViewName("new/faultManager");
         return modelAndView;

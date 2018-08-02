@@ -58,10 +58,11 @@
                         <img
                         <c:if test="${g.deviceType=='sensor'}">
                                 title="报警器:${g.deviceName},阈值:${g.alertNumber}"
-                                src="new/img/alert.png"
+                                <c:if test="${g.deviceLevel==1}">src="new/img/alert_y.png"</c:if>
+                                <c:if test="${g.deviceLevel==2}">src="new/img/alert.png"</c:if>
                         </c:if>
                         <c:if test="${g.deviceType=='device'}">
-                                title="传感器:${g.deviceName}" src="new/img/sensor.png"
+                                title="传感器:${g.deviceName}" src="new/img/sensor_b.png"
                         </c:if>
                                 width=30px height=30px" style="box-shadow: 0px 0px 20px #05ed0c;">
                         <c:if test="${g.deviceType=='sensor'}"><p>联动设备</p></c:if>
@@ -70,65 +71,65 @@
                 </c:forEach>
             </div>
         </div>
-        </div>
-        <div class="col-md-12">
-            <div class="tile">
-                <div class="tile-body">
-                    <table class="table table-hover table-bordered" id="sampleTable">
-                        <thead>
+    </div>
+    <div class="col-md-12">
+        <div class="tile">
+            <div class="tile-body">
+                <table class="table table-hover table-bordered" id="sampleTable">
+                    <thead>
+                    <tr>
+                        <th>操作</th>
+                        <th>ID</th>
+                        <th>设备编号</th>
+                        <th>设备名称</th>
+                        <th>所属单位</th>
+                        <th>备注</th>
+                        <th>创建时间</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${deviceConfigList}" var="device" varStatus="status">
                         <tr>
-                            <th>操作</th>
-                            <th>ID</th>
-                            <th>设备编号</th>
-                            <th>设备名称</th>
-                            <th>所属单位</th>
-                            <th>备注</th>
-                            <th>创建时间</th>
-                            <th>操作</th>
+                            <td><a href="dataRetrieveByAppEui?appEui=${device.appEui}">查看数据</a>&nbsp;&nbsp;
+                                <a href="sensorManager?groupId=${device.groupId}">查看告警设备</a>
+                            </td>
+                            <td>${device.appEui}</td>
+                            <td>${device.devEui}</td>
+                            <td>${device.deviceName}</td>
+                            <td>${groupMapData.get(device.groupId).groupName}</td>
+                            <td>${device.deviceComment}</td>
+                            <td>${device.createTime}</td>
+                            <td id="parentId_${device.parentId}">
+                                <div class="btn-group btn-group-toggle" data-toggle="buttons"
+                                     id="${device.id}"
+                                        <c:if test="${cuser.userRole=='user'}">
+                                            style="display: none"
+                                        </c:if>
+                                >
+                                    <c:if test="${startedApp.get(device.appEui)==true}">
+                                        <label class="btn btn-warning"
+                                               onclick="startAndStopReceiveData(this)"
+                                               id="${device.appEui}">
+                                            <input type="checkbox" autocomplete="off">暂停
+                                        </label>
+                                    </c:if>
+                                    <c:if test="${startedApp.get(device.appEui)==false}">
+                                        <label class="btn btn-success"
+                                               onclick="startAndStopReceiveData(this)"
+                                               id="${device.appEui}">
+                                            <input type="checkbox" autocomplete="off">启动
+                                        </label>
+                                    </c:if>
+                                </div>
+                            </td>
                         </tr>
-                        </thead>
-                        <tbody>
-                        <c:forEach items="${deviceConfigList}" var="device" varStatus="status">
-                            <tr>
-                                <td><a href="dataRetrieveByAppEui?appEui=${device.appEui}">查看数据</a>&nbsp;&nbsp;
-                                    <a href="sensorManager?groupId=${device.groupId}">查看告警设备</a>
-                                </td>
-                                <td>${device.appEui}</td>
-                                <td>${device.devEui}</td>
-                                <td>${device.deviceName}</td>
-                                <td>${groupMapData.get(device.groupId).groupName}</td>
-                                <td>${device.deviceComment}</td>
-                                <td>${device.createTime}</td>
-                                <td id="parentId_${device.parentId}">
-                                    <div class="btn-group btn-group-toggle" data-toggle="buttons"
-                                         id="${device.id}"
-                                            <c:if test="${cuser.userRole=='user'}">
-                                                style="display: none"
-                                            </c:if>
-                                    >
-                                        <c:if test="${startedApp.get(device.appEui)==true}">
-                                            <label class="btn btn-warning"
-                                                   onclick="startAndStopReceiveData(this)"
-                                                   id="${device.appEui}">
-                                                <input type="checkbox" autocomplete="off">暂停
-                                            </label>
-                                        </c:if>
-                                        <c:if test="${startedApp.get(device.appEui)==false}">
-                                            <label class="btn btn-success"
-                                                   onclick="startAndStopReceiveData(this)"
-                                                   id="${device.appEui}">
-                                                <input type="checkbox" autocomplete="off">启动
-                                            </label>
-                                        </c:if>
-                                    </div>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                        </tbody>
-                    </table>
-                </div>
+                    </c:forEach>
+                    </tbody>
+                </table>
             </div>
         </div>
+    </div>
     </div>
 </main>
 <!-- Essential javascripts for application to work-->

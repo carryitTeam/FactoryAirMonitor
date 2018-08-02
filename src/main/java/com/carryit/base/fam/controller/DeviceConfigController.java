@@ -43,15 +43,15 @@ public class DeviceConfigController {
         modelAndView.addObject("groupMapData", mapData);
         modelAndView.addObject("cuser", cuser);
         List<DeviceConfig> deviceConfigList = null;
-//        if ("superAdmin".equalsIgnoreCase(cuser.getUserRole())) {
-//            DeviceConfig deviceConfig = new DeviceConfig();
-//            deviceConfig.setDeviceType("device");
-//            deviceConfigList = deviceConfigService.queryDeviceConfigByType(deviceConfig);
-//        }else {
-        DeviceConfig deviceConfig = new DeviceConfig();
-        deviceConfig.setGroupId(Integer.parseInt(request.getParameter("groupId")));
-        deviceConfigList = deviceConfigService.queryDeviceConfigByGroupId(deviceConfig);
-//        }
+        if ("superAdmin".equalsIgnoreCase(cuser.getUserRole())) {
+            DeviceConfig deviceConfig = new DeviceConfig();
+            deviceConfig.setDeviceType("device");
+            deviceConfigList = deviceConfigService.queryDeviceConfigByType(deviceConfig);
+        } else {
+            DeviceConfig deviceConfig = new DeviceConfig();
+            deviceConfig.setGroupId(cuser.getGroupId());
+            deviceConfigList = deviceConfigService.queryDeviceConfigByGroupId(deviceConfig);
+        }
         modelAndView.addObject("deviceConfigList", deviceConfigList);
         modelAndView.setViewName("new/deviceManager");
         return modelAndView;
@@ -98,12 +98,19 @@ public class DeviceConfigController {
         Map<Integer, GroupInfo> mapData = toMapData(groupInfos);
         modelAndView.addObject("groupMapData", mapData);
         modelAndView.addObject("deviceDataMap", mapDataDev);
-        deviceConfig.setGroupId(Integer.parseInt(request.getParameter("groupId")));
-        List<DeviceConfig> tmp = deviceConfigService.queryDeviceConfigByGroupId(deviceConfig);
-        if (tmp.size()>0){
-            deviceConfig = tmp.get(0);
-            deviceConfig.setParentId(deviceConfig.getId());
-            sensorConfigList = deviceConfigService.queryDeviceConfigByParentId(deviceConfig);
+        deviceConfig.setGroupId(cuser.getGroupId());
+
+        if ("superAdmin".equalsIgnoreCase(cuser.getUserRole())) {
+            DeviceConfig deviceConfig1 = new DeviceConfig();
+            deviceConfig1.setDeviceType("sensor");
+            sensorConfigList = deviceConfigService.queryDeviceConfigByType(deviceConfig1);
+        } else {
+            List<DeviceConfig> tmp = deviceConfigService.queryDeviceConfigByGroupId(deviceConfig);
+            if (tmp.size() > 0) {
+                deviceConfig = tmp.get(0);
+                deviceConfig.setParentId(deviceConfig.getId());
+                sensorConfigList = deviceConfigService.queryDeviceConfigByParentId(deviceConfig);
+            }
         }
         modelAndView.addObject("sensorConfigList", sensorConfigList);
         modelAndView.setViewName("new/sensorManager");

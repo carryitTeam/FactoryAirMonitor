@@ -45,23 +45,33 @@ public class TopController {
         Map<Integer, GroupInfo> mapData = toMapData(groupInfos);
         modelAndView.addObject("groupMapData", mapData);
         modelAndView.addObject("startedApp", startedApp);
-//        if ("superAdmin".equalsIgnoreCase(cuser.getUserRole())) {
-//            DeviceConfig deviceConfig = new DeviceConfig();
-//            deviceConfig.setDeviceType("device");
-//            List<DeviceConfig> deviceConfigList = deviceConfigService.queryDeviceConfigByType(deviceConfig);
-//            modelAndView.addObject("deviceConfigList", deviceConfigList);
-//        }else {
+        if ("superAdmin".equalsIgnoreCase(cuser.getUserRole()) && request.getParameter("groupId")==null) {
+            DeviceConfig deviceConfig = new DeviceConfig();
+            deviceConfig.setDeviceType("device");
+            List<DeviceConfig> deviceConfigList = deviceConfigService.queryDeviceConfigByType(deviceConfig);
+            modelAndView.addObject("deviceConfigList", deviceConfigList);
+            List<GroupInfo> groupInfoList = groupInfoService.queryAllGroupInfo();
+            modelAndView.addObject("groupInfoList", groupInfoList);
+            modelAndView.setViewName("new/topManagerTmp");
+            return modelAndView;
+        }
         DeviceConfig deviceConfig = new DeviceConfig();
-        deviceConfig.setGroupId(Integer.parseInt(request.getParameter("groupId")));
+        int gid = 0;
+        if (cuser.getGroupId()!=-1){
+            gid = cuser.getGroupId();
+        }else {
+            gid = Integer.parseInt(request.getParameter("groupId"));
+        }
+        deviceConfig.setGroupId(gid);
         List<DeviceConfig> deviceConfigList = deviceConfigService.queryDeviceConfigByGroupId(deviceConfig);
 
         GroupInfo groupInfo = new GroupInfo();
-        groupInfo.setId(deviceConfig.getGroupId());
+        groupInfo.setId(gid);
         groupInfo = groupInfoService.queryGroupInfoById(groupInfo);
 
         List<DeviceConfig> groupAll = new ArrayList<>(10);
         groupAll.addAll(deviceConfigList);
-        for (DeviceConfig dc :deviceConfigList){
+        for (DeviceConfig dc : deviceConfigList) {
             DeviceConfig d = new DeviceConfig();
             d.setParentId(dc.getId());
             groupAll.addAll(deviceConfigService.queryDeviceConfigByParentId(d));
