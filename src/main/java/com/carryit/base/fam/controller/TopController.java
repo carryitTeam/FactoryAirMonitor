@@ -74,8 +74,12 @@ public class TopController {
         for (DeviceConfig dc : deviceConfigList) {
             DeviceConfig d = new DeviceConfig();
             d.setParentId(dc.getId());
-            groupAll.addAll(deviceConfigService.queryDeviceConfigByParentId(d));
-        }
+            List<DeviceConfig> sensors =  deviceConfigService.queryDeviceConfigByParentId(d);
+            for (DeviceConfig s : sensors){
+                s.setExcludeAlert(dc.getExcludeAlert());
+            }
+            groupAll.addAll(sensors);
+    }
         modelAndView.addObject("deviceConfigList", deviceConfigList);
         modelAndView.addObject("groupAll", groupAll);
         modelAndView.addObject("groupInfo", groupInfo);

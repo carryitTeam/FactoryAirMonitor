@@ -54,19 +54,20 @@
                 <c:forEach items="${groupAll}" var="g">
                     <div class='drag drag-6'
                          style="left: ${g.leftX}px;top: ${g.topY}px;width: 30px;height: 30px"
-                         id="pic_${g.id}">
-                        <img
+                         id="pic${g.deviceType}_${g.id}">
+                        <img id="${g.appEui}_${g.devEui}"
                         <c:if test="${g.deviceType=='sensor'}">
-                                title="报警器:${g.deviceName},阈值:${g.alertNumber}"
-                                <c:if test="${g.deviceLevel==1}">src="new/img/alert_y.png"</c:if>
-                                <c:if test="${g.deviceLevel==2}">src="new/img/alert.png"</c:if>
+                             title="报警器:${g.deviceName},阈值:${g.alertNumber}"
+                             <c:if test="${g.deviceLevel==1 && 'no'.equals(g.excludeAlert)}">src="new/img/alert_y.png"</c:if>
+                             <c:if test="${g.deviceLevel==2 && 'no'.equals(g.excludeAlert)}">src="new/img/alert.png"</c:if>
+                             <c:if test="${g.excludeAlert=='yes'}">src="new/img/alert_g.png"</c:if>
                         </c:if>
                         <c:if test="${g.deviceType=='device'}">
-                                title="传感器:${g.deviceName}" src="new/img/sensor_b.png"
+                             title="传感器:${g.deviceName}" src="new/img/sensor_b.png"
                         </c:if>
-                                width=30px height=30px" style="box-shadow: 0px 0px 20px #05ed0c;">
-                        <c:if test="${g.deviceType=='sensor'}"><p>联动设备</p></c:if>
-                        <c:if test="${g.deviceType=='device'}"><p>传感设备</p></c:if>
+                             width=30px height=30px" style="box-shadow: 0px 0px 20px #05ed0c;">
+                        <c:if test="${g.deviceType=='device'}"><p><a href="${g.appEui}">趋势图</a>
+                        </p></c:if>
                     </div>
                 </c:forEach>
             </div>
@@ -91,8 +92,8 @@
                     <tbody>
                     <c:forEach items="${deviceConfigList}" var="device" varStatus="status">
                         <tr>
-                            <td><a href="dataRetrieveByAppEui?appEui=${device.appEui}">查看数据</a>&nbsp;&nbsp;
-                                <a href="sensorManager?groupId=${device.groupId}">查看告警设备</a>
+                            <td><a href="dataRetrieveByAppEui?appEui=${device.appEui}">查看传感器数据</a>&nbsp;&nbsp;
+                                <a href="sensorManager?groupId=${device.groupId}">查看联动设备</a>
                             </td>
                             <td>${device.appEui}</td>
                             <td>${device.devEui}</td>
@@ -139,11 +140,65 @@
 <script src="new/js/main.js"></script>
 <script src="new/js/drag.js"></script>
 <!-- The javascript plugin to display page loading on top-->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    $(function () {
+        $("div[id^='pic']").tooltip({
+                                        hide: {
+                                            effect: "explode",
+                                            delay: 250
+                                        }
+                                    });
+    });
+</script>
 <script src="new/js/plugins/pace.min.js"></script>
 <!-- Page specific javascripts-->
 <script type="text/javascript" src="new/js/plugins/chart.js"></script>
 <!-- Google analytics script-->
 <script type="text/javascript">
+
+    function updateSensorStatus() {
+        var ds = $("div[id^='picdevice_']")
+        for (var i = 0; i < ds.length; i++) {
+            var appEui = $(ds[i]).children("img").attr("id").split("_")[0]
+            $.ajax({
+                       type: 'POST',
+                       url: "getNewData",
+                       async: false,
+                       data: {
+                           appEui: appEui
+                       },
+                       success: function (data) {
+                           if (data != "") {
+                               var showData = "气体浓度：" + data['40003']
+                                              + "；一级报警上限：" + data['40013']
+                                              + "；一级报警下限：" + data['40014']
+                                              + "；二级报警上限：" + data['40015']
+                                              + "；二级报警下限：" + data['40016']
+                                              + "；传感器温度：" + data['40013']
+                                              + "；流量：" + data['40011']
+                                              + "；剩余时间：" + data['40009']
+                                              + "；创建时间：" + new Date()
+                               $(ds[i]).children("img").attr("title", showData)
+                               console.log(data)
+                           }
+                       }
+                   });
+        }
+    }
+
+    updateSensorStatus();
+    setInterval(updateSensorStatus, 10000);
+    $('#tooltips').click(function () {
+        var self = this;
+        $.pt({
+                 target: self,
+                 content: '好雨知时节， 当春乃发生。随风潜入夜， 润物细无声。。。'
+             });
+    });
+
     function startAndStopReceiveData(node) {
         var appEui = $(node).attr("id");
         var currStatus = transferString($(node).text());

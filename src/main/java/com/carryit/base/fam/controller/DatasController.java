@@ -155,6 +155,25 @@ public class DatasController {
         return 1;
     }
 
+    @PostMapping("/getNewData")
+    public
+    @ResponseBody
+    Object getNewData(HttpServletRequest request) {
+        String appEui = request.getParameter("appEui");
+        Datas datas = new Datas();
+        datas.setAppEui(appEui);
+        List<Datas> datasList = datasService.queryAllUsersByAppEui(datas);
+        if (datasList.size()>0){
+            datas = datasList.get(datasList.size()-1);
+            String allContent = datas.getRealData();
+            Map<String, String> parseData = Change.strDatas(allContent);
+            parseData.put("careData", allContent);
+            return parseData;
+        }else {
+            return "";
+        }
+    }
+
     @RequestMapping("/dataRetrieveByAppEui")
     public ModelAndView devicesForGroup(HttpServletRequest request) {
         HashMap<String, Boolean> startedApp = (HashMap<String, Boolean>) servletContext.getAttribute("startedApp");
