@@ -41,60 +41,39 @@
         </ul>
     </div>
     <div class="row">
-        <div class="col-md-4">
-            <div class="card mb-3 border-primary">
-                <div class="card-body" style="background-color: #d6e9ea">
-                    <blockquote class="card-blockquote">
-                        <h3><a href="topManager?groupId=${groupId}">拓扑管理</a></h3>
-                    </blockquote>
+        <div class="col-md-12">传感器设备：</div>
+        <c:forEach items="${deviceConfigList}" var="device" varStatus="status">
+            <div class="col-md-4">
+                <div class="card mb-3
+                    border-danger
+                    ">
+                    <div class="card-body" style="background-color: #8deaba">
+                        <blockquote class="card-blockquote">
+                            <p>传感器名称：<b>${device.deviceName}</b></p>
+                            <p>是否屏蔽联动设备：<b>${device.excludeAlert}</b></p>
+                        </blockquote>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card mb-3 border-primary">
-                <div class="card-body" style="background-color: #d6e9ea">
-                    <blockquote class="card-blockquote">
-                        <h3><a href="alertManager?groupId=${groupId}">实时报警管理</a></h3>
-                    </blockquote>
+        </c:forEach>
+    </div>
+    <div class="row">
+        <div class="col-md-12">联动设备：</div>
+        <c:forEach items="${sensorConfigList}" var="sensor" varStatus="status">
+            <div class="col-md-4">
+                <div class="card mb-3
+                    border-warning
+                    ">
+                    <div class="card-body" style="background-color: #ead078">
+                        <blockquote class="card-blockquote">
+                            <p>传感器名称：<b>${sensor.deviceName}</b></p>
+                            <p>端口：<b>${sensor.devicePort}</b></p>
+                            <p>联动报警等级：<b>${sensor.deviceLevel}</b></p>
+                        </blockquote>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card mb-3 border-primary">
-                <div class="card-body" style="background-color: #d6e9ea">
-                    <blockquote class="card-blockquote">
-                        <h3><a href="alertHistoryManager?groupId=${groupId}">历史报警管理</a></h3>
-                    </blockquote>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card mb-3 border-primary">
-                <div class="card-body" style="background-color: #d6e9ea">
-                    <blockquote class="card-blockquote">
-                        <h3><a href="faultManager?groupId=${groupId}">故障管理</a></h3>
-                    </blockquote>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card mb-3 border-primary">
-                <div class="card-body" style="background-color: #d6e9ea">
-                    <blockquote class="card-blockquote">
-                        <h3><a href="deviceManager?groupId=${groupId}">传感器设备配置</a></h3>
-                    </blockquote>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card mb-3 border-primary">
-                <div class="card-body" style="background-color: #d6e9ea">
-                    <blockquote class="card-blockquote">
-                        <h3><a href="sensorManager?groupId=${groupId}">联动设备配置</a></h3>
-                    </blockquote>
-                </div>
-            </div>
-        </div>
+        </c:forEach>
     </div>
 </main>
 <!-- Essential javascripts for application to work-->

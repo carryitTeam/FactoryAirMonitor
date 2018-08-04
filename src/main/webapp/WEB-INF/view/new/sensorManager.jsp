@@ -64,10 +64,10 @@
                             <th>设备端口</th>
                             <th>ID</th>
                             <th>设备编号</th>
-                            <th>联动设备名</th>
-                            <th>所属单位</th>
-                            <th>所属设备</th>
-                            <th>payload</th>
+                            <th style="display: none">联动设备名</th>
+                            <th style="display: none">所属单位</th>
+                            <th style="display: none">所属设备</th>
+                            <th style="display: none">payload</th>
                             <th>创建时间</th>
                             <th>操作</th>
                         </tr>
@@ -81,10 +81,10 @@
                                 <td>${device.devicePort}</td>
                                 <td>${device.appEui}</td>
                                 <td>${device.devEui}</td>
-                                <td>${device.deviceName}</td>
-                                <td>${groupMapData.get(deviceDataMap.get(device.parentId).groupId).groupName}</td>
-                                <td>${deviceDataMap.get(device.parentId).deviceName}</td>
-                                <td>${device.payload}</td>
+                                <td style="display: none">${device.deviceName}</td>
+                                <td style="display: none">${groupMapData.get(deviceDataMap.get(device.parentId).groupId).groupName}</td>
+                                <td style="display: none">${deviceDataMap.get(device.parentId).deviceName}</td>
+                                <td style="display: none">${device.payload}</td>
                                 <td>${device.createTime}</td>
                                 <td id="parentId_${device.parentId}_${deviceDataMap.get(device.parentId).groupId}">
                                     <div class="btn-group btn-group-toggle" data-toggle="buttons"

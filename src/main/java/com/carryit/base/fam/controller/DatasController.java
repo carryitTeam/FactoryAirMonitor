@@ -22,6 +22,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -216,6 +217,8 @@ public class DatasController {
             timeList.add("\""+datas.getCreateTime()+"\"");
             gasVal.add(Double.parseDouble(parseData.get("40003")));
         }
+        Collections.reverse(timeList);
+        Collections.reverse(gasVal);
         return careDatas;
     }
 

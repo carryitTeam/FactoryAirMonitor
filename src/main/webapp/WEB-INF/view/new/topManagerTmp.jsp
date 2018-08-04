@@ -45,7 +45,7 @@
             <div class="col-md-4">
                 <div class="card mb-3 border-dark
                     ">
-                    <div class="card-body" style="background-color: #d6e9ea">
+                    <div class="card-body" style="background-color: #eac1c0">
                         <blockquote class="card-blockquote">
                             <p>单位名称：<b>${groupInfo.groupName}</b></p>
                             <p>单位地址：<b>${groupInfo.groupLocation}</b></p>

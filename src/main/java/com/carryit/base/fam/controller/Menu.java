@@ -1,7 +1,9 @@
 package com.carryit.base.fam.controller;
 
+import com.carryit.base.fam.bean.DeviceConfig;
 import com.carryit.base.fam.bean.GroupInfo;
 import com.carryit.base.fam.bean.User;
+import com.carryit.base.fam.service.impl.DeviceConfigService;
 import com.carryit.base.fam.service.impl.GroupInfoService;
 import com.carryit.base.fam.service.impl.UserService;
 
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -23,6 +26,9 @@ public class Menu {
     @Autowired
     private GroupInfoService groupInfoService;
 
+    @Autowired
+    private DeviceConfigService deviceConfigService;
+
     @RequestMapping("/menu")
     public ModelAndView checkUser(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView();
@@ -32,11 +38,21 @@ public class Menu {
         }
         String groupId = request.getParameter("groupId");
         User cuser = (User) request.getSession().getAttribute("cuser");
+        DeviceConfig deviceConfig = new DeviceConfig();
+        deviceConfig.setGroupId(Integer.parseInt(groupId));
+        List<DeviceConfig> deviceConfigList = deviceConfigService.queryDeviceConfigByGroupId(deviceConfig);
 
-//        if ("superAdmin".equalsIgnoreCase(cuser.getUserRole())) {
-        modelAndView.setViewName("new/menu");
-//        }
+        List<DeviceConfig> sensorConfigList = new ArrayList<>();
+        for (DeviceConfig d: deviceConfigList){
+            d.setParentId(d.getId());
+            sensorConfigList.addAll(deviceConfigService.queryDeviceConfigByParentId(d));
+        }
+
+        modelAndView.addObject("deviceConfigList", deviceConfigList);
+        modelAndView.addObject("sensorConfigList", sensorConfigList);
         modelAndView.addObject("groupId", groupId);
+        modelAndView.setViewName("new/menu");
+
         return modelAndView;
     }
 

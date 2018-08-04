@@ -53,22 +53,24 @@
             >
                 <c:forEach items="${groupAll}" var="g">
                     <div class='drag drag-6'
-                         style="left: ${g.leftX}px;top: ${g.topY}px;width: 30px;height: 30px"
+                         style="left: ${g.leftX}px;top: ${g.topY}px;width: 30px;height: 50px"
                          id="pic${g.deviceType}_${g.id}">
                         <img id="${g.appEui}_${g.devEui}"
                         <c:if test="${g.deviceType=='sensor'}">
                              title="报警器:${g.deviceName},阈值:${g.alertNumber}"
-                             <c:if test="${g.deviceLevel==1 && 'no'.equals(g.excludeAlert)}">src="new/img/alert_y.png"</c:if>
-                             <c:if test="${g.deviceLevel==2 && 'no'.equals(g.excludeAlert)}">src="new/img/alert.png"</c:if>
-                             <c:if test="${g.excludeAlert=='yes'}">src="new/img/alert_g.png"</c:if>
+                             <c:if test="${g.deviceLevel==1 && 'no'.equals(g.excludeAlert)}">src="new/img/first.png"</c:if>
+                             <c:if test="${g.deviceLevel==2 && 'no'.equals(g.excludeAlert)}">src="new/img/second.png"</c:if>
+                             <c:if test="${g.excludeAlert=='yes'}">src="new/img/deny.png"</c:if>
                         </c:if>
                         <c:if test="${g.deviceType=='device'}">
-                             title="传感器:&#13;${g.deviceName}" src="new/img/sensor_b.png"
+                             title="传感器:&#13;${g.deviceName}" src="new/img/normal.png"
                         </c:if>
-                             width=30px height=30px" style="box-shadow: 0px 0px 20px #05ed0c;">
-                        <c:if test="${g.deviceType=='device'}"><p style=" color:#e7eb0a; font-size:8px;">传感器
+                             width=30px height=50px" style="box-shadow: 0px 0px 20px #05ed0c;">
+                        <c:if test="${g.deviceType=='device'}"><p
+                                style=" color:#e7eb0a; font-size:8px;">传感器
                         </p></c:if>
-                        <c:if test="${g.deviceType=='sensor'}"><p style=" color:#e7eb0a; font-size:8px;">告警器
+                        <c:if test="${g.deviceType=='sensor'}"><p
+                                style=" color:#e7eb0a; font-size:6px;">${g.deviceLevel}级告警器
                         </p></c:if>
                     </div>
                 </c:forEach>
@@ -133,10 +135,6 @@
             </div>
         </div>
     </div>
-    <a href="http://www.divcss5.com/jiqiao/j510.shtml"
-       title="第一排&#10;第二排&#10;第三排">title换行1</a>
-    <a href="http://www.divcss5.com/jiqiao/j510.shtml"
-       title="说明一&#13;说明二&#13;说明三">title换行2</a>
     </div>
 </main>
 <!-- Essential javascripts for application to work-->
