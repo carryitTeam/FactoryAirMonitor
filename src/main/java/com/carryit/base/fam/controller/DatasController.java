@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -163,13 +164,13 @@ public class DatasController {
         Datas datas = new Datas();
         datas.setAppEui(appEui);
         List<Datas> datasList = datasService.queryAllUsersByAppEui(datas);
-        if (datasList.size()>0){
-            datas = datasList.get(datasList.size()-1);
+        if (datasList.size() > 0) {
+            datas = datasList.get(0);
             String allContent = datas.getRealData();
             Map<String, String> parseData = Change.strDatas(allContent);
             parseData.put("careData", allContent);
             return parseData;
-        }else {
+        } else {
             return "";
         }
     }
@@ -189,22 +190,31 @@ public class DatasController {
         Datas datas = new Datas();
         datas.setAppEui(appEui);
         List<Datas> datasList = datasService.queryAllUsersByAppEui(datas);
-        Map<Integer, Map<String, String>> parseData = toCareMapData(datasList);
+        List<String> timeList = new ArrayList<>();
+        List<Double> gasVal = new ArrayList<>();
+        Map<Integer, Map<String, String>> parseData = toCareMapData(datasList, timeList, gasVal);
         modelAndView.addObject("datasList", datasList);
         modelAndView.addObject("parseData", parseData);
         modelAndView.addObject("startedApp", startedApp);
+        modelAndView.addObject("timeList", timeList);
+        modelAndView.addObject("gasVal", gasVal);
 //        }
         modelAndView.setViewName("new/detailDataInfo");
         return modelAndView;
     }
 
-    public Map<Integer, Map<String, String>> toCareMapData(List<Datas> datasList) {
+    public Map<Integer, Map<String, String>> toCareMapData(List<Datas> datasList, List<String> timeList, List<Double> gasVal) {
         Map<Integer, Map<String, String>> careDatas = new HashMap<>(1000);
         for (Datas datas : datasList) {
             String allContent = datas.getRealData();
             Map<String, String> parseData = Change.strDatas(allContent);
             parseData.put("careData", allContent);
             careDatas.put(datas.getId(), parseData);
+            if(allContent.startsWith("6b")){
+                continue;
+            }
+            timeList.add("\""+datas.getCreateTime()+"\"");
+            gasVal.add(Double.parseDouble(parseData.get("40003")));
         }
         return careDatas;
     }

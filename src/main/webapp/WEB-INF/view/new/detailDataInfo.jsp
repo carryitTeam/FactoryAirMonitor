@@ -47,6 +47,9 @@ a
         </ul>
     </div>
     <div class="row">
+        <div id="chartmain" style="width:90%; height: 400px;"></div>
+    </div>
+    <div class="row">
         <div class="col-md-6">
             <c:if test="${startedApp.get(datasList.get(0).appEui)==true}">
                 <p class="text-success">AppEui:${datasList.get(0).appEui}启动状态</p>
@@ -98,9 +101,43 @@ a
 <!-- The javascript plugin to display page loading on top-->
 <script src="new/js/plugins/pace.min.js"></script>
 <!-- Page specific javascripts-->
-<script type="text/javascript" src="new/js/plugins/chart.js"></script>
+<script src="new/js/echarts.min.js"></script>
+<script type="text/javascript">
+    //指定图标的配置和数据
+    var gasValTime = ${timeList};
+    var timeList = new Array()
+    for(var i=0; i< gasValTime.length;i++){
+        timeList.push(gasValTime[i])
+    }
+    var option = {
+        title:{
+            text:'传感器气体浓度趋势'
+        },
+        tooltip:{},
+        legend:{
+            data:['气体浓度']
+        },
+        xAxis:{
+            data:timeList
+        },
+        yAxis:{
+
+        },
+        series:[{
+            name:'浓度值',
+            type:'line',
+            data:${gasVal}
+        }]
+    };
+    //初始化echarts实例
+    var myChart = echarts.init(document.getElementById('chartmain'));
+
+    //使用制定的配置项和数据显示图表
+    myChart.setOption(option);
+</script>
 <script type="text/javascript">
     $('#sampleTable').DataTable();
 </script>
+
 </body>
 </html>
